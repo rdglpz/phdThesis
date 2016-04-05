@@ -197,7 +197,7 @@ Time series forecasting is performed by a regression function, which is a model 
 
 
 \begin{equation}\label{reggressor}
-\hat{Y}_{t+1} = f (\alpha,   Y_t)
+\hat{Y}_{t+1} = f (A,   Y_t)
 \end{equation} where $f$ is the regression function, $\alpha$ are the parameters of the model, $Y_t$ is the input vector with $m$ number of elements $Y_t=\{y_t,\dots, y_{t-m}\}$ and $\hat{Y}_{t+1}$ is the the prediction given by the regressor $f$ returning $h$ steps ahead $ \hat{Y}_{t+1} =\{  \hat{y}_{t+1} , \dots,\hat{y}_{t+h} \}$. The general objective function for fitting time series with a regressor model is given by Equation \ref{fittingfunction}.
 
 \begin{equation}\label{fittingfunction}
