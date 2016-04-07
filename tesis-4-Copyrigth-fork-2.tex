@@ -33,6 +33,7 @@
 \usepackage{rotating}
 \usepackage{enumerate}
 \usepackage[hang,flushmargin]{footmisc}
+\usepackage{cleveref}
 %\usepackage{subcaption}
 %\usepackage{subcaption}
 
@@ -1229,7 +1230,7 @@ w_i=\alpha(1-\alpha)^i
 \end{equation} where $i=\{1,2,\dots,\infty\}$ and $\alpha$ is a constant real value $0<\alpha<1$ that regulates the relevance of the previous values to produce the forecast. Each successive observation in the series is a new smoothed value. This value is computed as the weighted average of the current observation and the previous smoothed observations. Substituting Equation \ref{setexpvals} in \ref{expsm} are obtained the forecasting equations \ref{expsmootfff}-\ref{iterativesmoothing}.
 
 \begin{equation}\label{expsmootfff}
-\hat{Y}_{t+1} = \alpha Y_t + \alpha(1-\alpha)Y_{t-1} + \alpha(1-\alpha)^2 Y_{t-2} + \dots + \alpha(1-\alpha)^m y_{t-m}
+\hat{Y}_{t+1} = \alpha Y_t + \alpha(1-\alpha)Y_{t-1} + \alpha(1-\alpha)^2 Y_{t-2} + \dots + \alpha(1-\alpha)^m Y_{t-m}
 \end{equation} where $m$ is the number of considered lags. Factoring Equation \ref{expsmootfff} is obtained:
 \begin{equation}\label{expsmootf2}
 \hat{Y}_{t+1} =  \alpha Y_t + (1-\alpha)(\alpha Y_{t-1} + \alpha (1-\alpha) Y_{t-2} + \dots +  \alpha (1-\alpha)^{m-1} Y_{t-m})
@@ -1254,47 +1255,47 @@ Double exponential smoothing is an extension of the single exponential smoothing
 
 \begin{equation}\label{eq}
 	\hat{Y}_{t} = s_{t-1} + b_{t-1} 
-\end{equation} where the terms $s_t$ and $b_t$ are the level and slope (trend) at time $t$. This model is used to predict stable long-term time series. The $l$-step ahead prediction, also named Holt's method, is performed by Equation \ref{holtsmethod}
+\end{equation} where the terms $s_t$ and $b_t$ are the level and slope (trend) at time $t$. This model is used to predict stable long-term time series. The $h$-step ahead prediction, also named Holt's method, is performed by Equation \ref{holtsmethod}
 
 \begin{equation}\label{holtsmethod}
-	\hat{Y}_{t+l}=s_{t-1} +lb_{t-1}
-\end{equation} where $l$ is positive and defines the prediction at time $l$. A deeper analysis of this component is found in \cite{tho80}. The level and trend components are smoothed according to Equation \ref{smoothing}-3.37
+	\hat{Y}_{t+h}=s_{t-1} +h b_{t-1}
+\end{equation} where $h$ is positive and defines the prediction at time $h$. A deeper analysis of this component is found in \cite{tho80}. The level and trend components are smoothed according to Equation \ref{smoothing}-\ref{smoothing-1}
 
 
 \begin{eqnarray}\label{smoothing}
 s_{t-1} &=& Y_{t-1} + (1-\alpha)^2 e_{t-1} \\
-b_{t-1} &=& b_{t-2}+\alpha^2 e_{t-1} 
+b_{t-1} &=& b_{t-2}+\alpha^2 e_{t-1} \label{smoothing-1}
 \end{eqnarray} where $e_{t-1}$ is the previous forecasting error defined by Equation \ref{errorequation}
 
 \begin{eqnarray}\label{errorequation}
 e_{t-1} = \hat{Y}_{t-1} -Y_{t-1}
 \end{eqnarray}
 
-The Holt-Winters linear trend estimates the trend using a weighting function which considers more relevant the most recent observations. This estimation uses a local trend equation where the linear trend $s$ and slope $b$ components of the forecasting Equation \ref{holtsmethod} are updated each period with Equation \ref{errorhwmode} and 3.40.
+The Holt-Winters linear trend estimates the trend using a weighting function which considers more relevant the most recent observations. This estimation uses a local trend equation where the linear trend $s$ and slope $b$ components of the forecasting Equation \ref{holtsmethod} are updated each period with Equation \ref{errorhwmode} and \ref{errorhwmode-1}.
 
 
 
 \begin{eqnarray}\label{errorhwmode}
 s_t &=& \alpha Y_t + (1-\alpha_1)(s_{t-1}+b_{t-1}) \\
-b_t &=& \alpha_2 (s_t-s_{t-1})+ (1-\alpha_2)b_{t-1}
+b_t &=& \alpha_2 (s_t-s_{t-1})+ (1-\alpha_2)b_{t-1} \label{errorhwmode-1}
 \end{eqnarray}
 
-Similar to single exponential smoothing, the slope and level components also can be expressed as a function of their errors using the correction form presented in Equation \ref{errorhwmode2} - 3.42.
+Similar to single exponential smoothing, the slope and level components also can be expressed as a function of their errors using the correction form presented in Equation \ref{errorhwmode2} - \ref{errorhwmode2-1}.
 
 
 \begin{eqnarray}\label{errorhwmode2}
 s_t &=& s_{t-1}+b_{t-1}+\alpha_1 \epsilon \\
-b_t &=& b+{t-1}+\alpha_1 \alpha_2 \epsilon
+b_t &=& b+{t-1}+\alpha_1 \alpha_2 \epsilon \label{errorhwmode2-1}
 \end{eqnarray}
 
 
-The problem of the initialisation of parameters $s_1$ and $b_1$ is a problem that has been addressed before \cite{Kalekar2004}. Different methods have been proposed for the initialisation of these values. For $b_1$, it is possible to use the alternatives given by Equation \ref{eq2} - 3.45, for $s_1$ it can be initialised to $Y_1$.
+The problem of the initialisation of parameters $s_1$ and $b_1$ is a problem that has been addressed before \cite{Kalekar2004}. Different methods have been proposed for the initialisation of these values. For $b_1$, it is possible to use the alternatives given by Equation \ref{eq2} - \ref{eq2-1}, for $s_1$ it can be initialised to $Y_1$.
 
 
 \begin{eqnarray}\label{eq2}
 b_1 & = & Y_2 \\
 b_1 & = & [(Y_2-Y_1)+(Y_3-Y_2)+(Y_4-Y_3)] /3 \\
-b_1 & = & (Y_n-Y_1)/(n-1)
+b_1 & = & (Y_n-Y_1)/(n-1) \label{eq2-1}
 \end{eqnarray}
 
 The three initialisation options approximate a trend in different ways; the first ones is by taking just the second element of the time series, the second is computing the average of the three first differences of the time series, and as third option is considered the slope produced by the division of the subtraction of the fist element $Y_1$ of the last element $Y_n$.
@@ -1314,43 +1315,43 @@ The three initialisation options approximate a trend in different ways; the firs
 \subsection{Seasonal Holt-Winters}
 %https://www.otexts.org/fpp/7/5
 
-The Holt-Winters extension for seasonal components in time series is composed basically by three equations: the level equation $l_t$, the trend equation $b_t$ and the seasonal component equation $s_t$. With smoothing parameters $\alpha_1,\alpha_2$ and $\alpha_3$, and the seasonal parameter $\tau$ that expresses the period of the seasonality.
+The Holt-Winters extension for seasonal components in time series is composed basically by three equations: the level equation $\ell_t$, the trend equation $b_t$ and the seasonal component equation $s_t^1$. With smoothing parameters $\alpha_1,\alpha_2$ and $\alpha_3$, and the seasonal parameter $\tau$ that expresses the period of the seasonality. These components are described in Equation \ref{SHW}-\ref{SHW-1}
 
-\begin{eqnarray}
-\hat{Y}_{t+h} & =& l_t + h b_t + s_{t-\tau+h^+_\tau} \\
-l_t &=& \alpha_1 (Y_t-s_{t-\tau})+(1-\alpha)(l_{t-1}+b_{t-1}) \\
-b_t &=& \alpha_2 (l_t-l_{t-1})+(1-\alpha_2)b_{t-1} \\
-s_t &=& \alpha_3(Y_t-l_{t-1}-b_{t-1}) +(1-\alpha_3) s_{t-\tau}
+\begin{eqnarray}\label{SHW}
+\hat{Y}_{t+h} & =& \ell_t + h b_t + s^1_{t-\tau+h^+_\tau} \\
+\ell_t &=& \alpha_1 (Y_t-s^1_{t-\tau})+(1-\alpha)(\ell_{t-1}+b_{t-1}) \\
+b_t &=& \alpha_2 (\ell_t-l_{t-1})+(1-\alpha_2)b_{t-1} \\
+s^1_t &=& \alpha_3(Y_t-\ell_{t-1}-b_{t-1}) +(1-\alpha_3) s^1_{t-\tau} \label{SHW-1}
 \end{eqnarray} where $h_\tau^+ = [(h-1) \text{ mod } \tau]+1$.
 
-The level equation computes an average of the weights between the seasonal measurement $(Y_t - s_{t-\tau})$ and the nonseasonal prediction $(l_{t-1}+b_{t-1})$ in time $t$. The trend equation, is similar to Equation \ref{errorhwmode}. The seasonal equation is an average of the weights between the current seasonal time, $(Y_t-l_{t-1}-b_{t-1})$, and the same seasonal time of the previous year. The corresponding error correction alternative is given by the equations \ref{errorseasonal} - 3.52.
+The level equation computes an average of the weights between the seasonal measurement $(Y_t - s^1_{t-\tau})$ and the nonseasonal prediction $(\ell_{t-1}+b_{t-1})$ in time $t$. The trend equation, is similar to Equation \ref{errorhwmode}. The seasonal equation is an average of the weights between the current seasonal time, $(Y_t-\ell_{t-1}-b_{t-1})$, and the same seasonal time of the previous year. The corresponding error correction alternative is given by the equations \ref{errorseasonal} - \ref{errorseasonal1}.
 
 
 
 \begin{eqnarray}\label{errorseasonal}
-l_t &=& l_{t-1} + b_{t-1} +\alpha_1 \epsilon_t \\ 
+\ell_t &=& \ell_{t-1} + b_{t-1} +\alpha_1 \epsilon_t \\ 
 b_t &=& b_{t-1} + \alpha_1 \alpha_2 \epsilon_t \\ 
-s_t &=& s_{t-m} + \alpha_3 \epsilon_t 
+s^1_t &=& s^1_{t-m} + \alpha_3 \epsilon_t  \label{errorseasonal1}
 \end{eqnarray} 
 
 
 
-where $\epsilon_t = (l_{t-1}+b_{t-1} +s_{t-\tau}) = Y_t - \hat{Y}_{t|(t-1)}$ are the one-step training for the forecast errors.
+where $\epsilon_t = (\ell_{t-1}+b_{t-1} +s^1_{t-\tau}) = Y_t - \hat{Y}_{t|(t-1)}$ are the one-step training for the forecast errors.
 
 \subsection{Double Seasonal Holt-Winters}
 
-The double seasonal Holt-Winters (DSHW) is an extension of the previous method adding an extra seasonal equation ($s^2$) \cite{Taylor2006} that captures the seasonality of a second seasonal period. It is  also added other smoothing and  seasonal parameter $\omega$ and $\tau_2$ respectively. The new parameters have information about a bigger periodicity multiple of $\tau_1$. The additive DSHW is described in Equation \ref{DSHW}.
+The double seasonal Holt-Winters (DSHW) is an extension of the previous method adding an extra seasonal equation ($s^2$) \cite{Taylor2006} that captures the seasonality of a second seasonal period. It is also added other smoothing and seasonal parameter $\omega$ and $\tau_2$ respectively. The new parameters have information about a bigger periodicity multiple of $\tau_1$. The additive DSHW is described in Equation \ref{DSHW} - \ref{DSHW1}.
 
 \begin{eqnarray}\label{DSHW}
-\hat{Y}_{t}(k) & = & (l_t+kb_t)+s^1_{t-\tau_1+k}+ s^2_{t-\tau_2+k} \\
-l_t &=& \alpha_1 (Y_t-(s^1_{t-\tau_1} +s^2_{t-\tau_2}))+ \\ 
-& & (1-\alpha)(l_{t-1}+b_{t-1}) \\
-b_t &=& \alpha_2 (l_t-l_{t-1} ) + (1-\alpha_2)b_{t-1} \\
-s_t^1 &=& \alpha_3(Y_t -(l_t +s^2_{t-\tau_2})) + (1-\alpha_3)+s^1_{t-\tau_1} \\
-s_t^2 &=& \omega (Y_t-(l_t +  s_t^1)) + (1-\omega)+ s^2_{t-\tau_2} 
+\hat{Y}_{t+h} & = & (\ell_t+h b_t)+s^1_{t-\tau_1+h}+ s^2_{t-\tau_2+h} \\
+\ell_t &=& \alpha_1 (Y_t-(s^1_{t-\tau_1} +s^2_{t-\tau_2}))+  \\ \nonumber 
+& & (1-\alpha)(\ell_{t-1}+b_{t-1}) \\
+b_t &=& \alpha_2 (\ell_t-\ell_{t-1} ) + (1-\alpha_2)b_{t-1} \\
+s_t^1 &=& \alpha_3(Y_t -(\ell_t +s^2_{t-\tau_2})) + (1-\alpha_3)+s^1_{t-\tau_1} \\
+s_t^2 &=& \omega (Y_t-(\ell_t +  s_t^1)) + (1-\omega)+ s^2_{t-\tau_2} \label{DSHW1}
 \end{eqnarray} %where $l_t$ and $b_t$ are the level and trend. $s^1$ and $s^2$ are the two indices and $\alpha_1,\alpha_2, \alpha_3$ and $\omega $ are the smoothing parameters and 
 
-Where $Y_t(k)$ is the $k-th$ step-ahed forecast made from forecast origin $t$. The parameters are optimized by minimizing the sum of squared errors of one step-ahead residuals. In order to use the multiplicative version of DSHW, it is obtained by the product of the seasonal components. 
+Where $Y_{t+h}$ is the $h$-th step ahed forecast from forecast origin $t$. The parameters are optimized by minimizing the sum of squared errors of one step-ahead residuals. In order to use the multiplicative version of DSHW, it is obtained by the product of the seasonal components. 
 
 
 
