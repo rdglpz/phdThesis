@@ -1318,12 +1318,12 @@ The Holt-Winters extension for seasonal components in time series is composed ba
 
 \begin{eqnarray}
 \hat{Y}_{t+h} & =& l_t + h b_t + s_{t-\tau+h^+_\tau} \\
-l_t &=& \alpha_1 (Y_t)-s_{t-\tau}+(1-\alpha)(l_{t-1}+b_{t-1}) \\
+l_t &=& \alpha_1 (Y_t-s_{t-\tau})+(1-\alpha)(l_{t-1}+b_{t-1}) \\
 b_t &=& \alpha_2 (l_t-l_{t-1})+(1-\alpha_2)b_{t-1} \\
 s_t &=& \alpha_3(Y_t-l_{t-1}-b_{t-1}) +(1-\alpha_3) s_{t-\tau}
 \end{eqnarray} where $h_\tau^+ = [(h-1) \text{ mod } \tau]+1$.
 
-The level equation shows a weighted average between the seasonally adjusted observation $(Y_t - s_{t-\tau})$ and the nonseasonal forecast $(l_{t-1}+b_{t-1})$ for time $t$. The trend equation is identical to Holt's linear method. The seasonal equation shows a weighted average between the current seasonal index, $(Y_t-l_{t-1}-b_{t-1})$, and the seasonal index of the same season last year (i.e., $\tau$ time periods ago). The corresponding error correction alternative is given by the equations \ref{errorseasonal} - 3.52.
+The level equation computes an average of the weights between the seasonal measurement $(Y_t - s_{t-\tau})$ and the nonseasonal prediction $(l_{t-1}+b_{t-1})$ in time $t$. The trend equation, is similar to Equation \ref{errorhwmode}. The seasonal equation is an average of the weights between the current seasonal time, $(Y_t-l_{t-1}-b_{t-1})$, and the same seasonal time of the previous year. The corresponding error correction alternative is given by the equations \ref{errorseasonal} - 3.52.
 
 
 
@@ -1337,7 +1337,21 @@ s_t &=& s_{t-m} + \alpha_3 \epsilon_t
 
 where $\epsilon_t = (l_{t-1}+b_{t-1} +s_{t-\tau}) = Y_t - \hat{Y}_{t|(t-1)}$ are the one-step training for the forecast errors.
 
-%\subsection{Double Seasonal Holt-Winters}
+\subsection{Double Seasonal Holt-Winters}
+
+The double seasonal Holt-Winters (DSHW) is an extension of the previous method adding an extra seasonal equation ($s^2$) \cite{Taylor2006} that captures the seasonality of a second seasonal period. It is  also added other smoothing and  seasonal parameter $\omega$ and $\tau_2$ respectively. The new parameters have information about a bigger periodicity multiple of $\tau_1$. The additive DSHW is described in Equation \ref{DSHW}.
+
+\begin{eqnarray}\label{DSHW}
+\hat{Y}_{t}(k) & = & (l_t+kb_t)+s^1_{t-\tau_1+k}+ s^2_{t-\tau_2+k} \\
+l_t &=& \alpha_1 (Y_t-(s^1_{t-\tau_1} +s^2_{t-\tau_2}))+ \\ 
+& & (1-\alpha)(l_{t-1}+b_{t-1}) \\
+b_t &=& \alpha_2 (l_t-l_{t-1} ) + (1-\alpha_2)b_{t-1} \\
+s_t^1 &=& \alpha_3(Y_t -(l_t +s^2_{t-\tau_2})) + (1-\alpha_3)+s^1_{t-\tau_1} \\
+s_t^2 &=& \omega (Y_t-(l_t +  s_t^1)) + (1-\omega)+ s^2_{t-\tau_2} 
+\end{eqnarray} %where $l_t$ and $b_t$ are the level and trend. $s^1$ and $s^2$ are the two indices and $\alpha_1,\alpha_2, \alpha_3$ and $\omega $ are the smoothing parameters and 
+
+Where $Y_t(k)$ is the $k-th$ step-ahed forecast made from forecast origin $t$. The parameters are optimized by minimizing the sum of squared errors of one step-ahead residuals. In order to use the multiplicative version of DSHW, it is obtained by the product of the seasonal components. 
+
 
 
 
@@ -3260,7 +3274,11 @@ The three methodologies based on the proposed general Multi-Model Predictor fram
 
 As future work the author proposes to follow the research line of global modelling based on modes of time series that can be implemented in the Multi-Model Predictor architecture. The prediction accuracy of the next mode depends on the knowledge assumption of the data (It might be a stochastic Markov process, deterministic rule based prediction, as previously mentioned in Chapter \ref{TSFSI}). A correct general assumption of the sequential data provides robustness to the prediction. The author believes that the integration of different (possibly correlated) information sources as temperature, humidity and pollution levels as auxiliary information for the qualitative forecasters can be integrated and exploited for improving the global mode prediction accuracy. Bayes based tools such as Bayesian Networks allow the integration of all these diverse information because they are able to capture the probabilistic dependency of random variables given a set of observations \cite{han2011}. These kind of models are capable to predict the operation modes using the Bayesian inference; in other words, it is possible to estimate the posterior probability of unknown variables given a set of observations from diverse sources considered as random variables. These variables might be associated with the operation modes or regimes. 
 
-Another research direction, is the generalisation of the qualitative and quantitative method decomposition (Chapter \ref{qqmm}). The proposal is to extend the decomposition algorithm splitting the full period of size $\tau$ in sub periods of size $\tau'$. Where $\tau'$ is selected satisfying Equation \ref{tausub},
+Another research direction, is the generalisation of the qualitative and quantitative method decomposition (Chapter \ref{qqmm}) generating several qualitative and quantitative time series associated with specific subperiod of water demand pattern. 
+
+The proposed decomposition is useful when certain segments (or subperiods) of a period, obeys to different behavior. For example, in the work of \cite{Bakker2013}, M. Bakker et al. detected in the central and Southern part of Netherlands, an increment of the normal water demand from late afternoon to evening in summer days. This increment observed in these specific hours of the day is called, deviant season water demand pattern. This pattern is produced by people sprinkling their gardens, therefore the proposed forecasting method works differently for this part of the day.
+
+Therefore the proposal is to extend the decomposition algorithm splitting the size period $\tau$ in subperiods of size $\tau'$. The selected subperiod size $\tau'$ is selected satisfying Equation \ref{tausub}. 
 
 \begin{equation}\label{tausub}
 \{ \exists \tau' , mod(\tau,\tau')=0 \text{ and } \tau'\leq \tau\}
