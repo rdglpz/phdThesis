@@ -1254,16 +1254,16 @@ w_i=\alpha(1-\alpha)^i
 Double exponential smoothing is an extension of the single exponential smoothing that considers the trend in time series. The exponential smoothing component that captures the linear trend is described by the linear Equation \ref{eq}
 
 \begin{equation}\label{eq}
-	\hat{Y}_{t} = s_{t-1} + b_{t-1} 
-\end{equation} where the terms $s_t$ and $b_t$ are the level and slope (trend) at time $t$. This model is used to predict stable long-term time series. The $h$-step ahead prediction, also named Holt's method, is performed by Equation \ref{holtsmethod}
+	\hat{Y}_{t} = \ell_{t-1} + b_{t-1} 
+\end{equation} where the terms $\ell_t$ and $b_t$ are the level and slope (trend) at time $t$. This model is used to predict stable long-term time series. The $h$-step ahead prediction, also named Holt's method, is performed by Equation \ref{holtsmethod}
 
 \begin{equation}\label{holtsmethod}
-	\hat{Y}_{t+h}=s_{t-1} +h b_{t-1}
+	\hat{Y}_{t+h}=\ell_{t-1} +h b_{t-1}
 \end{equation} where $h$ is positive and defines the prediction at time $h$. A deeper analysis of this component is found in \cite{tho80}. The level and trend components are smoothed according to Equation \ref{smoothing}-\ref{smoothing-1}
 
 
 \begin{eqnarray}\label{smoothing}
-s_{t-1} &=& Y_{t-1} + (1-\alpha)^2 \epsilon_{t-1} \\
+\ell_{t-1} &=& Y_{t-1} + (1-\alpha)^2 \epsilon_{t-1} \\
 b_{t-1} &=& b_{t-2}+\alpha^2 \epsilon_{t-1} \label{smoothing-1}
 \end{eqnarray} where $\epsilon_{t-1}$ is the previous forecasting error defined by Equation \ref{errorequation}
 
@@ -1271,25 +1271,25 @@ b_{t-1} &=& b_{t-2}+\alpha^2 \epsilon_{t-1} \label{smoothing-1}
 \epsilon_{t-1} = \hat{Y}_{t-1} -Y_{t-1}
 \end{eqnarray}
 
-The Holt-Winters linear trend estimates the trend using a weighting function which considers more relevant the most recent observations. This estimation uses a local trend equation where the linear trend $s$ and slope $b$ components of the forecasting Equation \ref{holtsmethod} are updated each period with Equation \ref{errorhwmode} and \ref{errorhwmode-1}.
+The Holt-Winters linear trend estimates the trend using a weighting function which considers more relevant the most recent observations. This estimation uses a local trend equation where the linear trend $\ell$ and slope $b$ components of the forecasting Equation \ref{holtsmethod} are updated each period with Equation \ref{errorhwmode} and \ref{errorhwmode-1}.
 
 
 
 \begin{eqnarray}\label{errorhwmode}
-s_t &=& \alpha Y_t + (1-\alpha_1)(s_{t-1}+b_{t-1}) \\
-b_t &=& \alpha_2 (s_t-s_{t-1})+ (1-\alpha_2)b_{t-1} \label{errorhwmode-1}
+\ell_t &=& \alpha Y_t + (1-\alpha_1)(\ell_{t-1}+b_{t-1}) \\
+b_t &=& \alpha_2 (\ell_t-\ell_{t-1})+ (1-\alpha_2)b_{t-1} \label{errorhwmode-1}
 \end{eqnarray}
 
 Similar to single exponential smoothing, the slope and level components also can be expressed as a function of their errors using the correction form presented in Equation \ref{errorhwmode2} - \ref{errorhwmode2-1}.
 
 
 \begin{eqnarray}\label{errorhwmode2}
-s_t &=& s_{t-1}+b_{t-1}+\alpha_1 \epsilon \\
+\ell_t &=& \ell_{t-1}+b_{t-1}+\alpha_1 \epsilon \\
 b_t &=& b+{t-1}+\alpha_1 \alpha_2 \epsilon \label{errorhwmode2-1}
 \end{eqnarray}
 
 
-The problem of the initialisation of parameters $s_1$ and $b_1$ is a problem that has been addressed before \cite{Kalekar2004}. Different methods have been proposed for the initialisation of these values. For $b_1$, it is possible to use the alternatives given by Equation \ref{eq2} - \ref{eq2-1}, for $s_1$ it can be initialised to $Y_1$.
+The problem of the initialisation of parameters $\ell_1$ and $b_1$ is a problem that has been addressed before \cite{Kalekar2004}. Different methods have been proposed for the initialisation of these values. For $b_1$, it is possible to use the alternatives given by Equation \ref{eq2} - \ref{eq2-1}, for $\ell_1$ it can be initialised to $Y_1$.
 
 
 \begin{eqnarray}\label{eq2}
