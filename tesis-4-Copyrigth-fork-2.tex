@@ -364,12 +364,12 @@ The work of J. Quevedo and V. Puig in \cite{quevedo2014} addresses a similar app
 \parbox{5cm}{
 \includegraphics[trim = 0mm 100mm 0mm 100mm, clip,width=5.2cm]{figures/quevedoDescriptors01B.pdf}
 %
-\caption{Class 1 descriptor associated to Weekend and holiday consumption patterns. (\textcopyright 2014, IEEE).}
+\caption{Class 1 descriptor associated with Weekend and holiday consumption patterns. (\textcopyright 2014, IEEE).}
 \label{qualitativeDescriptors1}}
 %\qquad
 \begin{minipage}{5cm}
 \includegraphics[trim = 0mm 90mm 0mm 90mm, clip,width=5cm]{figures/quevedoDescriptors02.pdf}
-\caption{Class 2 descriptor associated to weekdays consumption pattern. (\textcopyright 2014, IEEE).}
+\caption{Class 2 descriptor associated with weekdays consumption pattern. (\textcopyright 2014, IEEE).}
 \label{qualitativeDescriptors2}
 \end{minipage}
 \end{figure}
@@ -381,7 +381,7 @@ The work of J. Quevedo and V. Puig in \cite{quevedo2014} addresses a similar app
  %information from the data in the phase space with the aim of modelling the time series behavior and find patterns of the input space by clustering the data in its phase space form. On the other hand, nonlinear autoregressive (NAR) neural networks are powerful computational models for modelling and forecasting nonlinear time series. Taking the advantage of both methods, a new method is proposed combining k-means algorithm and NAR network to provide better forecasting results. In the Figure \ref{solarRadiationFcst} Is shown the basic principle of the proposed approach. The time series of the hourly solar radiation 	
 
 
-Benmouiza developed \cite{Benmouiza2013} a methodology based on the combination of clustering methods and artificial neural networks to predict in the short term the solar horizontal radiation. The predictor model is a composition of several independent local models. Each model is trained with clustered data of one class containing similar dynamical patterns. The architecture has a Global Nonlinear Autoregressive Neural Network (NAR) used for predicting the local model to forecast. Once the local model is selected, a local NAR model associated to each cluster is used to forecast the hourly radiation. Although the application of the work aims to forecast the solar radiation, it might be possible to implement it for water demand forecast, since the dynamics of the water demand may obey also to global and local structure in its dynamics where the local dynamic patterns can be identified and clustered.
+Benmouiza developed \cite{Benmouiza2013} a methodology based on the combination of clustering methods and artificial neural networks to predict in the short term the solar horizontal radiation. The predictor model is a composition of several independent local models. Each model is trained with clustered data of one class containing similar dynamical patterns. The architecture has a Global Nonlinear Autoregressive Neural Network (NAR) used for predicting the local model to forecast. Once the local model is selected, a local NAR model associated with each cluster is used to forecast the hourly radiation. Although the application of the work aims to forecast the solar radiation, it might be possible to implement it for water demand forecast, since the dynamics of the water demand may obey also to global and local structure in its dynamics where the local dynamic patterns can be identified and clustered.
 
 %The algorithm proposed has three stages:  First, phase space reconstitution of the hourly global solar radiation time series was reached by finding the appropriate time delay using mutual information method, and the minimum embedding dimension is defined using false nearest neighbour method. Secondly, the unsupervised k-means clustering algorithm was then applied for grouping the input data into k clusters, which have similar charac- teristics. 
 
@@ -425,7 +425,7 @@ Figure \ref{solarRadiationFcst} shows how the data in phase space is classified 
 
 
 
-{\color{red} M. Bakker et al. \cite{Bakker2013} propose a fully adaptive forecast scheme using a static calendar to compute in real time model weight coefficients (named day factors), and demand patterns used by the model. The model assumes the existence of four kinds of different water demand patters (reported in \cite{Zhou2002}) of which those associated to holidays, weekdays, and deviant holidays are known in advance but not for deviant season water demand patterns which should be detected on-line.
+{\color{red} M. Bakker et al. \cite{Bakker2013} propose a fully adaptive forecast scheme using a static calendar to compute in real time model weight coefficients (named day factors), and demand patterns used by the model. The model assumes the existence of four kinds of different water demand patters (reported in \cite{Zhou2002}) of which those associated with holidays, weekdays, and deviant holidays are known in advance but not for deviant season water demand patterns which should be detected on-line.
  %on nominal time series patterns that computes coefficients named day factors and daily demand patterns for a configurable number of deviant day types. The disadvantage is that the deviant types are defined manually by using human visual analysis.
 }
 
@@ -591,7 +591,7 @@ All the mentioned systems are able to generate a time series since it is possibl
 
 
 
-A special case of nonlinear systems are the piecewise linear or nonlinear dynamical systems where the system is modelled by a set of local models that are activated by certain rules. Each local model is associated to one operation mode. The activation of these local models depends on the model of the finite state machine in the deterministic case \cite{Black2008}, or by a stochastic state machine that activates the different local models by probabilistic rules such as those performed by Markov Models Chains. Figure \ref{stateMachine} shows an example of a finite state machine model that captures the dynamics of behavior changes. The submodels or states are activated when an event occurs. In contrast, the Markov Model \cite{Grinstead2010} in Figure \ref{stateMachineMarkov} models the change of states by producing probabilities events to jump from one state to another.
+A special case of nonlinear systems are the piecewise linear or nonlinear dynamical systems where the system is modelled by a set of local models that are activated by certain rules. Each local model is associated with one operation mode. The activation of these local models depends on the model of the finite state machine in the deterministic case \cite{Black2008}, or by a stochastic state machine that activates the different local models by probabilistic rules such as those performed by Markov Models Chains. Figure \ref{stateMachine} shows an example of a finite state machine model that captures the dynamics of behavior changes. The submodels or states are activated when an event occurs. In contrast, the Markov Model \cite{Grinstead2010} in Figure \ref{stateMachineMarkov} models the change of states by producing probabilities events to jump from one state to another.
   
  
  
