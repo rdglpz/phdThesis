@@ -194,16 +194,16 @@ A general classification of the models used for forecasting can be done accordin
 
 
 
-Time series forecasting is performed by a regression function, which is a model that receives a sequence of observations and returns a scalar or a vector of real numbers. The regression function that predicts the value in the next instant of time $\{t+1\}$ given a sequence of values in $y_t$ is expressed by the Equation \ref{reggressor}.
+Time series forecasting is performed by a regression function, which is a model that receives a sequence of observations and returns a scalar or a vector of real numbers. The regression function that predicts the value in the next instant of time $t+1$, given a sequence of values in $\mathbf{Y}_t$ is expressed by the Equation \ref{reggressor}.
 
 
 \begin{equation}\label{reggressor}
-\hat{Y}_{t+1} = f (A,   Y_t)
-\end{equation} where $f$ is the regression function, $\alpha$ are the parameters of the model, $Y_t$ is the input vector with $m$ number of elements $Y_t=\{y_t,\dots, y_{t-m}\}$ and $\hat{Y}_{t+1}$ is the the prediction given by the regressor $f$ returning $h$ steps ahead $ \hat{Y}_{t+1} =\{  \hat{y}_{t+1} , \dots,\hat{y}_{t+h} \}$. The general objective function for fitting time series with a regressor model is given by Equation \ref{fittingfunction}.
+\hat{Y}_{t+1} = \mathbf{F}( \mathbf{A},  \mathbf{Y}_t)
+\end{equation} where $\mathbf{F}$ is the regression function, $\mathbf{A}=\{\mathbf{a_1},\dots,\mathbf{a}_k\}$ are the parameters of the model, $\mathbf{Y}_t$ is the input vector with $m$ number of elements $\mathbf{Y}_t=\{Y_{t-m},\dots,Y_{t}\}$ and $\hat{Y}_{t+1}$ is the the prediction given by the regressor $\mathbf{F}$ returning $h$ steps ahead $ \hat{\mathbf{Y}}_{t+1} =\{  \hat{Y}_{t+1} , \dots,\hat{Y}_{t+h} \}$. The general objective function for fitting time series with a regressor model is given by Equation \ref{fittingfunction}.
 
 \begin{equation}\label{fittingfunction}
-\underset{ \{ \alpha \} }{\text{min}} \sum_{t=m}^{N-h} ||  \hat{Y}_{t+1} - {Y}_{t+1}||^2
-\end{equation} where the regression function minimises the squared errors between the output of the regressor $f$ and the original data. 
+\underset{ \{ \mathbf{a} \} }{\text{min}} \sum_{t=m}^{n-h} ||  \hat{\mathbf{Y}}_{t+1} - {\mathbf{Y}}_{t+1}||^2
+\end{equation} where the regression function minimises the squared errors between the output of the regressor $\mathbf{F}$ and the original data. 
 
 
 % adjusting the parameters $\alpha$ from the index $t$ starting from the number of observations required $m$ to the total number of of data $N$ minus the size of the prediction horizon $h$.
@@ -215,18 +215,18 @@ The problem to solve in this thesis is the design of a general framework that in
 
 
 \begin{eqnarray}\label{multimodel}
-  \mathbf{F(A,Y_t)} = \begin{cases}
-        f_1(\alpha_1,X_t) & \text{ }\text{ }  \text{ if $mode=1$} 
+  \mathbf{F(A,Y_{\text{t}})} = \begin{cases}
+        f_1(a_1,\mathbf{Y}_{t}) & \text{ }\text{ }  \text{ if $mode=1$} 
         \\
-         f_2(\alpha_2,X_t) &\text{ }\text{ }   \text{ if $mode=2$} \\
+         f_2(a_2,\mathbf{Y}_t) &\text{ }\text{ }   \text{ if $mode=2$} \\
 		\vdots \\
-       f_k (\alpha_k,X_t) &\text{ } \text{ } \text{if $mode =k$}
+       f_k (a_k,\mathbf{Y}_t) &\text{ } \text{ } \text{if $mode =k$}
         \end{cases}
-\end{eqnarray} where $\mathbf{F(A,Y)}$ is the multi-model that contains the independent local models $f_1,\dots,f_k$. $\mathbf{A}$ is the set of the parameters of all the models and is is defined as $\mathbf{A}  = \{\alpha_1,\alpha_2,\dots,\alpha_k \}$. The objective of study is to build a multi-model that fits complex dynamics of time series. The objective function for the multi-model is described in Equation \ref{fittingfunction2}.
+\end{eqnarray} where $\mathbf{F(A,Y_{\text{t}})}$ is the multi-model that contains $k$ independent local models $f_1,\dots,f_k$. $\mathbf{A}$ is the set of the parameters of all the models and it is defined as $\mathbf{A}  = \{a_1,a_2,\dots,a_k \}$. The objective of study is to build a multi-model that fits complex dynamics of time series. The objective function for the multi-model is described in Equation \ref{fittingfunction2}.
 
 
 \begin{equation}\label{fittingfunction2}
-\underset{ \{ \mathbf{A} \} }{\text{min}} \sum_{t=m}^{N-h} ||   \mathbf{F(A,X_t)}  - {Y}_{t+1}||
+\underset{ \{ \mathbf{A} \} }{\text{arg min}} \sum_{t=m}^{n-h} ||   \mathbf{F(A,\mathbf{Y}_\text{t})}  - \mathbf{Y}_{t+1}||
 \end{equation} The selection of the modes of global modelling is a design problem for the activation of different modes according to knowledge collected from the observed data and a priori information. The developing of this global modelling is related to the construction and exploitation of probabilistic or deterministic rules that should be explored for finding a suitable model of this kind that estimates accurately  the next operation mode.
 
 
@@ -430,7 +430,7 @@ Figure \ref{solarRadiationFcst} shows how the data in phase space is classified 
 }
 
 
- Another interesting approach based on the combination of multiple models, are the consensus and ensemble methods. {\color{red} The consensus models are tools to create structured prediction maps which consider a limited set of future forecasts based on expert information. This set of forecast are provided by the human knowledge \cite{Mcnees87}.} On the other hand, an ensemble forecast is a collection of two or more forecasts performed at the same time. These methods focus on generating scenarios that describe probabilistically the predicted states of a dynamical system \cite{Leutbecher2008}. Ensemble forecasting is considered a Monte Carlo analysis method where multiple numerical predictions are produced from generating different possible initial conditions given a past sequence and current set of observations. {\color{red} Applications of these models are found in medicine \cite{Koestler2013}, health \cite{Fink1984}, economics, meteorology and water management. In economics, this approach is so relevant at the point that exists a specialised firm named Consensus Economics$^\text{TM}$ group \cite{mon16} that collects the state of the art forecasters with their predictions for a big number of variables (more than 1000) from 85 industrialised countries in Eastern Europe, Asia Pacific and Latin America. The group has a significant community of researchers that confirm better accuracy of Consensus Forecasts$^\text{TM}$ than most of the individual forecasters \cite{Bat00, BWWA01, Jon14, NR11}.} 
+ Another interesting approach based on the combination of multiple models, are the consensus and ensemble methods. {\color{red} The consensus models are tools to create structured prediction maps which consider a limited set of future forecasts based on expert information. This set of forecast are provided by the human knowledge \cite{Mcnees87}.} On the other hand, an ensemble forecast is a collection of two or more forecasts performed at the same time. These methods focus on generating scenarios that describe probabilistically the predicted states of a dynamical system \cite{Leutbecher2008}. Ensemble forecasting is considered a Monte Carlo analysis method where multiple numerical predictions are produced from generating different possible initial conditions given a past sequence and current set of observations. {\color{red} Applications of these models are found in medicine \cite{Koestler2013}, health \cite{Fink1984}, economics, meteorology and water management. In economics, this approach is so relevant at the point that exists a specialised firm named Consensus Economics$^\text{TM}$ group \cite{mon16} that collects the state-of-the-art forecasters with their predictions for a big number of variables (more than 1000) from 85 industrialised countries in Eastern Europe, Asia Pacific and Latin America. The group has a significant community of researchers that confirm better accuracy of Consensus Forecasts$^\text{TM}$ than most of the individual forecasters \cite{Bat00, BWWA01, Jon14, NR11}.} 
  
  %with an influent collection of macroeconomic forecasts and analyses by topic for each country from a total of 115 including the most powerful economies with high impact in academic research. Novotny et al. \cite{novotny2011}, validated the accuracy of the Consensus Forecasts estimates using the database of the International Monetary Fund and the Organisation for Economic Co-operation and Development.  
  
@@ -503,7 +503,7 @@ A time series is defined as a sequence of chronologically ordered observations r
 
 \begin{equation}\label{tsnotation}
 	\mathbf{Y} =\{Y_1, Y_2,\dots,Y_t,\dots, Y_n\}
-\end{equation} where $t$ is the index that indicates the time when the value was taken, $n$ is the length of the time series. Usually time series $\mathbf{Y}$ deals with scalar numbers that might be integers, reals, but sometimes they store qualitative information, where each element takes on a symbol from a defined set of objects. $Y_t \in A $, where $A$ is a set of symbols included in the alphabet.
+\end{equation} where $t$ is the index that indicates the time when the value was taken, $n$ is the length of the time series. Usually time series $\mathbf{Y}$ deals with scalar numbers that might be integers, reals, but sometimes they store qualitative information, where each element takes on a symbol from a defined set of objects. $Y_t \in \mathbf{A} $, where $\mathbf{A}$ is a set of symbols included in the alphabet.
 
 
 
@@ -743,8 +743,8 @@ In the time series classical analysis literature, decomposition is used to descr
 
 \begin{enumerate}[i]
 \item Additive models consider the sum of the trend, seasonal and random variation. It is used  when the seasonal variation is relatively constant over time. It is expressed by Equation \ref{additiveCompositionEq} \begin{equation}\label{additiveCompositionEq}
-Y_t = T + S + R
-\end{equation} where the times series is generated by adding $T$, $S$, and $R$, the trend, seasonal and random components respectively. An example of the general structure of this model is shown in Figure \ref{additiveComposition}.
+Y_t = \mathrm{T} + \mathrm{S} + \mathrm{R}
+\end{equation} where the times series is generated by adding $\mathrm{T}$, $\mathrm{S}$, and $\mathrm{R}$, the trend, seasonal and random components respectively. An example of the general structure of this model is shown in Figure \ref{additiveComposition}.
 
 
 
@@ -758,8 +758,8 @@ Y_t = T + S + R
 \item Multiplicative models are composed by the multiplication of the different components like trend, seasonal and random components. This kind of model is used when an increasing seasonal variation is observed along the time. It is expressed by Equation \ref{multiplicativeEq}.
 
 \begin{equation}\label{multiplicativeEq}
-Y_t = T* S* R
-\end{equation} where the components $R$, $S$ and $T$ are the same described previously, with the difference that the time series $Y_t$ is the result of the product of such components. An example of the structure using this kind of decomposition is shown in the Figure \ref{multiplicativeComposition}.
+Y_t = \mathrm{T} \times \mathrm{S} \times \mathrm{R}
+\end{equation} where the components $ \mathrm{R}$, $ \mathrm{S}$ and $ \mathrm{T}$ are the same described previously, with the difference that the time series $Y_t$ is the result of the product of such components. An example of the structure using this kind of decomposition is shown in the Figure \ref{multiplicativeComposition}.
 
 
 
@@ -774,8 +774,8 @@ Y_t = T* S* R
 \item The pseudo-additive decomposition (Mixed) presents a more complex dynamic adding and multiplying the different components. It combines features of both the additive and the multiplicative models.  The general structure of this kind of model is expressed by Equation \ref{pseudoAdd}:  
 
 \begin{equation}\label{pseudoAdd}
-Y_t = TC_t \times (S+I-1)
-\end{equation} where the addition of the seasonal effects and irregular fluctuations $(S+I-1)$ produces a trend in the mean, and the trend cycle component $TC_t$ produces a multiplicative effect that increases the variance along time. Figure \ref{pseudoadditive} shows an example of how a time series of this type looks. The low and high red dotted line bound the time series according to an increasing variance. The continuous red line is the mean increasing along the time.
+Y_t = \mathrm{TC_t} \times \mathrm{S+I-1}
+\end{equation} where the addition of the seasonal effects and irregular fluctuations $\mathrm{(S+I)}-1$ produces a trend in the mean, and the trend cycle component $\mathrm{TC}_t$ produces a multiplicative effect that increases the variance along time. Figure \ref{pseudoadditive} shows an example of how a time series of this type looks. The low and high red dotted line bound the time series according to an increasing variance. The continuous red line is the mean increasing along the time.
 
 %\textit{This model type is supported exclusively by the X-12-ARIMA method. TRAMO/SEATS does not support this kind of the model. This model is recommended for time series that display strongly fluctuating seasonal effects.} An example is shown in the figure \ref{pseudoadditive}
  \begin{figure}[h!]
@@ -899,7 +899,7 @@ The stationarity of data can be determined by using the algorithm of the runs te
 \end{equation}
 \item Collect the occurrences of values above ($I$) and below ($O$) the median value of the series using Equation \ref{collect}
 \begin{eqnarray}\label{collect}
-  \mathbf{C_T} = \begin{cases}
+  {C_T} = \begin{cases}
         I & \text{ }\text{ }  \text{ if $ \overline{\mathbf{Y}}_T> \tilde{(\mathbf{Y'}}) $} 
         \\
          O &\text{ }\text{ }   \text{ otherwise} \\
@@ -909,11 +909,11 @@ The stationarity of data can be determined by using the algorithm of the runs te
 
 
 \begin{eqnarray}\label{count}
-\mathbf{C}^O = |\{\forall i \in \{1,2,\dots,T-1,T\}, | \mathbf{C}_i = O \}| \\
-\mathbf{C}^I = |\{\forall i \in \{1,2,\dots,T-1,T\}, | \mathbf{C}_i = I \}| \nonumber
+{C}^O = |\{\forall i \in \{1,2,\dots,T-1,T\}, | {C}_i = O \}| \\
+{C}^I = |\{\forall i \in \{1,2,\dots,T-1,T\}, | {C}_i = I \}| \nonumber
 \end{eqnarray} 
 
-\item Compute the probability of having a run $\mathds{P}(\mathbf{C}^O)$ and $\mathds{P}(\mathbf{C}^I)$ and if $\mathds{P}(\mathbf{C}^O) \approx \mathds{P}(\mathbf{C}^I)$, the the stationarity test is passed.
+\item Compute the probability of having a run ${Pr}(\mathbf{C}^O)$ and ${P}(\mathbf{C}^I)$ and if ${Pr}(\mathbf{C}^O) \approx {Pr}(\mathbf{C}^I)$, the the stationarity test is passed.
 
 
 %\item Compute the rate of counts found to known probabilities of runs for random data. If the the $\#I/\#O=1$ the time series is stationary, if $\#I/\#O>1$ it presents a positive trend, and negative trend other wise. 
@@ -1263,12 +1263,12 @@ Double exponential smoothing is an extension of the single exponential smoothing
 
 
 \begin{eqnarray}\label{smoothing}
-s_{t-1} &=& Y_{t-1} + (1-\alpha)^2 e_{t-1} \\
-b_{t-1} &=& b_{t-2}+\alpha^2 e_{t-1} \label{smoothing-1}
-\end{eqnarray} where $e_{t-1}$ is the previous forecasting error defined by Equation \ref{errorequation}
+s_{t-1} &=& Y_{t-1} + (1-\alpha)^2 \epsilon_{t-1} \\
+b_{t-1} &=& b_{t-2}+\alpha^2 \epsilon_{t-1} \label{smoothing-1}
+\end{eqnarray} where $\epsilon_{t-1}$ is the previous forecasting error defined by Equation \ref{errorequation}
 
 \begin{eqnarray}\label{errorequation}
-e_{t-1} = \hat{Y}_{t-1} -Y_{t-1}
+\epsilon_{t-1} = \hat{Y}_{t-1} -Y_{t-1}
 \end{eqnarray}
 
 The Holt-Winters linear trend estimates the trend using a weighting function which considers more relevant the most recent observations. This estimation uses a local trend equation where the linear trend $s$ and slope $b$ components of the forecasting Equation \ref{holtsmethod} are updated each period with Equation \ref{errorhwmode} and \ref{errorhwmode-1}.
@@ -1340,7 +1340,7 @@ where $\epsilon_t = (\ell_{t-1}+b_{t-1} +s^1_{t-\tau}) = Y_t - \hat{Y}_{t|(t-1)}
 
 \subsection{Double Seasonal Holt-Winters}
 
-The double seasonal Holt-Winters (DSHW) is an extension of the previous method adding an extra seasonal equation ($s^2$) \cite{Taylor2006} that captures the seasonality of a second seasonal period. It is also added other smoothing and seasonal parameter $\omega$ and $\tau_2$ respectively. The new parameters have information about a bigger periodicity multiple of $\tau_1$. The additive DSHW is described in Equation \ref{DSHW} - \ref{DSHW1}.
+The double seasonal Holt-Winters (DSHW) is an extension of the previous method adding an extra seasonal equation ($s^2$) \cite{Taylor2006}, that captures a second seasonal period. It is also added other smoothing and seasonal parameter $\omega$ and $\tau_2$ respectively. The new parameters have information about a bigger periodicity multiple of $\tau_1$. The additive DSHW is described in Equation \ref{DSHW} - \ref{DSHW1}.
 
 \begin{eqnarray}\label{DSHW}
 \hat{Y}_{t+h} & = & (\ell_t+h b_t)+s^1_{t-\tau_1+h}+ s^2_{t-\tau_2+h} \\
@@ -1351,7 +1351,7 @@ s_t^1 &=& \alpha_3(Y_t -(\ell_t +s^2_{t-\tau_2})) + (1-\alpha_3)+s^1_{t-\tau_1} 
 s_t^2 &=& \omega (Y_t-(\ell_t +  s_t^1)) + (1-\omega)+ s^2_{t-\tau_2} \label{DSHW1}
 \end{eqnarray} %where $l_t$ and $b_t$ are the level and trend. $s^1$ and $s^2$ are the two indices and $\alpha_1,\alpha_2, \alpha_3$ and $\omega $ are the smoothing parameters and 
 
-Where $Y_{t+h}$ is the $h$-th step ahed forecast from forecast origin $t$. The parameters are optimized by minimizing the sum of squared errors of one step-ahead residuals. In order to use the multiplicative version of DSHW, it is obtained by the product of the seasonal components. 
+Where $Y_{t+h}$ is the $h$-th step ahed forecast from forecast origin $t$. The parameters are optimized by minimizing the sum of squared errors of one step-ahead residuals. In order to use the multiplicative version the Single and Double Seasonal Holt-Winters, they are obtained by the product of the seasonal components \cite{arima,SBM2007}. 
 
 
 
