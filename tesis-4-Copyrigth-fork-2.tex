@@ -238,7 +238,7 @@ The problem to solve in this thesis is the design of a general framework that in
 
 \section{Main Objective}
 
-The main objective is to find high performance drinking water demand prediction models that provide accurate predictions in the short term. The availability of an accurate and detailed prediction is a very important part for making accurate decisions regarding the operation, control and management of drinking water networks. An accurate model allows minimising operational costs and wastewater without sacrificing quality of service, delivering drinking water to the population. 
+The main objective is to find high performance drinking water demand prediction models that provide accurate predictions in the short term. The availability of an accurate and detailed prediction is a very important part for making accurate decisions in relation to the operation, control and management of drinking water networks. An accurate model allows minimising operational costs and wastewater without sacrificing quality of service, delivering drinking water to the population. 
 The problem is addressed studying the identification and classification of different dynamic patterns found in drinking water demand time series for the design of local predictors that are integrated later in a global model.
 
 
@@ -464,10 +464,10 @@ is the most likely trajectory that might be taken as official to predict the phe
 % \usepackage{booktabs}
 
 
-{\color{red}Considering the survey of novel application in water management by Donkor et al. \cite{Donkor2014}, the general concern of forecast methodologies is to fit the time series reducing the difference between the real value and the estimated forecast. Even though model fitting by minimising the gap is crucial to select a good forecasting model. The uncertainty prediction is also an important component for the forecast that should be considered in order to define the prediction bounds to give confidence to the prediction. Regarding to water management, Tiwari et al. \cite{TA15} propose a bootstrap method to learn a wavelet based machine learning considering also the minimization of the prediction bounds. Other articles studying the uncertainty of stochastic models are found in \cite{Christopher2015}, \cite{Cutore2008} and \cite{Alvisi2014}.}  
+{\color{red}Considering the survey of novel application in water management by Donkor et al. \cite{Donkor2014}, the general concern of forecast methodologies is to fit the time series reducing the difference between the real value and the estimated forecast. Even though model fitting by minimising the gap is crucial to select a good forecasting model. The uncertainty prediction is also an important component for the forecast that should be considered in order to define the prediction bounds to give confidence to the prediction. With regard to water management, Tiwari et al. \cite{TA15} propose a bootstrap method to learn a wavelet based machine learning considering also the minimization of the prediction bounds. Other articles studying the uncertainty of stochastic models are found in \cite{Christopher2015}, \cite{Cutore2008} and \cite{Alvisi2014}.}  
 
 
-Based on the multi-modelling approach and the references collected regarding design of multi-model forecasting, this thesis proposes the next contributions to multi-model forecasting.
+Based on the multi-modelling approach and the references collected regarding the design of multi-model forecasting, this thesis proposes the next contributions to multi-model forecasting.
 
 
 \begin{itemize}
@@ -551,7 +551,7 @@ The end of the time series analysis is the design of dynamical models based on t
 %The time series modelling is addressed as black - box modelling 
 
 
-During the analysis of time series two general approaches are taken into account depending on the linearity of the data: the linear and nonlinear approaches. Linear methods are useful when the interpretation of the observed data is regular, this is, it has a dominant frequency and the sequential information can be measured with linear correlations. It is assumed that the systems are governed and explained with linear algebra theory. Using this approach the linear equations are limited to model systems that present a decaying, growing or damped periodically oscillating behaviour. The remaining irregularities are assumed to be random external inputs or disturbances to the system that can be described statistically by the normal distribution. Some examples of systems studied under this assumption are shown in Table \ref{sysclaff} taken from the book Nonlinear Dynamical Systems in \cite{strogatz} of Strogatz and Steven H., where the dynamics of the linear systems is determined and classified by the number of variables or differential equations. The most basic systems belonging to this classification present a simple dynamic of growth, decay, or equilibrium when the systems contain one variable. When oscillations are present, they can be modelled with linear systems with two variables, for example, a simple mass-spring system. With more than three variables, applications are found in engineering e.g., coupled systems modelled with several linear systems. For more complex systems like coupled oscillators require a greater number of equations or variables to model them.  }
+During the analysis of time series two general approaches are taken into account depending on the linearity of the data, like the linear and nonlinear approaches. Linear methods are useful when the interpretation of the observed data is regular presenting a dominant frequency and sequential information that can be measured with linear correlations. It is assumed that the systems are governed and explained with linear algebra theory. Using this approach the linear equations are limited to model systems that present a decaying, growing or damped periodically oscillating behaviour. The remaining irregularities are assumed to be random external inputs or disturbances to the system that can be described statistically by the normal distribution. Some examples of systems studied under this assumption are shown in Table \ref{sysclaff} taken from the book Nonlinear Dynamical Systems in \cite{strogatz} of Strogatz and Steven H., where the dynamics of the linear systems is determined and classified by the number of variables or differential equations. The most basic systems belonging to this classification present a simple dynamic of growth, decay, or equilibrium when the systems contain one variable. When oscillations are present, they can be modelled with linear systems with two variables, for example, a simple mass-spring system. With more than three variables, applications are found in engineering e.g., coupled systems modelled with several linear systems. For more complex systems like coupled oscillators require a greater number of equations or variables to model them.  }
 
 On the other hand, nonlinear methods address a more general family of dynamical models. This approach must be considered when the time series presents irregularities from the point of view of linear dynamical systems theory. The main drawback of linear theory is the impossibility to distinguish the random noise from the nonlinear structure of the data, therefore, it cannot model appropriately this kind of behaviour since the nonlinearity produces false residuals that might be confused with the noise where in reality it can be still modelled somehow. The systems in this category are natural processes. The simplest nonlinear models that contain just one variable are used to study fixed points, bifurcations, over damped systems or the equilibrium in ecosystems. For two variables natural oscillations, like limit cycles, biological oscillations and nonlinear electronics are studied. For three or more variables, systems that might present strange attractors, chemical kinetics, iterated maps or fractals are studied. For many variables the nonlinear optics, non equilibrium statistical mechanics, heart cell synchronisation, biological neural networks response, complete ecosystems and economics behavior are studied. For the continuum domain, nonlinear waves, plasma, earthquakes, general relativity, quantum field theory, reaction diffusion, biological and chemical waves among others systems are studied.
 
@@ -675,7 +675,7 @@ In order to proceed with the description of some of the most popular methods use
 	
 	\begin{figure}[!htb]
 	\centering
-	  \includegraphics[width=80mm]{figures/secularTrend.eps}
+	  \includegraphics[width=80mm]{figures/secularTrendThin.eps}
 	   \caption{Secular trend}\label{secularTrend}
 \end{figure} 
 	
@@ -689,7 +689,7 @@ In order to proceed with the description of some of the most popular methods use
 %	\end{itemize}
 	\begin{figure}[!htb]
 	\centering
-	  \includegraphics[width=80mm]{figures/seasonal.eps}
+	  \includegraphics[width=80mm]{figures/seasonalThin.eps}
 	   \caption{Seasonal variation}\label{seasonality}
 \end{figure} 
 	
@@ -701,7 +701,7 @@ In order to proceed with the description of some of the most popular methods use
 %	\end{itemize}
 
 
-\item White noise is modelled by a normal distribution function that captures the random variation of variables. This component also has the property of having zero mean, constant and independent variance for different values along time. An example of what the noise component looks is shown in the Figure \ref{noise}. White noise can be presented as external disturbances, error measurements due technical limitations and interference.
+\item White noise is modelled by a normal distribution function that captures the random variation of variables. This component also has the property of having zero mean, constant and independent variance for different values along time. An example of what the noise component looks is shown in the Figure \ref{noise}. White noise can be presented like external disturbances, error measurements due technical limitations and interference.
 	%\begin{itemize}
 	%	\item External disturbances.
 	%	\item Error measurements due technical limitations.
@@ -710,14 +710,14 @@ In order to proceed with the description of some of the most popular methods use
 	
 \begin{figure}[!htb]
 	\centering
-	  \includegraphics[width=80mm]{figures/noise.eps}
+	  \includegraphics[width=80mm]{figures/noiseThin.eps}
 	   \caption{Noise}\label{noise}
 \end{figure} 
 
 \item Transient variation captures the accidental dynamic presented regularly as isolated perturbations or aperiodic fluctuations that affect the regular behaviour over the time. An example of the appearance of this component is shown in Figure \ref{transcientVariation}, where aperiodic oscillations are present. It is possible to confuse this component with noise. When it appears, a nonlinear model might be used for describing the dynamics of this component. %but at first instance to discard the possibility of being noise this component is analysed if has a zero mean and independent variance.
 \begin{figure}[!htb]
 	\centering
-	  \includegraphics[width=80mm]{figures/transientVariation.eps}
+	  \includegraphics[width=80mm]{figures/transientVariationThin.eps}
 	   \caption{Transient variation}\label{transcientVariation}
 \end{figure} 
 
@@ -750,7 +750,7 @@ Y_t = \mathrm{T} + \mathrm{S} + \mathrm{R}
 
  \begin{figure}[h!]
 				\centering
-				\includegraphics[width=80mm]{figures/additiveCompositionExample.eps}
+				\includegraphics[width=80mm]{figures/additiveCompositionExampleThin.eps}
 				\caption{Additive composition example}
 				\label{additiveComposition}
 \end{figure} In this figure the red line is the trend approximation of the time series, and the black line is the real data with seasonal components and noise.
@@ -765,7 +765,7 @@ Y_t = \mathrm{T} \times \mathrm{S} \times \mathrm{R}
 
  \begin{figure}[h!]
 				\centering
-				\includegraphics[width=80mm]{figures/multiplicativeCompositionExample.eps}
+				\includegraphics[width=80mm]{figures/multiplicativeCompositionExampleThin.eps}
 				\caption{Multiplicative composition example}
 				\label{multiplicativeComposition}
 \end{figure} The red dotted lines of the figure shows the multiplicative trend of variance of the time series $Y_t$.
@@ -780,7 +780,7 @@ Y_t = \mathrm{TC_t} \times \mathrm{S+I-1}
 %\textit{This model type is supported exclusively by the X-12-ARIMA method. TRAMO/SEATS does not support this kind of the model. This model is recommended for time series that display strongly fluctuating seasonal effects.} An example is shown in the figure \ref{pseudoadditive}
  \begin{figure}[h!]
 				\centering
-				\includegraphics[width=80mm]{figures/mixedCompositionExample.eps}
+				\includegraphics[width=80mm]{figures/mixedCompositionExampleThin.eps}
 				\caption{Pseudo-additive time series example}
 				\label{pseudoadditive}
 \end{figure} 
@@ -856,18 +856,18 @@ Stationarity is proved when there is no strong violation of the basic properties
 %presented  This occurs when the sample data does not capture the cyclic phenomena with pattern repetitions every certain period $\tau$. %(containing a repetitive characteristic inside a period of time $\tau$)  
 This means that the sample data size must be greater than the period, $\tau$. 
 
-In other words we need a large data set of size $n$, such that $n \gg p \tau$, where $\tau$ is the size of the period and $p$ is the number of periods that guarantee $p$ characteristic samples. As an example, Figure \ref{incomsample} gives the impression of non-stationarity only if the data we have is limited, therefore it is not possible to determine periodicity. On the other hand, if we have more data, like in Figure \ref{fullsamples} a pattern is revealed. Hence local stationarity is detected. Figure \ref{fullsamples} shows complete cycles with a relative stationarity (since we do not know what will happen in the future). 
+In other words we need a large data set of size $n$, such that $n \gg p \tau$, where $\tau$ is the size of the period and $p$ is the number of periods that guarantee $p$ characteristic samples, e.g., Figure \ref{incomsample} gives the impression of non-stationarity only if the data we have is limited, therefore it is not possible to determine periodicity. On the other hand, if we have more data, like in Figure \ref{fullsamples} a pattern is revealed. Hence local stationarity is detected. Figure \ref{fullsamples} shows complete cycles with a relative stationarity (since we do not know what will happen in the future). 
 
 \begin{figure}[h!]
 \centering
 \parbox{5cm}{
-\includegraphics[width=5cm]{figures/plotDemandsCompletePatterns.pdf}
+\includegraphics[width=5cm]{figures/plotDemandsCompletePatternsDotted.pdf}
 %
 \caption{Incomplete pattern}
 \label{incomsample}}
 \qquad
 \begin{minipage}{5cm}
-\includegraphics[width=5cm]{figures/partialPatterns.pdf}
+\includegraphics[width=5cm]{figures/plotDemandsCompletePatternsThin2.pdf}
 \caption{Four complete patterns}
 \label{fullsamples}
 \end{minipage}
@@ -1823,7 +1823,7 @@ Here is concluded the theory and the description of the algorithms involved to a
 
 Time series can present several pattern behaviours in regular time lapses activated by events generated by natural or social circumstances (e.g. social events, meteorological phenomena, regime of chemical reactions). This is, for example, the case of water or electricity consumption that presents a daily periodicity (the demands present a repetitive pattern every day varying regularly for week-ends and holidays), a weekly periodicity (the demand decreases during the week-ends) and seasonal changes (the demand changes according to the season because of weather, holidays, etc.).
 
-Approaches have been proposed in the literature for forecasting time series that presents several patterns and seasonalities, see e.g., \cite {Alvisi2007} or \cite{Quevedo2010}, where a two-level model is used: a daily flow time series model is combined with a daily 10-minute distribution pattern. The identification of these patterns allows to design local models to forecast specific regimes. Recent related research on identifying behavior regimes in time series can be found in the literature. In \cite{Benmouiza2013}, the implementation of a global NAR neural network predictor is proposed to estimate the regimes associated with local NAR neural network predictor used for forecasting the hourly global solar radiation. In \cite{KumarP10}, an algorithm is proposed for clustering the data and training local predictive models for each set to generate a forecast based on the combination of the local models. In \cite{Alvarez07}, clustering is used to group the days with similar pattern regarding to the variation of working days and holidays.
+Approaches have been proposed in the literature for forecasting time series that presents several patterns and seasonalities, see e.g., \cite {Alvisi2007} or \cite{Quevedo2010}, where a two-level model is used: a daily flow time series model is combined with a daily 10-minute distribution pattern. The identification of these patterns allows to design local models to forecast specific regimes. Recent related research on identifying behavior regimes in time series can be found in the literature. In \cite{Benmouiza2013}, the implementation of a global NAR neural network predictor is proposed to estimate the regimes associated with local NAR neural network predictor used for forecasting the hourly global solar radiation. In \cite{KumarP10}, an algorithm is proposed for clustering the data and training local predictive models for each set to generate a forecast based on the combination of the local models. In \cite{Alvarez07}, clustering is used to group the days with similar pattern with regard to the variation of working days and holidays.
 In fact, time series forecasting presenting multiple patterns is related to the multi-modelling approach of dynamical systems \cite{MurJoh97} used for modelling nonlinear systems under
 the assumption that they can be approximated by a finite number of interpolated linear invariant (LTI) models in different operating points (regimes). The identification of those multi-models also involves identifying the different regimes. Once identified, a linear model is estimated for each regime and these local models are combined on-line using weighted sum and a scheduling variable.
 
@@ -2764,7 +2764,7 @@ Finally to measure the performance of the algorithms is used the $\overline{RMSE
 %\end{table}
 
 
-In order to compare graphically the performance regarding to the \textbf{QMMP+NF}, the figures \ref{fig:stacked:1} - \ref{fig:stacked:14} illustrate the improvement that the filter produces: the first column of plots shows the prediction errors $RMSE_{24}$ at each time $t$ in hours along the testing set comparing the performance of the Noise Filter (\textbf{QMMP+NF}) (red line) with the original Qualitative and Quantitative forecasting (\textbf{QMMP}) (Black dotted line) with the pattern mode calendar. For the second column, a prediction sample 48 hours ahead is plot comparing the actual (black line), with the normal (\textbf{QMMP}) (blue dotted line) and filtered predictions (\textbf{QMMP+NF}) (red line). It is observed that the noise filter reduces in general the prediction error since the red line is the most of the time lower than the black line representing the prediction with SARIMA pattern without filtering.
+In order to compare graphically the performance regarding the \textbf{QMMP+NF}, the figures \ref{fig:stacked:1} - \ref{fig:stacked:14} illustrate the improvement that the filter produces: the first column of plots shows the prediction errors $RMSE_{24}$ at each time $t$ in hours along the testing set comparing the performance of the Noise Filter (\textbf{QMMP+NF}) (red line) with the original Qualitative and Quantitative forecasting (\textbf{QMMP}) (Black dotted line) with the pattern mode calendar. For the second column, a prediction sample 48 hours ahead is plot comparing the actual (black line), with the normal (\textbf{QMMP}) (blue dotted line) and filtered predictions (\textbf{QMMP+NF}) (red line). It is observed that the noise filter reduces in general the prediction error since the red line is the most of the time lower than the black line representing the prediction with SARIMA pattern without filtering.
 %The Table \ref{performance} shows a performance improvement of the proposed \textbf{MMP+NF} algorithm minimizing the $\overline{MSE}_{24}$ error respecting \textbf{MMP} and \textbf{RBF-ANN} for all sectors except the sector 10017. Taking the average error of each forecasting method for all tested sectors, the proposed methodology improved the accuracy $\% 19.5$ respecting the \textbf{RBF-ANN}, and $\%12.39$ respecting the \textbf{MMP}.
 
 
@@ -3019,7 +3019,7 @@ Avg.      &	\textbf{0.0479}	&	0.0612	& 	6 & 	0.0523 & 0.0528 \\ \hline
 %\end{table}
 
 
-Considering the average performance of each algorithm for all the series, the Table shows that \textbf{QMMP} is the algorithm with the best average performance with an average error of $0.0479$. The second best is the proposed algorithm \textbf{RBFMMP+OR} with an average performance of $0.0523$, the third best algorithm is the \textbf{RBF-ANN} with an average performance of $0.0528$. The \textbf{DSHW} is the algorithm with the worst performance with an average performance of $0.0612$. Comparing with percentages,  \textbf{QMMP}, \textbf{RBFMMP+OR},   and \textbf{RBF-ANN} are $\%21$, $\%13.7$ and  $\%14.5$ better than \textbf{DSHW} performance. The asterisk written in the performance box of the  \textbf{DSHW} regarding to Sector 11 means that it displays an unstable behavior for a set of values of the time series, so in order to have a consistent error measurement, the unstable section was omitted. This kind of situations reinforce the need of exploring filtering and reconstructing the time series. In figures \ref{fig:stackedB:1}-\ref{fig:stackedB:7} are plot the prediction samples produced by the \textbf{RBFMMP+OR} 24 hours ahead during the day 298. The red dotted line is the prediction and the solid black line is the real water demand during that period.
+Considering the average performance of each algorithm for all the series, the Table shows that \textbf{QMMP} is the algorithm with the best average performance with an average error of $0.0479$. The second best is the proposed algorithm \textbf{RBFMMP+OR} with an average performance of $0.0523$, the third best algorithm is the \textbf{RBF-ANN} with an average performance of $0.0528$. The \textbf{DSHW} is the algorithm with the worst performance with an average performance of $0.0612$. Comparing with percentages,  \textbf{QMMP}, \textbf{RBFMMP+OR},   and \textbf{RBF-ANN} are $\%21$, $\%13.7$ and  $\%14.5$ better than \textbf{DSHW} performance. The asterisk written in the performance box of the  \textbf{DSHW} with regard to Sector 11 means that it displays an unstable behavior for a set of values of the time series, so in order to have a consistent error measurement, the unstable section was omitted. This kind of situations reinforce the need of exploring filtering and reconstructing the time series. In figures \ref{fig:stackedB:1}-\ref{fig:stackedB:7} are plot the prediction samples produced by the \textbf{RBFMMP+OR} 24 hours ahead during the day 298. The red dotted line is the prediction and the solid black line is the real water demand during that period.
 
 
 
@@ -3265,7 +3265,7 @@ The particular conclusions related to the algorithms developed in this thesis ar
 	
 	\item \textbf{Multi-Model Predictor Based on the Qualitative and Quantitative Decomposition of the Time Series including a Nonlinear Filter (\textbf{MMP+NF})}: This Multi-Model implementation includes a nonlinear filter. The nonlinear filter is used with water demand time series which their qualitative behavior approximate the human calendar activity of working and resting days. The nonlinear filter was able to find new nonlinear structure of the qualitative behavior of the time series. The integration of this mechanism provides of interesting advantages over other algorithms in real situations when the dynamics of the system is changing gradually along the time, with traditional approaches, the new data should be analysed in order to decide if the current model is still valid or not.  As soon as is detected a dynamic change, it might be required to construct a new forecasting model. The proposed model is able to detect the mismatches to correct the next prediction pattern. This algorithm is more robust to the model mismatches in the sense that presents adaptability as soon as the new information provided by the pattern mismatches is collected and processed.
 	
-	\item \textbf{Multi-Model Forecasting Using Radial Basis Function Neural Networks with an On-Line Mode Recognition \textbf{(RBFANN+OR)}}: This implementation proposes at the same time a general framework for constructing a Multi-Model Predictor based completely in machine learning algorithms. The Disadvantage of this approach is that sometimes produces false positives regarding to the forecasting mode.
+	\item \textbf{Multi-Model Forecasting Using Radial Basis Function Neural Networks with an On-Line Mode Recognition \textbf{(RBFANN+OR)}}: This implementation proposes at the same time a general framework for constructing a Multi-Model Predictor based completely in machine learning algorithms. The Disadvantage of this approach is that sometimes produces false positives regarding the forecasting mode.
 \end{itemize}
 
 The three methodologies based on the proposed general Multi-Model Predictor framework has some disadvantage that should be solved. The mode prediction may produce false positives. This is aggravated when the assumption of the certainty of the data is not correct at all. For example, the prediction fails when the strategy is to trust in the pattern calendar activity when in reality the prediction mode is governed by other kind of rules. In this situation the prediction will not be robust enough. In order to solve this problem, is possible to be selective by associating certain algorithms or prediction schemes to specific time series. This can be performed off-line executing a cross validation methodology as we did in Chapter 5.1. If the prediction scheme is required to be adaptive taking decisions in an on-line fashion, methodologies for exploiting in real time the information collected so far should be considered for the prediction of the next mode for the global modelling.
