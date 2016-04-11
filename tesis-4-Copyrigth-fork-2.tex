@@ -1417,38 +1417,38 @@ kNN forecasting is used to solve the problem of estimating the next elements $Y_
 $$\mathbf{D}_t=\{Y_{t-(m+1)\tau},\dots,Y_{t}\} $$ where $m$ is the size of the delayed vector $\mathbf{D}_t$, and $\tau$  is the sampling frequency over the time series where $t=\{(m-1)\tau+1, (m-1)\tau+2,\dots,N-1-h \}$. To get the nearest neighbors of $\mathbf{D_t}$, the parameter $\epsilon$ is defined to get the delayed neighbor vectors $v_1,...,v_k$ respect with $\mathbf{D}_t$ satisfying Equation \ref{nb}
 
 \begin{equation}\label{nb}
-dist (	\mathbf{D}_{v_k},\mathbf{D}_t	) \in \epsilon
+dist (	\mathbf{D}_{v_\kappa},\mathbf{D}_t	) \in \varepsilon
 \end{equation} where $dist$ can be any distance. For magnitudes is common to use the Euclidean distance, but for comparing sequences of qualitative information, the Hamming distance is an adequate metric. 
 
 % For real numbers the $dist$ can be any norm. The more used norms is infty and euclidean distance.
 
 \subsection{Real Numbers Forecasting}
 
-The forecasting for real numbers where the vector to forecast is a real number vector $\mathbf{D}_t \in \mathds{R}^m$ is performed by using the Equation \ref{knnpred} with the vectors that satisfy the constraint expressed in Equation \ref{nb}. The forecasting value is the result of the weighted sum of the \textit{futures} $Y_{t+ h\Delta n}$ of the selected vectors $v_1,\dots,v_k$ and it is defined in Equation \ref{knnpred}
+The forecasting for real numbers where the vector to forecast is a real number vector $\mathbf{D}_t \in \mathds{R}^m$ is performed by using the Equation \ref{knnpred} with the vectors that satisfy the constraint expressed in Equation \ref{nb}. The forecasting value is the result of the weighted sum of the \textit{futures} $Y_{t+ h\Delta n}$ of the selected vectors $v_1,\dots,v_\kappa$ and it is defined in Equation \ref{knnpred}
 
 \begin{equation}\label{knnpred}
-	\hat{Y}_{t + h \Delta n} = \alpha_j \sum_{j=1}^k Y_{t + h \Delta n}
-\end{equation} where $h \Delta n$ is the prediction horizon at next instants $\{1,\dots,h\}$, $\{\alpha_j\}_{j=1}^k$ are weights that add up to $1$ expressed by Equation \ref{weightsknn}:
+	\hat{Y}_{t + h \Delta n} = \alpha_j \sum_{j=1}^\kappa Y_{t + h \Delta n}
+\end{equation} where $h \Delta n$ is the prediction horizon at next instants $\{1,\dots,h\}$, $\{\alpha_j\}_{j=1}^\kappa$ are weights that add up to $1$ expressed by Equation \ref{weightsknn}:
 
 \begin{equation}\label{weightsknn}
-\sum_{j=1}^k \alpha_j =1
+\sum_{j=1}^\kappa \alpha_j =1
 \end{equation} There are two popular ways to assign the values to the weights $\alpha$:
 
 \begin{enumerate}
 \item Set all the weights equally to predict the average value. 
 
 \begin{equation}
-	\alpha_j = \frac{1}{k}
+	\alpha_j = \frac{1}{\kappa}
 \end{equation}
 
 \item Set the weights inversely proportional to the closeness of the vectors $\mathbf{D}_{v_k}$ respect with $\mathbf{D}_t$ as described by Equation \ref{setpropw} and \ref{setpropw2}.
 
 \begin{equation}\label{setpropw}
 	\alpha_j = \frac{\beta_j}{\sum_{i=1}^k \beta_i} 
-\end{equation} where the partial weights $\{\beta_i,\dots, \beta_k\}$ are assigned with the Equation \ref{setpropw2}
+\end{equation} where the partial weights $\{\beta_i,\dots, \beta_\kappa\}$ are assigned with the Equation \ref{setpropw2}
 
 	\begin{equation}\label{setpropw2}
-	\beta_j = \frac{dist(\mathbf{D}_t,\mathbf{D}_{v_k}) - dist(\mathbf{D}_t,\mathbf{D}_{v_j})}{dist(\mathbf{D}_t,\mathbf{D}_{v_k}) - dist(\mathbf{D}_t,\mathbf{D}_{v_1})}
+	\beta_j = \frac{dist(\mathbf{D}_t,\mathbf{D}_{v_\kappa}) - dist(\mathbf{D}_t,\mathbf{D}_{v_j})}{dist(\mathbf{D}_t,\mathbf{D}_{v_\kappa}) - dist(\mathbf{D}_t,\mathbf{D}_{v_1})}
 	\end{equation} where $\mathbf{D}_{v_1}$ is the closest  and $\mathbf{D}_{v_j}$ is the farthest vector. As a result the closer delayed vector will have more influence for the prediction.
 
 
