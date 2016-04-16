@@ -204,12 +204,12 @@ Time series forecasting is performed by a regression function, which is a model 
 
 
 \begin{equation}\label{reggressor}
-\hat{Y}_{t+1} = \mathbf{F}( \mathbf{A},  \mathbf{Y}_t)
-\end{equation} where $\mathbf{F}$ is the regression function, $\mathbf{A}=\{\mathbf{a_1},\dots,\mathbf{a}_k\}$ are the parameters of the model, $\mathbf{Y}_t$ is the input vector with $m$ number of elements $\mathbf{Y}_t=\{Y_{t-m},\dots,Y_{t}\}$ and $\hat{Y}_{t+1}$ is the the prediction given by the regressor $\mathbf{F}$ returning $h$ steps ahead $ \hat{\mathbf{Y}}_{t+1} =\{  \hat{Y}_{t+1} , \dots,\hat{Y}_{t+h} \}$. The general objective function for fitting time series with a regressor model is given by Equation \ref{fittingfunction}.
+\hat{\mathbf{Y}}_{t+1} = \mathbf{F}( \mathbf{A},  \mathbf{Y}_t^{'})
+\end{equation} where $\mathbf{F}$ is the regression function, $\mathbf{A}=\{{a_1},\dots,{a}_k\}$ are the parameters of the model, $\mathbf{Y}_t^{'}$ is the input vector with $m$ number of elements $\mathbf{Y}_t^{'}=\{Y_{t-m},\dots,Y_{t}\}$ and $\hat{\mathbf{Y}}_{t+1}$ is the the prediction given by the regressor $\mathbf{F}$ returning $h$ steps ahead $ \hat{\mathbf{Y}}_{t+1} =\{  \hat{Y}_{t+1} , \dots,\hat{Y}_{t+h} \}$. The general objective function for fitting time series with a regressor model is given by Equation \ref{fittingfunction}.
 
 \begin{equation}\label{fittingfunction}
 \underset{ \{ \mathbf{a} \} }{\text{min}} \sum_{t=m}^{n-h} ||  \hat{\mathbf{Y}}_{t+1} - {\mathbf{Y}}_{t+1}||^2
-\end{equation} where the regression function minimises the squared errors between the output of the regressor $\mathbf{F}$ and the original data. 
+\end{equation} where the regression function minimises the squared errors between the output of the regressor $\mathbf{F}$ and the original data $\mathbf{Y}_{t+1}=\{  {Y}_{t+1} , \dots,{Y}_{t+h} \}$. 
 
 
 % adjusting the parameters $\alpha$ from the index $t$ starting from the number of observations required $m$ to the total number of of data $N$ minus the size of the prediction horizon $h$.
@@ -221,18 +221,18 @@ The problem to solve in this thesis is the design of a general framework that in
 
 
 \begin{eqnarray}\label{multimodel}
-  \mathbf{F}(\mathbf{A},\mathbf{Y}_{t}) = \begin{cases}
+  \mathbf{F}(\mathbf{A},\mathbf{Y}_{t}^{'}) = \begin{cases}
         f_1(a_1,\mathbf{Y}_{t}) & \text{ }\text{ }  \text{ if $mode=1$} 
         \\
-         f_2(a_2,\mathbf{Y}_t) &\text{ }\text{ }   \text{ if $mode=2$} \\
+         f_2(a_2,\mathbf{Y}_t^{'}) &\text{ }\text{ }   \text{ if $mode=2$} \\
 		\vdots \\
-       f_k (a_k,\mathbf{Y}_t) &\text{ } \text{ } \text{if $mode =k$}
+       f_k (a_k,\mathbf{Y}_t^{'}) &\text{ } \text{ } \text{if $mode =k$}
         \end{cases}
-\end{eqnarray} where $ \mathbf{F}(\mathbf{A},\mathbf{Y}_{t})$ is the multi-model that contains $k$ independent local models $f_1,\dots,f_k$. $\mathbf{A}$ is the set of the selector parameters for the models and it is defined as $\mathbf{A}  = \{a_1,a_2,\dots,a_k \}$ and $\mathbf{Y}_t$ is a vector with recent measurements at time $t$. The objective of study is to build a multi-model that fits complex dynamics of time series. The objective function for the multi-model is described by Equation \ref{fittingfunction2}.
+\end{eqnarray} where $ \mathbf{F}(\mathbf{A},\mathbf{Y}_{t}^{'})$ is the multi-model that contains $k$ independent local models $f_1,\dots,f_k$. $\mathbf{A}$ is the set of the selector parameters for the models and it is defined as $\mathbf{A}  = \{a_1,a_2,\dots,a_k \}$ and $\mathbf{Y}_t^{'}$ is a vector with recent measurements at time $t$. The objective of study is to build a multi-model that fits complex dynamics of time series. The objective function for the multi-model is described by Equation \ref{fittingfunction2}.
 
 
 \begin{equation}\label{fittingfunction2}
-\underset{ \{ \mathbf{A} \} }{\text{arg min}} \sum_{t=m}^{n-h} ||   \mathbf{F(A,\mathbf{Y}_\text{t})}  - \mathbf{Y}_{t+1}||
+\underset{ \{ \mathbf{A} \} }{\text{arg min}} \sum_{t=m}^{n-h} ||   \mathbf{F}(\mathbf{A},\mathbf{Y}_t^{'})  - \mathbf{Y}_{t+1}||
 \end{equation} The selection of the modes of global modelling is a design problem for the activation of different modes according to knowledge collected from the observed data and a priori information. The developing of this global modelling is related to the construction and exploitation of probabilistic or deterministic rules that should be explored for finding a suitable model of this kind that estimates accurately  the next operation mode.
 
 
@@ -508,8 +508,8 @@ Based on the multi-modelling approach and the references collected regarding the
 A time series is defined as a sequence of chronologically ordered observations recorded at regular time intervals. The observations are sequential data that might represent qualitative or quantitative information depending on the source and application field.  When the data are quantitative, the measurements that compose the time series express magnitudes or scalar information. An univariate time series notation used in the literature is defined as follows in Equation \ref{tsnotation}:
 
 \begin{equation}\label{tsnotation}
-	\mathbf{Y} =\{Y_1, Y_2,\dots,Y_t,\dots, Y_n\}
-\end{equation} where $t$ is the index that indicates the time when the value was taken, $n$ is the length of the time series. Usually time series $\mathbf{Y}$ deals with scalar numbers that might be integers, reals, but sometimes they store qualitative information, where each element takes on a symbol from a defined set of objects. $Y_t \in \mathbf{A} $, where $\mathbf{A}$ is a set of symbols included in the alphabet.
+	\mathbf{Y}_{full} =\{Y_1, Y_2,\dots,Y_t,\dots, Y_n\}
+\end{equation} where $\mathbf{Y}_{full}$ is the full time series, $t$ is the index that indicates the time when the value was taken, $n$ is the length of the time series. Usually time series ($\mathbf{Y}_{full}, \mathbf{Y}$) deals with scalar numbers that might be integers, reals, but sometimes they store qualitative information, where each element takes on a symbol from a defined set of objects. $Y_t \in \mathbf{A} $, where $\mathbf{A}$ is a set of symbols included in the alphabet.
 
 
 
@@ -895,18 +895,18 @@ The stationarity of data can be determined by using the algorithm of the runs te
 
 
 \begin{enumerate}
-\item Divide the series into time intervals of length $\tau$.
+\item  Divide into intervals $T$ of length $\tau$.
 \begin{equation}
-	\mathbf{Y}'_T = \{Y_t\}_{t=\tau(T-1)+1}^{T \tau}
+	Z_T' = \{Y_t\}_{t=\tau(T-1)+1}^{T \tau}
 \end{equation}
 \item Compute a mean value for each interval.
 \begin{equation}
-	\overline{\mathbf{Y}}_T' = \frac{1}{{\tau}}\sum_{t=1}^\tau(\mathbf{Y}'_{T+\Delta t})
+	\overline{Z}_T' = \frac{1}{{\tau}}\sum_{t=1}^\tau(Z_T')
 \end{equation}
-\item Collect the occurrences of values above ($I$) and below ($O$) the median value of the series using Equation \ref{collect}
+\item Collect the occurrences of values above ($I$) and below ($O$) the median value $\tilde{{Z}'}$ of the series using Equation \ref{collect}.
 \begin{eqnarray}\label{collect}
   {C_T} = \begin{cases}
-        I & \text{ }\text{ }  \text{ if $ \overline{\mathbf{Y}}_T'> \tilde{(\mathbf{Y'}}) $} 
+        I & \text{ }\text{ }  \text{ if $ \overline{Z}_T'> \tilde{{Z}'}) $} 
         \\
          O &\text{ }\text{ }   \text{ otherwise} \\
         \end{cases}
@@ -1414,7 +1414,7 @@ kNN forecasting is used to solve the problem of estimating the next elements $Y_
 
 
 \begin{equation}\label{knots}
-\mathbf{Y} = \{Y_1,\dots,Y_t,\dots,Y_n\}
+\mathbf{Y}_{full} = \{Y_1,\dots,Y_t,\dots,Y_n\}
 \end{equation} where $Y_1$ is the first element of the time series, $Y_n$ is the latest value at time $n$ and $t$ is the $t-$th measurement. For this purpose, the time series is organised in subsequences named delay vectors of the form.
 
 $$\mathbf{D}_t=\{Y_{t-(m+1)\tau},\dots,Y_{t}\} $$ where $m$ is the size of the delay vector $\mathbf{D}_t$, and $\tau$  is the sampling frequency over the time series where $t=\{(m-1)\tau+1, (m-1)\tau+2,\dots,n-1-h \}$. To get the nearest neighbors of $\mathbf{D}_t$, the parameter $\varepsilon$ is defined to get the delayed neighbor vectors $v_1,...,v_k$ respect with $\mathbf{D}_t$ satisfying Equation \ref{nb}
@@ -1462,7 +1462,7 @@ Besides of these methods for the weight assignment is possible to set the weight
 
 \subsection{Qualitative Forecasting}
 \label{qualitativeForecasting}
-When each element $Y_t$ of the time series take elements $Y_t \in A$ from any alphabet $A$, where $A$ contains symbols used as labels rather than scalar values, we call the time series qualitative. For example, classification labels for the identification of certain patterns associated with any class. Since these values are not related to any magnitude, the metric to measure the distance must considers only the qualitative differences of the elements of the delay vector $\mathbf{D}_t$. For this purpose, the Hamming distance is a suitable metric to measure the difference between two sequences of labels. The Hamming distance is shown in \ref{hamming}
+When each element $Y_t$ of the time series take elements $Y_t \in \mathbf{A}$ from any alphabet $\mathbf{A}$, where $\mathbf{A}$ contains symbols used as labels rather than scalar values, we call the time series qualitative. For example, classification labels for the identification of certain patterns associated with any class. Since these values are not related to any magnitude, the metric to measure the distance must considers only the qualitative differences of the elements of the delay vector $\mathbf{D}_t$. For this purpose, the Hamming distance is a suitable metric to measure the difference between two sequences of labels. The Hamming distance is shown in \ref{hamming}
 
 \begin{equation}\label{hamming}
 dist (\mathbf{x},\mathbf{y}) = \frac{\sum_{i=1}^{m}{hamming(x_i,y_i)}}{m}
@@ -2183,10 +2183,10 @@ The correlation analysis is required to identify the SARIMA model, and then opti
 \begin{equation}\label{kNNobjectiveFunction}
 \begin{aligned}
 & \underset{m, \varepsilon}{\text{arg min}}
-  \sum_{T=1}^{N'}  || \hat{\mathbf{Y}}_{T+1}  - \mathbf{Y}_{T+1} || \\
+  \sum_{T=1}^{N'}  || \hat{\mathbf{Y}}_{T \tau +1}  - \mathbf{Y}_{T \tau +1} || \\
 %& \text{subject to} \\    & \epsilon, m &
 \end{aligned}
-\end{equation} where $\hat{\mathbf{Y}}_{T+1}$ is the predicted value given by the composition of the qualitative and quantitative forecasting for the next days expressed by
+\end{equation} where $\hat{\mathbf{Y}}_{T \tau+1}$ is the predicted value given by the composition of the qualitative and quantitative forecasting for the next days expressed by
 
 
 
@@ -2198,17 +2198,17 @@ The correlation analysis is required to identify the SARIMA model, and then opti
 
 
 \begin{equation}\label{predictedData}
-\hat{\mathbf{Y}}_{T+1} = \{  \hat{Z}_{T+1} P_{\hat{C}_{T+1}}, \dots, \hat{Z}_{T+\Delta n} P_{\hat{C}_{T+\Delta n}} \}
+\hat{\mathbf{Y}}_{T \tau +1} = \{  \hat{Z}_{T+1} P_{\hat{C}_{T+1}}, \dots, \hat{Z}_{T+h} P_{\hat{C}_{T+h}} \}
 \end{equation} 
 
-\noindent and  $\mathbf{Y}_{T+1}$ is the real hourly information (in our application, water consumption) defined by
+\noindent and  $\mathbf{Y}_{T \tau +1}$ is the real hourly information (in our application, water consumption) defined by
 
 
 \begin{equation}\label{realData}
-{\mathbf{Y}}_{T+1} = \{Y_{\tau (T-1)+1},\dots,Y_{\tau T \cdot  \Delta n}  \}
+{\mathbf{Y}}_{T \tau+1} = \{Y_{\tau (T-1)+1},\dots,Y_{\tau T \cdot  h}  \}
 \end{equation}
 
-\noindent where $\Delta n$ is the $n$-th predicted element. The Figure \ref{predictionSample} shows how the prediction at the smallest basis (hours) is performed along the period (day), using a sliding window of size $h$ covering the subsequence of data from $T+1$ to $T+\tau-1$ in $\tau$ steps. 
+\noindent where $h$ is the $h$-th predicted element. The Figure \ref{predictionSample} shows how the prediction at the smallest basis (hours) is performed along the period (day), using a sliding window of size $h$ covering the prediction subsequence data from $(\tau (T-1)+1)$ to $(\tau T \cdot  h)$ in $\tau$ steps. 
 
 
 \subsubsection{Operational Phase}
@@ -2316,14 +2316,14 @@ V = \{\forall i \in [1,T], C_i = \hat{C}_{T+1} \}
 
 \begin{equation}\label{sortresiduals}
 	d(R_s,R_{V_{l}}) < d(R_s,R_{V_{l+1}})
-\end{equation} where $d$ is the Euclidean distance function and $l=\{1,\dots,\kappa-1\}$ are the indexes related to the closets residuals. Once $V$ indexes are ordered, the filter for the next time step $T+1$ is computed by the Equation (\ref{filter}) (that is the simplification of Equation (\ref{filter2}) setting $m=1$).
+\end{equation} where function $d$ is the Euclidean distance function and $l=\{1,\dots,\kappa-1\}$ are the indexes related to the closets residuals. Once $V$ indexes are ordered, the filter for the next time step $T+1$ is computed by the Equation (\ref{filter}) (that is the simplification of Equation (\ref{filter2}) setting $m=1$).
 
 \begin{equation}\label{filter}
 	F_{T+1} = \frac{1}{k}\sum_{i=1}^{\kappa} R_{v_i}
 \end{equation} The $F_{T+1}$ vector is used as predictor corrector and it is integrated in Equation (\ref{corrector}).
 
 \begin{equation}\label{corrector}
-	\{ \mathbf{\hat{Y}}_{\lfloor t/\tau \rfloor+i}\}_{i=1}^{H}   =  \{ \mathbf{\hat{Z}}_{T+i} \cdot \mathbf{{P}}_{\hat{C}_{T+i}}+\alpha F_{T+i} \}_{i=1}^{H}
+	\{ \mathbf{\hat{Y}}_{T \tau+i}\}_{i=1}^{H \tau}   =  \{ \mathbf{\hat{Z}}_{T+i} \cdot \mathbf{{P}}_{\hat{C}_{T+i}}+\alpha F_{T+i} \}_{i=1}^{H}
 \end{equation} where $\alpha \leq 1 $ is a real constant number that weighs the amplitude of the filter signal. Notice that when $\alpha=0$ the filter has no effect, and when $\alpha=1$ the filter might over re-adjust the prediction producing poor accuracy forecast. To estimate a value for the $\alpha$ parameter, the \textbf{MMP+NF} is executed with different $\alpha$ and $\kappa$ values using the validation set and are selected those that minimize the prediction error.
 
 
@@ -2333,7 +2333,7 @@ V = \{\forall i \in [1,T], C_i = \hat{C}_{T+1} \}
 
 
 
-For the operational phase of water distribution networks, as it is mentioned before, it is necessary to have available 24 hour ahead predictions in an hourly basis for the operational control. Similarly to the previous algorithm, two days ahead are predicted and a window of size $\tau$ is slid over the prediction ${\hat{Y}_{T+1}},\dots,  {\hat{Y}_{T+H}} $. This process is described by Figure \ref{predictionSample}. To measure the performance of this architecture in an hourly basis is obtained using the testing data set.
+For the operational phase of water distribution networks, as it is mentioned before, it is necessary to have available 24 hour ahead predictions in an hourly basis for the operational control. Similarly to the previous algorithm, two days ahead are predicted and a window of size $\tau$ is slid over the prediction ${\hat{Y}_{T \tau +1}},\dots,  {\hat{Y}_{T\tau + H \tau}} $. This process is described by Figure \ref{predictionSample}. To measure the performance of this architecture in an hourly basis is obtained using the testing data set.
 
 
 
@@ -2510,7 +2510,7 @@ The performance of \textbf{QMMP+kNN} and \textbf{QMMP+NF} depends on the selecte
 \end{figure}
 
 
-The training-validation is divided in datasets $\mathrm{A}$ and $\mathrm{B}$ taken from the $70\%$ of the total data. For this task the time series $\mathbf{Y}$, are decomposed in its qualitative and qualitative components $\mathbf{Z}$ and $\mathbf{X}$ by using the Equation \ref{quant} and \ref{qual} respectively. The parameter $\tau$ is set to $24$ according to the seasonality observed in the correlation plots of Figure \ref{autocorr01} and \ref{autocorr02}, the qualitative time series $\mathbf{X}$ is classified using k-means. The number of classes is selected according to the maximum silhouette coefficient criteria. Different number of classes are tested with $K_{test} = \{1,\dots,10\}$. Their silhouette values are plot in the Figure \ref{silhouetteVals}, where all the time series considered matches with a number of classes $k=2$.
+The training-validation is divided in datasets $\mathrm{A}$ and $\mathrm{B}$ taken from the $70\%$ of the total data. For this task the time series $\mathbf{Y}_{full}$, are decomposed in its qualitative and qualitative components $\mathbf{Z}$ and $\mathbf{X}$ by using the Equation \ref{quant} and \ref{qual} respectively. The parameter $\tau$ is set to $24$ according to the seasonality observed in the correlation plots of Figure \ref{autocorr01} and \ref{autocorr02}, the qualitative time series $\mathbf{X}$ is classified using k-means. The number of classes is selected according to the maximum silhouette coefficient criteria. Different number of classes are tested with $K_{test} = \{1,\dots,10\}$. Their silhouette values are plot in the Figure \ref{silhouetteVals}, where all the time series considered matches with a number of classes $k=2$.
  
  
 \begin{figure}[h!]
@@ -2582,7 +2582,7 @@ In both iterations the parameters $m$ and $\varepsilon$ defining the length and 
 \begin{equation}\label{qualitativeParametersOpt}
 \begin{aligned}
 & \underset{m, \varepsilon}{\text{arg min}}
-  \sum_{T=1}^{N'}  dist( \hat{\mathbf{C}}_{T}  , \mathbf{C}_{T}) \\
+  \sum_{T=1}^{N'}  dist( \hat{\mathbf{C}}_{T+H}  , \mathbf{C}_{T+H}) \\
 %& \text{subject to} \\    & \epsilon, m &
 \end{aligned}
 \end{equation} where $dist$ is the hamming distance since $\mathbf{C}$ is a sequences of labels and the prediction is performed by using the Equation \ref{estimatingModes}. Table \ref{knnparameters} includes the parameters that optimize the prediction with kNN for each iteration. The distance of the neighborhood and size of the delay vector for kNN mode estimator are those that minimises the objective function expressed by Equation (\ref{kNNobjectiveFunction}) subject to $ \varepsilon = \{0.01,0.02,\dots,0.1\}$  and $m=\{2,\dots,10\}$.
