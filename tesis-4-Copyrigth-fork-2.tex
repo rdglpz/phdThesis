@@ -34,6 +34,10 @@
 \usepackage{enumerate}
 \usepackage[hang,flushmargin]{footmisc}
 \usepackage{cleveref}
+\usepackage{nomencl}
+\makenomenclature
+
+
 %\usepackage{subcaption}
 %\usepackage{subcaption}
 
@@ -113,6 +117,8 @@
 \hyphenation{pi-ece-wise}
 \hyphenation{wea-ther}
 \hyphenation{Spa-in}
+\hyphenation{to-pic}
+\hyphenation{co-mand}
 \hyphenation{ti-me-in---de-pen-dent}
 
 
@@ -194,7 +200,7 @@ A general classification of the models used for forecasting can be done accordin
 
 
 
-Time series forecasting is performed by a regression function, which is a model that receives a sequence of observations and returns a scalar or a vector of real numbers. The regression function that predicts the value in the next instant of time $t+1$, given a sequence of values in $\mathbf{Y}_t$ is expressed by the Equation \ref{reggressor}.
+Time series forecasting is performed by a regression function, which is a model that receives a sequence of observations and returns a scalar or a vector of real numbers. The regression function that predicts the value in the next instant of time $t+1$, given a sequence of values in $\mathbf{Y}_t$ is expressed by Equation \ref{reggressor}.
 
 
 \begin{equation}\label{reggressor}
@@ -215,14 +221,14 @@ The problem to solve in this thesis is the design of a general framework that in
 
 
 \begin{eqnarray}\label{multimodel}
-  \mathbf{F(A,Y_{\text{t}})} = \begin{cases}
+  \mathbf{F}(\mathbf{A},\mathbf{Y}_{t}) = \begin{cases}
         f_1(a_1,\mathbf{Y}_{t}) & \text{ }\text{ }  \text{ if $mode=1$} 
         \\
          f_2(a_2,\mathbf{Y}_t) &\text{ }\text{ }   \text{ if $mode=2$} \\
 		\vdots \\
        f_k (a_k,\mathbf{Y}_t) &\text{ } \text{ } \text{if $mode =k$}
         \end{cases}
-\end{eqnarray} where $\mathbf{F(A,Y_{\text{t}})}$ is the multi-model that contains $k$ independent local models $f_1,\dots,f_k$. $\mathbf{A}$ is the set of the parameters of all the models and it is defined as $\mathbf{A}  = \{a_1,a_2,\dots,a_k \}$. The objective of study is to build a multi-model that fits complex dynamics of time series. The objective function for the multi-model is described in Equation \ref{fittingfunction2}.
+\end{eqnarray} where $ \mathbf{F}(\mathbf{A},\mathbf{Y}_{t})$ is the multi-model that contains $k$ independent local models $f_1,\dots,f_k$. $\mathbf{A}$ is the set of the selector parameters for the models and it is defined as $\mathbf{A}  = \{a_1,a_2,\dots,a_k \}$ and $\mathbf{Y}_t$ is a vector with recent measurements at time $t$. The objective of study is to build a multi-model that fits complex dynamics of time series. The objective function for the multi-model is described by Equation \ref{fittingfunction2}.
 
 
 \begin{equation}\label{fittingfunction2}
@@ -238,7 +244,7 @@ The problem to solve in this thesis is the design of a general framework that in
 
 \section{Main Objective}
 
-The main objective is to find high performance drinking water demand prediction models that provide accurate predictions in the short term. The availability of an accurate and detailed prediction is a very important part for making accurate decisions in relation to the operation, control and management of drinking water networks. An accurate model allows minimising operational costs and wastewater without sacrificing quality of service, delivering drinking water to the population. 
+The main objective is to find high performance drinking water demand prediction models that provide accurate predictions in the short term. The availability of an accurate and detailed prediction is a very important part for making accurate decisions regarding the operation, control and management of drinking water networks. An accurate model allows minimising operational costs and wastewater without sacrificing quality of service, delivering drinking water to the population. 
 The problem is addressed studying the identification and classification of different dynamic patterns found in drinking water demand time series for the design of local predictors that are integrated later in a global model.
 
 
@@ -591,7 +597,7 @@ All the mentioned systems are able to generate a time series since it is possibl
 
 
 
-A special case of nonlinear systems are the piecewise linear or nonlinear dynamical systems where the system is modelled by a set of local models that are activated by certain rules. Each local model is associated with one operation mode. The activation of these local models depends on the model of the finite state machine in the deterministic case \cite{Black2008}, or by a stochastic state machine that activates the different local models by probabilistic rules such as those performed by Markov Models Chains. Figure \ref{stateMachine} shows an example of a finite state machine model that captures the dynamics of behavior changes. The submodels or states are activated when an event occurs. In contrast, the Markov Model \cite{Grinstead2010} in Figure \ref{stateMachineMarkov} models the change of states by producing probabilities events to jump from one state to another.
+A special case of nonlinear systems are the piecewise linear or nonlinear dynamical systems where the system is modelled by a set of local models that are activated by certain rules. Each local model is associated to one operation mode. The activation of these local models depends on the model of the finite state machine in the deterministic case \cite{Black2008}, or by a stochastic state machine that activates the different local models by probabilistic rules such as those performed by Markov Models Chains. Figure \ref{stateMachine} shows an example of a finite state machine model that captures the dynamics of behavior changes. The submodels or states are activated when an event occurs. In contrast, the Markov Model \cite{Grinstead2010} in Figure \ref{stateMachineMarkov} models the change of states by producing probabilities events to jump from one state to another.
   
  
  
@@ -744,7 +750,7 @@ In the time series classical analysis literature, decomposition is used to descr
 \begin{enumerate}[i]
 \item Additive models consider the sum of the trend, seasonal and random variation. It is used  when the seasonal variation is relatively constant over time. It is expressed by Equation \ref{additiveCompositionEq} \begin{equation}\label{additiveCompositionEq}
 Y_t = \mathrm{T} + \mathrm{S} + \mathrm{R}
-\end{equation} where the times series is generated by adding $\mathrm{T}$, $\mathrm{S}$, and $\mathrm{R}$, the trend, seasonal and random components respectively. An example of the general structure of this model is shown in Figure \ref{additiveComposition}.
+\end{equation} where the times series is generated by adding $\mathrm{T}$, $\mathrm{S}$, and $\mathrm{R}$, the trend, seasonal, and random components respectively. An example of the general structure of this model is shown in Figure \ref{additiveComposition}.
 
 
 
@@ -771,11 +777,11 @@ Y_t = \mathrm{T} \times \mathrm{S} \times \mathrm{R}
 \end{figure} The red dotted lines of the figure shows the multiplicative trend of variance of the time series $Y_t$.
 
 
-\item The pseudo-additive decomposition (Mixed) presents a more complex dynamic adding and multiplying the different components. It combines features of both the additive and the multiplicative models.  The general structure of this kind of model is expressed by Equation \ref{pseudoAdd}:  
+\item The pseudo-additive decomposition (Mixed) presents a more complex dynamic, adding and multiplying the different components. It combines features of both the additive and the multiplicative models.  The general structure of this kind of model is expressed by Equation \ref{pseudoAdd}:  
 
 \begin{equation}\label{pseudoAdd}
 Y_t = \mathrm{TC_t} \times \mathrm{S+I-1}
-\end{equation} where the addition of the seasonal effects and irregular fluctuations $\mathrm{(S+I)}-1$ produces a trend in the mean, and the trend cycle component $\mathrm{TC}_t$ produces a multiplicative effect that increases the variance along time. Figure \ref{pseudoadditive} shows an example of how a time series of this type looks. The low and high red dotted line bound the time series according to an increasing variance. The continuous red line is the mean increasing along the time.
+\end{equation} where the addition of the seasonal effects, and irregular fluctuations $\mathrm{(S+I)}-1$ produces a trend in the mean, and the trend cycle component $\mathrm{TC}_t$ produces a multiplicative effect that increases the variance along time. Figure \ref{pseudoadditive} shows an example of how a time series of this type looks. The low and high red dotted line bound the time series according to an increasing variance. The continuous red line is the mean increasing along the time.
 
 %\textit{This model type is supported exclusively by the X-12-ARIMA method. TRAMO/SEATS does not support this kind of the model. This model is recommended for time series that display strongly fluctuating seasonal effects.} An example is shown in the figure \ref{pseudoadditive}
  \begin{figure}[h!]
@@ -834,7 +840,7 @@ In time series classical analysis, it is important the study of different compon
 \subsection{Stationarity and Sampling}
 
 
-In order to study a phenomena it is important to reproduce it many times under the same conditions and be sure that the measurements taken effectively correspond to the same scientific study object or process. The concept of reproducibility in time series is strongly related to two stationarity meanings:
+In order to study a phenomena it is important to reproduce it many times under the same conditions and be sure that the measurements taken effectively correspond to the same scientific study, object, or process. The concept of reproducibility in time series is strongly related to two stationarity meanings:
 
 \begin{enumerate}
 \item Invariability of parameters during the analysis of the system:  These parameters must not depend on time and they change once they are noticed or desired to produce intentionally another output.
@@ -883,7 +889,7 @@ Assuming we have sufficient information, we can take two approaches for testing 
 \end{itemize}
 
 
-The nonparametric approach does not require any assumption of the data, therefore is more general. One of the most popular stationarity test is the Runs Test. The test defines a run as ``succession of one or more identical symbols or patterns'', which are followed and preceded by a different symbol or no symbol at all \cite{gibons83}. The idea behind is similarly to a series generated by identical flips (or runs) of a coin, where the symbol $O$ and $I$ represents heads and tails respectively. An example of such run is that the sequence $\mathbf{C}=\{OIIIIIIOOIOO\}$. If the coin is balanced will present stationarity approximating the same number of $O$ and $I$ runs as long as more observations are available, otherwise a trend might be noticed.
+The nonparametric approach does not require any assumption of the data, therefore it is more general. One of the most popular stationarity test is the Runs Test. The test defines a run as ``succession of one or more identical symbols or patterns'', which are followed and preceded by a different symbol or no symbol at all \cite{gibons83}. The idea behind is similarly to a series (or runs) generated by identical flips of a coin, where the symbol $O$ and $I$ represents heads and tails, respectively. An example of such run is the sequence $\mathbf{C}=\{OIIIIIIOOIOO\}$. If the coin is balanced, the sequence will present stationarity approximating the same number of $O$ and $I$ as long as more observations are available, otherwise a trend might be detected.
 
 The stationarity of data can be determined by using the algorithm of the runs test proposed by Bendat and Piersol in \cite{Bendat1986} as follows:
 
@@ -895,25 +901,25 @@ The stationarity of data can be determined by using the algorithm of the runs te
 \end{equation}
 \item Compute a mean value for each interval.
 \begin{equation}
-	\overline{\mathbf{Y}}_T = \frac{1}{{\tau}}\sum_{t=1}^\tau(\mathbf{Y}'_{T+\Delta t})
+	\overline{\mathbf{Y}}_T' = \frac{1}{{\tau}}\sum_{t=1}^\tau(\mathbf{Y}'_{T+\Delta t})
 \end{equation}
 \item Collect the occurrences of values above ($I$) and below ($O$) the median value of the series using Equation \ref{collect}
 \begin{eqnarray}\label{collect}
   {C_T} = \begin{cases}
-        I & \text{ }\text{ }  \text{ if $ \overline{\mathbf{Y}}_T> \tilde{(\mathbf{Y'}}) $} 
+        I & \text{ }\text{ }  \text{ if $ \overline{\mathbf{Y}}_T'> \tilde{(\mathbf{Y'}}) $} 
         \\
          O &\text{ }\text{ }   \text{ otherwise} \\
         \end{cases}
 \end{eqnarray}
-\item Count the number of runs with $I$ and $O$ following the Equation \ref{count}
+\item Count the number of runs with $I$ and $O$ following Equation \ref{count}
 
 
 \begin{eqnarray}\label{count}
-{C}^O = |\{\forall i \in \{1,2,\dots,T-1,T\}, | {C}_i = O \}| \\
-{C}^I = |\{\forall i \in \{1,2,\dots,T-1,T\}, | {C}_i = I \}| \nonumber
+{C}^O = |\{i,\forall i \in \{1,2,\dots,T-1,T\}, | {C}_i = O \}| \\
+{C}^I = |\{i,\forall i \in \{1,2,\dots,T-1,T\}, | {C}_i = I \}| \nonumber
 \end{eqnarray} 
 
-\item Compute the probability of having a run ${Pr}(\mathbf{C}^O)$ and ${P}(\mathbf{C}^I)$ and if ${Pr}(\mathbf{C}^O) \approx {Pr}(\mathbf{C}^I)$, the the stationarity test is passed.
+\item Compute the probability of having a run ${Pr}(\mathbf{C}^O)$ and ${Pr}(\mathbf{C}^I)$ and if ${Pr}(\mathbf{C}^O) \approx {Pr}(\mathbf{C}^I)$, the the stationarity test is passed.
 
 
 %\item Compute the rate of counts found to known probabilities of runs for random data. If the the $\#I/\#O=1$ the time series is stationary, if $\#I/\#O>1$ it presents a positive trend, and negative trend other wise. 
@@ -954,11 +960,11 @@ The stationarity of data can be determined by using the algorithm of the runs te
 %http://www.ptolomeo.unam.mx:8080/xmlui/bitstream/handle/132.248.52.100/363/A5.pdf?sequence=5
 
 
-We have seen so far how the general characteristics of the time series are analysed discarding dynamic details at local level. In order to analyse what is going on with the observed dynamic fluctuations at local level of the time series, the relation analysis between variables is performed.
+We have seen so far how the general characteristics of the time series are analysed discarding dynamic details at local level. In order to analyse what is going on with the observed dynamic fluctuations at local level of the time series, a relation analysis between variables is performed.
 
-The relation analysis is an important part of the study of linear time series, it is based on the linear temporal relation between the values of the time series named autocorrelation. In order to define the correlated variable, first it is needed to define the simplest non-periodic process, that is the linear stochastic process. 
+The relation analysis is an important part of the study of linear time series, it focuses on the existence of a linear temporal relation between the the variable of interest and another one is named autocorrelation. In order to define the correlated variable, we need to define the simplest non-periodic process; that is a linear stochastic process. 
 
-A stochastic process is a set of random variables $\{Y_t\}_{t \in \mathcal{O}}$, where $Y_t \in \mathbb{R}$, $t$ is the time index included in the set $\mathcal{O}$, with infinite values in the range $(0,\infty]$ in continuous-time. For discrete-time process the random variable takes a finite number of $\mathbb{N}$ values $\mathcal{O}=(0,\mathbb{N}]$, limiting the length of the discrete time series. A stationarity process is presented when the probabilities related to the random variables are constant over time. This is expressed in Equation \ref{statproc}.
+A stochastic process is a set of random variables $\{Y_t\}_{t \in \mathcal{O}}$, where $Y_t \in \mathbb{R}$, $t$ is the time index included in the set $\mathcal{O}$, with infinite values in the range $(0,\infty]$ in a continuous-time. For discrete-time process the random variable takes a finite number of $\mathbb{N}$ values $\mathcal{O}=(0,\mathbb{N}]$, limiting the length of the discrete time series. A stationarity process is present when the probabilities related to the random variables are constant over time. This is expressed in Equation \ref{statproc}.
 
 
 
@@ -975,11 +981,11 @@ There are two kinds of autocorrelation metrics used as tools for measuring the e
 
 \begin{itemize}
 \item The Simple Autocorrelation Function (ACF), measures the lineal relation between the observation $Y_t$ from a time series and the delayed value $Y_{t-\tau}$.
-\item The Partial Autocorrelation (PACF), is the estimation of the simple correlation but removing the effect produced by the autocorrelations for shorter delays than $\tau$.
+\item The Partial Autocorrelation (PACF), is the estimation of the simple correlation but removing the effect produced by the autocorrelations for delays shorter than $\tau$.
 \end{itemize}
 
 
-The degree of relation for the simple and partial autocorrelation is measured using the autocorrelation coefficient $\rho_k$. The coefficient takes values in the range $[-1,1]$.  This coefficient gives information about the existence and the correlation type.  A coefficient with value of $+1$ means a strong positive relation between two observations separated by $k$ units of time. The positive sign means that both variables respond similarly. A value of $-1$ expresses a strong inverse relation.  When a value of $0$ is obtained means that two values does not have any relation. Equation \ref{autocorr} computes the autocorrelation function.
+The degree of relation for the simple and partial autocorrelation is measured using the autocorrelation coefficient $\rho_k$. The coefficient takes values in the range $[-1,1]$.  This coefficient gives information about the existence and the type of correlation. A coefficient with value of $+1$ means a strong positive relation between two observations separated by $k$ units of time. The positive sign means that both variables respond similarly. A value of $-1$ expresses a strong inverse relation.  When a value of $0$ is obtained, the two variables do not exhibit any relation. Equation \ref{autocorr} computes the autocorrelation function.
 
 %\begin{equation}\label{autocorr}
 %\rho_\tau = corr_{\tau_\tau}(Y_t,Y_{t+\tau})= \frac{\sum_{t=1}^{n-k}(Y_t- \overline{Y})(Y_{t+\tau}-\overline{Y}) }{\sum_{t=1}^n (Y_t-\overline{Y})^2}
@@ -1014,13 +1020,13 @@ The Partial Autocorrelation Function (PACF) of $\tau$ order is similar to the AC
 
 Equation ACF \ref{autocorr} and PACF \ref{parcorr} are used to produce plots named autocorrelograms. Each autocorrelogram is composed plotting the coefficients $\rho_\tau$ and $\pi_{\tau,\tau}$ respectively varying $\tau$ at different lags. Each autocorrelogram provides information about the Moving-Average (MA) and Auto-Regressive (AR) polynomial order and structure \cite{BoxJen}. The description of the Box-Jenkins ARIMA methodology is addressed in Chapter \ref{BoxJenkins}.
 
-The Ljung-Box test is an auxiliary test born in 1970 \cite{Box1970} and implemented to quantify the model fitting \cite{LJUNG1978} measuring the independency of the values of time series. This test gives information about the possible existence of linear relations in the data or if the data sequence is merely random noise.  The Ljung-Box test is given by the Equation \ref{lbtest}
+The Ljung-Box test is an auxiliary test born in 1970 \cite{Box1970} and implemented to quantify the model fitting \cite{LJUNG1978} measuring the independency of the values of time series. This test gives information about the possible existence of linear relations in the data or if the data sequence is merely random noise.  The Ljung-Box test is given by Equation \ref{lbtest}
 
 \begin{equation}\label{lbtest}
-	LB_m = n(n+2) \sum_{t=\tau}^m \frac{\hat{\pi}^2_t}{n-\tau} 
-\end{equation} where $n$ is the sample size, $m$ is the lag length and $\hat{\pi}_t$ is the autocorrelation of the sample at lag $t$.
+	LB_m = n(n+2) \sum_{t=\tau}^m \frac{\hat{\pi}^2_{t,t}}{n-\tau} 
+\end{equation} where $n$ is the sample size, $m$ is the lag length and $\hat{\pi}_{t,t}$ is the autocorrelation of the sample at lag $t$.
 
-The $LB_m$ value is evaluated using the $\chi^2$ test. If $LB_m$ exceeds the critic value of the $\chi^2$ to the significance level selected (usually at $\% 95$). The test assumes the mull correlation hypothesis $H_0$ among the values until the opposite is demonstrated. If the alternative is demonstrated, then $H_0$ would be rejected and the existence of significant correlation hypothesis $H_1$ is taken. This is expressed in Equation \ref{lbqthypotesys}.
+The $LB_m$ value is evaluated using the $\chi^2$ test. If $LB_m$ exceeds the critic value of the $\chi^2$ to the significance level selected (usually at $95\% $). The test assumes the mull correlation hypothesis $H_0$ among the values until the opposite is demonstrated. If the alternative is demonstrated, then $H_0$ would be rejected and the existence of significant correlation hypothesis $H_1$ is taken. This is expressed in Equation \ref{lbqthypotesys}.
 
 
 
@@ -1104,7 +1110,7 @@ The $LB_m$ value is evaluated using the $\chi^2$ test. If $LB_m$ exceeds the cri
 
 %En 1970, Box y Jenkins desarrollaron un cuerpo metodológico destinado a identificar, estimar y diagnosticar modelos dinámicos de series temporales en los que la variable tiempo juega un papel fundamental.
 
-A very useful framework for time series analysis is the Box-Jenkins Auto-Reggresive method. In 1970 Box and Jenkins proposed this framework to identify, estimate and diagnosis dynamic models of time series where the variable of time is important. The objective of Box-Jenkins is to provide an algorithmic way to construct forecasting models \cite{Econometr2010}.
+A very useful framework for time series analysis is the Box-Jenkins Auto-Regressive method. In 1970 Box and Jenkins proposed this framework to identify, estimate, and diagnoses dynamic models of time series, where the variable time is important. The objective of Box-Jenkins is to provide an algorithmic way to construct forecasting models \cite{Econometr2010}.
 
 %En 1970, Box y Jenkins desarrollaron un cuerpo metodológico destinado a identificar, estimar y diagnosticar modelos dinámicos de series temporales en los que la variable tiempo juega un papel fundamental. Una parte importante de esta metodología está pensada para liberar al investigador económetra de la tarea de especificación de los modelos dejando que los propios datos temporales de la variable a estudiar nos indiquen las características de la estructura probabilística subyacente. En parte, los procedimientos que vamos a analizar se contraponen a la "forma tradicional" de identificar y especificar un modelo apoyándonos en las teorías subyacentes al fenómeno analizado aunque, convenientemente utilizados, los conceptos y procedimientos que examinaremos constituyen una herramienta útil para ampliar y complementar los conocimientos econométricos básicos.
 
@@ -1113,14 +1119,11 @@ A very useful framework for time series analysis is the Box-Jenkins Auto-Reggres
 
 \subsection{Auto-Regressive (AR) Models }
 
-The first set of models to capture the dynamic of linear time series is the Auto-Regressive model. Auto-Regressive models explain an endogenous variable of a period $t$ by the previous observations adding an error term (under previous conditions, $Y_t$ can be expressed as a linear combination of its past values plus an error term). The notation of the  auto-regressive models are abbreviated as AR models, a $p$-order model is written as $\text{AR}(p)$%. Where $p$ is the number observations in the past. 
-
-
- The basic auto-regressive model is expressed as AR(1) and is represented by the Equation \ref{ARM}.
+The first set of models to capture the dynamic of linear time series is the Auto-Regressive model. Auto-Regressive models explain an endogenous variable of a period $t$ by the previous observations adding an error term (under previous conditions, $Y_t$ can be expressed as a linear combination of its past values plus an error term). The notation of the  auto-regressive models are abbreviated as AR models, a $p$-order model is written as $\text{AR}(p)$. Where $p$ is the number of observations in the past that are taking into account by the model. The basic Auto-Regressive model is expressed as AR(1) and is represented by Equation \ref{ARM}.
 
 \begin{equation}\label{ARM}
 \hat{Y}_t = \Phi_0 + \Phi_1 Y_{t-1} + \epsilon_t
-\end{equation} where $\hat{Y}_t$ is the forecast value, $\epsilon_t$ is the error term with the property of having a null mean, constant variance and null covariances among errors associated with different observations. The general $\text{AR}(p)$ model is expressed by Equation \ref{armodel}
+\end{equation} where $\hat{Y}_t$ is the forecast value, $\epsilon_t$ is the error term with the property of having a zero mean, constant variance, and null covariances among errors associated with different observations. The general $\text{AR}(p)$ model is expressed by Equation \ref{armodel}
 
 \begin{equation}\label{armodel}
 \hat{Y}_t = \sum_{i=1}^{p}\Phi_i Y_{t-i} + \Phi_0 +\epsilon_t
@@ -1143,7 +1146,7 @@ This can be simplified using the lag polynomial operator. Therefore Equation \re
 
 \subsection{Moving-Average (MA) Models }
 
-The Moving-Average model explains the value of a variable at time instant $t$, as a weigh function of the previous independent error terms. The model is expressed as $\text{MA}(q)$ where $q$ is the number of error terms. The basic moving-average model is expressed as $\text{MA}(1)$ and is written as the Equation \ref{masim}:
+The Moving-Average model explains the value of a variable at time instant $t$, as a weigh function of the previous independent error terms. The model is expressed as $\text{MA}(q)$ where $q$ is the number of error terms. The basic moving-average model is expressed as $\text{MA}(1)$ and is written as Equation \ref{masim}:
 
 
 \begin{equation}\label{masim}
@@ -1186,9 +1189,9 @@ The \text{ARMA} model is a case of the ARIMA model that includes the auto-regres
 \end{equation}
 
 %\subsection{ARIMA}
-The nonseasonal \text{ARIMA} is written as $\text{ARIMA}(p,d,q)$ where $d$ is the degree of differencing associated with the component of integration $(1-L)^d Y_t$. This component discard the seasonal trend.% and can also get rid of a seasonal random walk type of nonstationarity.
+The nonseasonal \text{ARIMA} is written as $\text{ARIMA}(p,d,q)$ where $d$ is the degree of differencing associated with the component of integration $(1-L)^d Y_t$. This component discards any non stationary trend from the time series and is present in Equation \ref{arimad}. % and can also get rid of a seasonal random walk type of nonstationarity.
 
-\begin{equation}
+\begin{equation}\label{arimad}
 	\left( 1 - \sum_{i=1}^p \Phi_i (L)^i  \right) (1-L)^d Y_t = \left( 1 + \sum_{i=1}^q \Theta_i (L)^i\right)
 \end{equation}
 %http://people.duke.edu/~rnau/Notes_on_nonseasonal_ARIMA_models--Robert_Nau.pdf
@@ -1197,20 +1200,20 @@ The nonseasonal \text{ARIMA} is written as $\text{ARIMA}(p,d,q)$ where $d$ is th
 
 \subsection{Seasonal ARIMA}
 
-The general version of the Box-Jenkins models is the Seasonal ARIMA (SARIMA) model. This model considers also the modelling of the seasonal components of the time series. This model uses two polynomials expressed by ARIMA $ (p,d,q)$ $ (P,D,Q)_s$. Where the notation component  $(p,d,q)$ is the nonseasonal part of the model and  $(P,D,Q)_s$ is the seasonal component where $m$ is the number of measurements per season or cycle. The order of the different polynomials are expressed by $p, d, q, P, D,$ and $Q$. In order to illustrate how the seasonal component is extends the nonseasonal model, we analyse a SARIMA model $(1,1,1)(1,1,1)_s$ presented in Equation \ref{SARIMAEX}:
+The general version of the Box-Jenkins models is the Seasonal ARIMA (SARIMA) model. This model also considers the modelling of the seasonal components of the time series. This model uses two polynomials expressed by ARIMA $ (p,d,q)$ $ (P,D,Q)_{\check{s}}$. Where the notation component  $(p,d,q)$ is the nonseasonal part of the model and  $(P,D,Q)_{\check{s}}$ is the seasonal component where $m$ is the number of measurements per season or cycle. The order of the different polynomials are expressed by $p, d, q, P, D,$ and $Q$. In order to illustrate how the seasonal component extends the nonseasonal model, we analyse a SARIMA model $(1,1,1)(1,1,1)_{\check{s}}$ presented in Equation \ref{SARIMAEX}:
 
 \begin{equation}\label{SARIMAEX}
-	(1 - \Phi_1 (L)) (1-\phi (L)^s ) (1-L)(1-(L)^s){Y_t} = (1+\Phi_1 (L))(1+\phi_1 (L)^s)\epsilon_t	
-\end{equation}  where the seasonal AR, MA and the difference components consider the seasonal lag at time $s$ in the component $(L)^s$ that multiplies their respective nonseasonal components.
+	(1 - \Phi_1 (L)) (1-\phi (L)^s ) (1-L)(1-(L)^{\check{s}}){Y_t} = (1+\Phi_1 (L))(1+\phi_1 (L)^{\check{s}})\epsilon_t	
+\end{equation}  where the seasonal AR, MA, and the difference components consider a seasonal lag at time $\check{s}$ in the component $(L)^{\check{s}}$ that multiplies their respective nonseasonal components.
 
 
 %http://goo.gl/2nIIjX
-The Box-Jenkins model optimisation parameters is a well studied topic, therefore it is possible to find statistical optimisation methodologies and their implementation in different software packages. Regarding the optimisation methods one of the most popular methodologies are the minimisation of the exact maximum likelihood  \cite{1988}, and least squares fitting methods. The software packages that provides these functionalities are found in \textit{statsmodels} in \textit{Python}, Econometrics Toolbox in \textit{MATLAB}, \textit{ARIMAProcess} Function in \textit{MATHEMATICA}. the \textit{arima} command in \textit{STATA} among others.
+The Box-Jenkins model optimisation parameters is a well studied topic, therefore it is possible to find statistical optimisation methodologies and their implementation in different software packages. Regarding the optimisation methods, one of the most popular methodologies are the minimisation of the exact maximum likelihood  \cite{1988}, and least squares fitting methods. The software packages that provide these functionalities are found in \textit{statsmodels} (\textit{Python}), Econometrics Toolbox (\textit{MATLAB}), \textit{ARIMAProcess} Function (\textit{MATHEMATICA}), and the \textit{arima} command (\textit{STATA}), among others.
 
 \section{Holt-Winters: Exponential Smoothing}
 
 
-An alternative to the Box-Jenkins forecasting is the exponential smoothing method. The basic framework of this method was proposed in the late 50?s by C.C. Holt in 1957 and his student Peter Winters \cite{Goodwin2010}. Basically, the forecast produced by this method is the result of weighing the average of the past observations with weights decaying exponentially as the observations get older. The advantages related to this framework is to generate forecasts easily with very low storage requirements, ease of automation, reliable and adaptable to new changes in trends and sea- sonal patterns. These characteristics make these methods suitable to be applied widely in the industry due to their simplicity \cite{Kalekar2004}. 
+An alternative to the Box-Jenkins forecasting is the exponential smoothing method. The basic framework of this method was proposed in the late 50's by C.C. Holt in 1957 and his student Peter Winters \cite{Goodwin2010}. Basically, the forecast produced by this method is the result of weighing the average of the past observations with weights decaying exponentially as the observations get older. The advantages related to this framework is to generate forecasts easily with very low storage requirements, ease of automation, reliable and adaptable to new changes in trends and seasonal patterns. These characteristics make these methods suitable to be applied widely in the industry due to their simplicity \cite{Kalekar2004}. 
 
 
 %file:///Users/rodrigolopez/Downloads/0046351dc5a91a08de000000.pdf
@@ -1223,7 +1226,7 @@ The basic Holt-Winters comes from a family of exponential smoothing methods base
 \begin{equation}\label{expsm}
 \hat{Y}_{t+1} \sum_{i=0}^{\infty} = w_t Y_{t-i} 
 %\\S_t=\alpha *X_t + (1-\alpha) *S_{(t-1)}
-\end{equation} where $W =\{w_0,w_1,\dots, w_{\infty}\}$ are the weights given to the past values of the series with the property of summing $1$. The recent values have a higher weight that the old ones. The weighs are set using the Equation \ref{setexpvals}
+\end{equation} where $W =\{w_0,w_1,\dots, w_{\infty}\}$ are the weights given to the past values of the series with the property of summing $1$. The recent values have a higher weight that the old ones. The weighs are set using Equation \ref{setexpvals}
 
 \begin{equation}\label{setexpvals}
 w_i=\alpha(1-\alpha)^i
@@ -1231,17 +1234,17 @@ w_i=\alpha(1-\alpha)^i
 
 \begin{equation}\label{expsmootfff}
 \hat{Y}_{t+1} = \alpha Y_t + \alpha(1-\alpha)Y_{t-1} + \alpha(1-\alpha)^2 Y_{t-2} + \dots + \alpha(1-\alpha)^m Y_{t-m}
-\end{equation} where $m$ is the number of considered lags. Factoring Equation \ref{expsmootfff} is obtained:
+\end{equation} where $m$ is the number of considered lags. Factoring Equation \ref{expsmootfff} we obtain:
 \begin{equation}\label{expsmootf2}
 \hat{Y}_{t+1} =  \alpha Y_t + (1-\alpha)(\alpha Y_{t-1} + \alpha (1-\alpha) Y_{t-2} + \dots +  \alpha (1-\alpha)^{m-1} Y_{t-m})
 \end{equation} which is expressed iteratively in Equation \ref{iterativesmoothing}
 \begin{equation}\label{iterativesmoothing}
 \hat{Y}_{t+1} = \alpha Y_t +(1-\alpha)\hat{Y}_t
-\end{equation} where $\hat{Y}_t$ is the previous estimate. An alternative notation version of the smoothing forecasting is given by the Equation \ref{erroriterative}
+\end{equation} where $\hat{Y}_t$ is the previous estimate. An alternative notation version of the smoothing forecasting is given by Equation \ref{erroriterative}
 
 \begin{equation}\label{erroriterative}
 \hat{Y}_{t+1} = \alpha \epsilon_n + \hat{Y} _t
-\end{equation} where $\epsilon_n = Y_n- \hat{Y}_n$. It works as the correction for the Equation \ref{iterativesmoothing}.
+\end{equation} where $\epsilon_n = Y_n- \hat{Y}_n$. It works as the correction for Equation \ref{iterativesmoothing}.
 
 
 
@@ -1251,7 +1254,7 @@ w_i=\alpha(1-\alpha)^i
 
 \subsection{Double Exponential Smoothing}
 
-Double exponential smoothing is an extension of the single exponential smoothing that considers the trend in time series. The exponential smoothing component that captures the linear trend is described by the linear Equation \ref{eq}
+Double exponential smoothing is an extension of the single exponential smoothing that considers the trend in time series. The exponential smoothing component that capture the linear trend is described by the linear Equation \ref{eq}
 
 \begin{equation}\label{eq}
 	\hat{Y}_{t} = \ell_{t-1} + b_{t-1} 
@@ -1315,7 +1318,7 @@ The three initialisation options approximate a trend in different ways; the firs
 \subsection{Seasonal Holt-Winters}
 %https://www.otexts.org/fpp/7/5
 
-The Holt-Winters extension for seasonal components in time series is composed basically by three equations: the level equation $\ell_t$, the trend equation $b_t$ and the seasonal component equation $s_t^1$. With smoothing parameters $\alpha_1,\alpha_2$ and $\alpha_3$, and the seasonal parameter $\tau$ that expresses the period of the seasonality. These components are described in Equation \ref{SHW}-\ref{SHW-1}
+The Holt-Winters extension for seasonal components in time series is composed basically by three equations: the level equation $\ell_t$, the trend equation $b_t$ and the seasonal component equation $s_t^1$. With smoothing parameters $\alpha_1,\alpha_2$, and $\alpha_3$, and the seasonal parameter $\tau$ that expresses the period of the seasonality. These components are described in Equation \ref{SHW}-\ref{SHW-1}
 
 \begin{eqnarray}\label{SHW}
 \hat{Y}_{t+h} & =& \ell_t + h b_t + s^1_{t-\tau+h^+_\tau} \\
@@ -1324,7 +1327,7 @@ b_t &=& \alpha_2 (\ell_t-l_{t-1})+(1-\alpha_2)b_{t-1} \\
 s^1_t &=& \alpha_3(Y_t-\ell_{t-1}-b_{t-1}) +(1-\alpha_3) s^1_{t-\tau} \label{SHW-1}
 \end{eqnarray} where $h_\tau^+ = [(h-1) \text{ mod } \tau]+1$.
 
-The level equation computes an average of the weights between the seasonal measurement $(Y_t - s^1_{t-\tau})$ and the nonseasonal prediction $(\ell_{t-1}+b_{t-1})$ in time $t$. The trend equation, is similar to Equation \ref{errorhwmode}. The seasonal equation is an average of the weights between the current seasonal time, $(Y_t-\ell_{t-1}-b_{t-1})$, and the same seasonal time of the previous year. The corresponding error correction alternative is given by the equations \ref{errorseasonal} - \ref{errorseasonal1}.
+The level equation computes an average of the weights between the seasonal measurement $(Y_t - s^1_{t-\tau})$ and the nonseasonal prediction $(\ell_{t-1}+b_{t-1})$ in time $t$. The trend equation, is similar to Equation \ref{errorhwmode}. The seasonal equation is an average of the weights between the current seasonal time, $(Y_t-\ell_{t-1}-b_{t-1})$, and the same seasonal time of the previous year. The corresponding error correction alternative is given by equations \ref{errorseasonal} - \ref{errorseasonal1}.
 
 
 
@@ -1403,7 +1406,7 @@ Where $Y_{t+h}$ is the $h$-th step ahed forecast from forecast origin $t$. The p
 \section{k-Nearest Neighbors Forecasting}
 
 The k-Nearest Neighbors (kNN) is an nonparametric learning algorithm used in classification and forecasting. It takes decisions based on the experience contained in the training set (in the best case a subset of them). kNN assumes that the data is in a feature metric space. The considered data might be scalars, multidimensional vectors, labels or characters, etc.
-kNN forecasting is used to solve the problem of estimating the next elements $Y_{t+1},\dots, Y_{t+h}$ given a set of examples of the time series. kNN is considered a lazy learning algorithm which given a sample of past information, finds in the history similar scenarios to imitate their dynamics and use them to construct a short term forecast. kNN only needs three parameters: the sampling rate $\tau$, the embedding dimension m, and the geometric size of the neighborhood defined in $\epsilon$ (where the objects inside the radius $\mathds{\epsilon}$ are considered part of the neighborhood). kNN forecasting requires a times series defined in Equation \ref{knots}
+kNN forecasting is used to solve the problem of estimating the next elements $Y_{t+1},\dots, Y_{t+h}$ given a set of examples of the time series. kNN is considered a lazy learning algorithm which given a sample of past information, finds in the history similar scenarios to imitate their dynamics and use them to construct a short term forecast. kNN only needs three parameters: the sampling rate $\tau$, the embedding dimension m, and the geometric size of the neighborhood defined in $\varepsilon$ (where the objects inside the radius $\mathds{\varepsilon}$ are considered part of the neighborhood). kNN forecasting requires a times series defined in Equation \ref{knots}
 
 
 
@@ -1414,17 +1417,15 @@ kNN forecasting is used to solve the problem of estimating the next elements $Y_
 \mathbf{Y} = \{Y_1,\dots,Y_t,\dots,Y_n\}
 \end{equation} where $Y_1$ is the first element of the time series, $Y_n$ is the latest value at time $n$ and $t$ is the $t-$th measurement. For this purpose, the time series is organised in subsequences named delay vectors of the form.
 
-$$\mathbf{D}_t=\{Y_{t-(m+1)\tau},\dots,Y_{t}\} $$ where $m$ is the size of the delayed vector $\mathbf{D}_t$, and $\tau$  is the sampling frequency over the time series where $t=\{(m-1)\tau+1, (m-1)\tau+2,\dots,N-1-h \}$. To get the nearest neighbors of $\mathbf{D_t}$, the parameter $\epsilon$ is defined to get the delayed neighbor vectors $v_1,...,v_k$ respect with $\mathbf{D}_t$ satisfying Equation \ref{nb}
+$$\mathbf{D}_t=\{Y_{t-(m+1)\tau},\dots,Y_{t}\} $$ where $m$ is the size of the delay vector $\mathbf{D}_t$, and $\tau$  is the sampling frequency over the time series where $t=\{(m-1)\tau+1, (m-1)\tau+2,\dots,n-1-h \}$. To get the nearest neighbors of $\mathbf{D}_t$, the parameter $\varepsilon$ is defined to get the delayed neighbor vectors $v_1,...,v_k$ respect with $\mathbf{D}_t$ satisfying Equation \ref{nb}
 
 \begin{equation}\label{nb}
 dist (	\mathbf{D}_{v_\kappa},\mathbf{D}_t	) \in \varepsilon
-\end{equation} where $dist$ can be any distance. For magnitudes is common to use the Euclidean distance, but for comparing sequences of qualitative information, the Hamming distance is an adequate metric. 
-
-% For real numbers the $dist$ can be any norm. The more used norms is infty and euclidean distance.
+\end{equation} where $dist$ can be any distance. For magnitudes is common to use the Euclidean distance, but for comparing sequences of qualitative information, the Hamming distance is an adequate metric. For real numbers $dist$ can be any norm. The more used norms are infty and euclidean distance.
 
 \subsection{Real Numbers Forecasting}
 
-The forecasting for real numbers where the vector to forecast is a real number vector $\mathbf{D}_t \in \mathds{R}^m$ is performed by using the Equation \ref{knnpred} with the vectors that satisfy the constraint expressed in Equation \ref{nb}. The forecasting value is the result of the weighted sum of the \textit{futures} $Y_{t+ h\Delta n}$ of the selected vectors $v_1,\dots,v_\kappa$ and it is defined in Equation \ref{knnpred}
+The forecasting for real numbers where the vector to forecast is a real number vector $\mathbf{D}_t \in \mathds{R}^m$ is performed by using Equation \ref{knnpred} with the vectors that satisfy the constraint expressed in Equation \ref{nb}. The forecasting value is the result of the weighted sum of the \textit{futures} $Y_{t+ h\Delta n}$ of the selected vectors $v_1,\dots,v_\kappa$ and it is defined in Equation \ref{knnpred}
 
 \begin{equation}\label{knnpred}
 	\hat{Y}_{t + h \Delta n} = \alpha_j \sum_{j=1}^\kappa Y_{t + h \Delta n}
@@ -1444,8 +1445,8 @@ The forecasting for real numbers where the vector to forecast is a real number v
 \item Set the weights inversely proportional to the closeness of the vectors $\mathbf{D}_{v_k}$ respect with $\mathbf{D}_t$ as described by Equation \ref{setpropw} and \ref{setpropw2}.
 
 \begin{equation}\label{setpropw}
-	\alpha_j = \frac{\beta_j}{\sum_{i=1}^k \beta_i} 
-\end{equation} where the partial weights $\{\beta_i,\dots, \beta_\kappa\}$ are assigned with the Equation \ref{setpropw2}
+	\alpha_j = \frac{\beta_j}{\sum_{i=1}^\kappa \beta_i} 
+\end{equation} where the partial weights $\{\beta_i,\dots, \beta_\kappa\}$ are assigned with Equation \ref{setpropw2}
 
 	\begin{equation}\label{setpropw2}
 	\beta_j = \frac{dist(\mathbf{D}_t,\mathbf{D}_{v_\kappa}) - dist(\mathbf{D}_t,\mathbf{D}_{v_j})}{dist(\mathbf{D}_t,\mathbf{D}_{v_\kappa}) - dist(\mathbf{D}_t,\mathbf{D}_{v_1})}
@@ -1464,8 +1465,8 @@ Besides of these methods for the weight assignment is possible to set the weight
 When each element $Y_t$ of the time series take elements $Y_t \in A$ from any alphabet $A$, where $A$ contains symbols used as labels rather than scalar values, we call the time series qualitative. For example, classification labels for the identification of certain patterns associated with any class. Since these values are not related to any magnitude, the metric to measure the distance must considers only the qualitative differences of the elements of the delay vector $\mathbf{D}_t$. For this purpose, the Hamming distance is a suitable metric to measure the difference between two sequences of labels. The Hamming distance is shown in \ref{hamming}
 
 \begin{equation}\label{hamming}
-dist (X,Y) = \frac{\sum_{i=1}^{m}{hamming(x_i,y_i)}}{m}
-\end{equation} where $X = \{x_1,\dots,x_m\}$  and $Y = \{y_1,\dots,y_m\}$ are \textit{label} vectors where $\mathbf{X} , \mathbf{Y} \in A^m$ are labels of length $m$ and  the distance is evaluated as presented in Equation \ref{hamming2}
+dist (\mathbf{x},\mathbf{y}) = \frac{\sum_{i=1}^{m}{hamming(x_i,y_i)}}{m}
+\end{equation} where $\mathbf{x} = \{x_1,\dots,x_m\}$  and $\mathbf{y} = \{y_1,\dots,y_m\}$ are \textit{label} vectors where $\mathbf{x} , \mathbf{y} \in A^m$ are sequence labels of length $m$ and  the distance is evaluated as presented in Equation \ref{hamming2}
 
 \begin{eqnarray}\label{hamming2}
   hamming (x,y) = \begin{cases}
@@ -1478,37 +1479,37 @@ dist (X,Y) = \frac{\sum_{i=1}^{m}{hamming(x_i,y_i)}}{m}
 The estimation of the next $h$ labels is performed by means of the statistical mode $Mo$ (Equation \ref{estimatingModes})
 
 \begin{equation}\label{estimatingModes}
-	\hat{Y}_{t+h \Delta n } = Mo (\{Y_{t + h \Delta n}\}_{j=1}^{k})
-\end{equation} where $\hat{Y}_{t+h \Delta n}$ is the forecasted value at time t given by the mode of the set $\{Y_{t + h \Delta n}\}_{j=1}^{k}$ produced by the nearest neighbors and $h \Delta n$ takes the prediction horizon values from $1$ to $h$. This scheme is also known as majority vote, studied deeply by Bon Boyer and J. Strother Moore \cite{Boyer1991}. The scheme also has important applications in multi-model classification systems (\cite{Nipkow2011}, \cite{SCM02} \cite{Fre95}).
+	\hat{Y}_{t+h \Delta n } = Mo (\{Y_{t + h \Delta n}\}_{j=1}^{\kappa})
+\end{equation} where $\hat{Y}_{t+h \Delta n}$ is the forecasted value at time t given by the mode of the set $\{Y_{t + h \Delta n}\}_{j=1}^{\kappa}$ produced by the nearest neighbors and $h \Delta n$ takes the prediction horizon values from $1$ to $h$. This scheme is also known as majority vote, studied deeply by Bon Boyer and J. Strother Moore \cite{Boyer1991}. The scheme also has important applications in multi-model classification systems (\cite{Nipkow2011}, \cite{SCM02} \cite{Fre95}).
 
 
 
-where $\hat{Y}_{t+h \Delta n}$ is the forecasted value at time $t$ given by the mode of the set $\{Y_{t + h \Delta n}\}_{j=1}^{k}$ produced by the nearest neighbors and $h \Delta n$ takes the prediction horizon values from $1$ to $h$.
+%where $\hat{Y}_{t+h \Delta n}$ is the forecasted value at time $t$ given by the mode of the set $\{Y_{t + h \Delta n}\}_{j=1}^{\kappa}$ produced by the nearest neighbors and $h \Delta n$ takes the prediction horizon values from $1$ to $h$.
 
 
 
 
 \subsection{Simple Nonlinear Filter}
 
-A filter is a function that replaces a noisy measurement by a new value with less noise and closer to the real value. In time series, filters are useful for removing noise in order to find a dynamic structure in a system. The Simple Nonlinear Filter presented in the book of Nonlinear time series analysis by H. Kantz \cite{Kantz2004} is an algorithm for noise reduction of nonlinear time series. This algorithm is based on finding similar pat- terns of any section of the time series. Once similar patterns are found, the average of these components is computed and the studied point is replaced by a new filtered point.
+A filter is a function that replaces a noisy measurement by a new value with less noise, and closer to the real value. In time series, filters are useful for removing noise in order to find a dynamic structure in a system. The Simple Nonlinear Filter presented in the book of Nonlinear time series analysis by H. Kantz \cite{Kantz2004}, is an algorithm for noise reduction of nonlinear time series. This algorithm is based on finding similar pat- terns of any section of the time series. Once similar patterns are found, the average of these components is computed and the studied point is replaced by a new filtered point.
 
 The raw data might contain noisy information in the time series. The recent raw data input is processed in real time and the filter should pro- vide a new value with a reduced amplitude of the noise component. The noise filter tries to identify the data by decomposing it into two components: the signal structure and random fluctuations. This is presented as an additive superposition of the two components in Equation \ref{superposition}
 
 
 \begin{equation}\label{superposition}
-	x_{t+1} =  s_{t+1}+ \epsilon_{t+1}
-\end{equation} where $s_t$ is the noise free signal and $\epsilon_t$ is random noise with null autocorrelations.
+	Y_{t+1} =  s_{t+1}+ \eta_{t+1}
+\end{equation} where $s_t$ is the noise-free signal and $\eta_t$ is random noise with null autocorrelations.
 
-In order to recover the signal $s_t$ from the raw (and possibly noisy) signal $x_{t}$ it is necessary the availability of a function $\hat{f}$ that processes the data 
-$\{ x_{t-m+1},\dots,x_{t}\}$. The ideal noise filter must satisfies the Equation \ref{noiseFilterRequirement}
+In order to recover the signal $s_t$ from the raw (and possibly noisy) signal $Y_{t}$, it is necessary the availability of a function $\hat{f}$ that processes the data 
+$\{ Y_{t-m+1},\dots,Y_{t}\}$. The ideal noise filter must satisfies Equation \ref{noiseFilterRequirement}
 
 \begin{equation}\label{noiseFilterRequirement}
-	s_{t+1} - f(x_{t-m+1},\dots,x_{t}) = 0
-\end{equation} which it is an equivalence approximated by replacing the $t$-th value by the middle $m/2$ average value of the nearest neighbors vectors. This function $\hat{f}$ is given by the Equation \ref{filter2}
+	s_{t+1} - f(Y_{t-m+1},\dots,Y_{t}) = 0
+\end{equation} which it is an equivalence approximated by replacing the $t$-th value by the middle $m/2$ average value of the nearest neighbors vectors. This function $\hat{f}$ is given by Equation \ref{filter2}
 
 \begin{equation}\label{filter2}
-	\hat{s}_{t_0-\lceil m/2 \rceil} =  \frac{1}{|U_\epsilon ({x}_{t_0})|} \sum_{x_{t} \in U_\epsilon (x_{{t}_0})} x_{t-  \lceil m/2 \rceil }
-\end{equation} where $\hat{s}_{(t)_0-\lceil m/2 \rceil)}$ is the estimated \textit{noiseless} value and $U_{\epsilon (x_{{t}_0})}$ is the set representing the neighbors close to $x_{t_0}$.
+	\hat{s}_{t_0-\lceil m/2 \rceil} =  \frac{1}{|U_\in ({Y}_{t_0})|} \sum_{Y_{t} \in U_\in (Y_{{t}_0})} x_{t-  \lceil m/2 \rceil }
+\end{equation} where $\hat{s}_{(t)_0-\lceil m/2 \rceil)}$ is the estimated \textit{noiseless} value and $U_{\in (Y_{{t}_0})}$ is the set representing the neighbors close to $Y_{t_0}$.
 
 
 
@@ -1520,21 +1521,19 @@ $\{ x_{t-m+1},\dots,x_{t}\}$. The ideal noise filter must satisfies the Equation
 
 In machine learning, artificial neural networks (ANN) are computational models inspired in the biological neural networks applied to solve engineering problems as clustering, function modelling, regression and system identification for control \cite{Hoskins}, \cite{MurJoh97}. For the purpose of this thesis we are interested in the prediction capabilities of these kind of models.
 
-A basic ANN is composed by an input layer of same size as the input vector, a hidden layer that weighs the result of applying a certain basis function to each element of the input vector, and the output vector that is the weighted sum of the values from the hidden layer. Radial Basis Function Artificial Neural Networks (RBF-ANN) are a kind of artificial neural networks with the characteristic of using Radial Basis Functions in the neurons of its hidden layer \cite{Orr1996}.
+A basic ANN is composed by an input layer of same size as the input vector, a hidden layer that weighs the result of applying a certain basis function to each element of the input vector, and the output vector is the weighted sum of the values from the hidden layer. Radial Basis Function Artificial Neural Networks (RBF-ANN) are a kind of artificial neural networks with the characteristic of using Radial Basis Functions in the neurons of its hidden layer \cite{Orr1996}.
 
 
-The Radial Basis Functions (RBF) are monotonically decreasing or increasing real-valued functions that depend just on the distance between the origin (or center) $\mu$ and another other point $x$. The center $\mu$, the distance $r$ and the radius or width $ \sigma $  the parameters of a RBF.
+The Radial Basis Functions (RBF) are monotonically decreasing or increasing real-valued functions that depend just on the distance between the origin (or center) $\mu$ and another other point $\mathbf{x}$. The center $\mu$, the distance $r$ and the radius or width $ \sigma $  the parameters of a RBF.
 
-Therefore a RBF function $\psi(x, \mu)$ computes an associated value with the distance $r = ||x -\mu||^2$ . This value is the maximum when the distance, $r$, is the minimum, and the minimum value when $r$ tends to infinity. This property makes that these kind of functions produce higher response for the values in the neighborhood close to the centre.
+Therefore a RBF function $\psi(\mathbf{x}, \mu)$ computes an associated value with the distance $r = ||\mathbf{x} -\mu||^2$ . This value is the maximum when the distance, $r$, is the minimum, and the minimum value when $r$ tends to infinity. This property makes that these kind of functions produce higher response for the values in the neighborhood close to the centre.
 
 Particularly, the RBF for the ANN considered in this work is the Gaussian Radial Basis that is one of the most used RBF functions for general purposes and it is given by Equation \ref{rbf}
 
 
 \begin{equation}\label{rbf}
-\psi_j(x) = exp \left(-\frac{||x-\mu_j||^2}{2 \sigma^2_j} \right)
-\end{equation} where $x$ is the input vector, $\mu$ is the center of the function, and $\sigma$ is the width of the exponential function.
-
-The mathematical model of the RBF-ANN can be expressed as follows
+\psi_j(\mathbf{x}) = exp \left(-\frac{||\mathbf{x}-\mu_j||^2}{2 \sigma^2_j} \right)
+\end{equation} where $\mathbf{x}$ is the input vector, $\mu$ is the center of the function, and $\sigma$ is the width of the exponential function. The mathematical model of the RBF-ANN can be expressed as follows
 
  %tha its architecture is composed just by three layers; the input, the hidden and output layer, and the weights are optimized using gradient based algorithms assuming that the fixed widths of the radial basis are given a priori for each neuron.
 %A basic ANN is composed by an input layer of same size as the input vector, a hidden layer that weight the result of applying a certain basis function to each element of the input vector, and the output vector that is the weighted sum of the values from the hidden layer. Radial Basis Function Artificial Neural Networks (RBF-ANN) is a kind of artificial neural networks with the characteristic of using Radial Basis Functions in the neurons of its hidden layer \cite{Orr1996}.
@@ -1544,12 +1543,12 @@ The mathematical model of the RBF-ANN can be expressed as follows
 
 
 \begin{equation}\label{ann}
-f_k(x) = \sum_{j=0}^M w_{kj}\psi_j(x)
-\end{equation} where $w_{kj}$ is the weight of the $j$-th neuron and the $k$-th output, $M$ is the total number of hidden neurons, $f_k(x)$ is the $k$-th output layer of the neural network and $\psi$ is a radial basis function. The weights $\mathbf{w}$ in Equation \ref{ann} are optimised to minimise Equation \ref{of}
+f_k(\mathbf{x}) = \sum_{j=0}^M w_{kj}\psi_j(\mathbf{x})
+\end{equation} where $w_{kj}$ is the weight of the $j$-th neuron and the $k$-th output, $M$ is the total number of hidden neurons, $f_k(\mathbf{x})$ is the $k$-th output layer of the neural network and $\psi$ is a radial basis function. The weights $\mathbf{w}$ in Equation \ref{ann} to minimise Equation \ref{of}
 
 \begin{equation}\label{of}
-\underset{\mathbf{w}}{\text{minimise}} \sum_{i=1}^N (\mathbf{\mathbf{Y}}_i-\hat{\mathbf{Y}}_i)^2
-\end{equation} where $\mathbf{w}$ is the set of weights that minimise Equation \ref{of} given the $\sigma$ widths and $\mu$ centers. $N$ is the total number of samples $\mathbf{x}$, $\mathbf{\hat{Y}_i}$ is the mapping produced by the artificial neural network in Equation \ref{ann} and ${\mathbf{Y}_i}$ is the actual output associated with the input $\mathbf{x_i}$.
+\underset{\mathbf{w}}{\text{arg min}} \sum_{i=1}^N (\mathbf{\mathbf{y}}_i-\hat{\mathbf{y}}_i)^2
+\end{equation} where $\mathbf{w}$ is the set of weights that minimises Equation \ref{of} given the $\sigma$ widths and $\mu$ centers. $n$ is the total number of samples $\mathbf{x}$ of the training set, $\mathbf{\hat{y}_i}$ is the mapping produced by the artificial neural network in Equation \ref{ann} and ${\mathbf{y}_i}$ is the actual output associated to input $\mathbf{\mathbf{x}}_i$.
 
 
 
@@ -1595,7 +1594,7 @@ RMSE =\sqrt{    \frac{\sum_{i=1}^n   e(i)^2 }{n} }
 
 \end{itemize} 
 
-The reference index for comparing the performance of the different algorithms for different prediction horizon values $h$, the average $RMSE_h$ is used. It is defined by Equation \ref{MRMSE}.
+The average $RMSE_h$ is a reference index for comparing the performance of the different forecasting algorithms at different prediction horizon values $h$. It is defined by Equation \ref{MRMSE},
 
 %Since in forecasting models often is required to know the performance predicting several steps ahead these indexes are generalised for this end. To measure the accuracy $h$ steps ahead of the forecasting model $n$ is substituted by $h$ in any error indicator formula. The reference index for comparing the performance of the different algorithms for different step aheads $h$, the average $RMSE_h$ is used. It is defined by Equation \ref{MRMSE}.
 
@@ -1626,23 +1625,23 @@ A clustering algorithm is a method that groups a set of vectors according to a s
 
 \subsection{k-Means Clustering}
 %http://stats.stackexchange.com/questions/10540/how-to-interpret-mean-of-silhouette-plot
-The k-means algorithm is a data mining clustering method based on minimising the mean distance of each centroid to a set of selected data points according to their distances. The centroids represent different classes of data that are used as prototypes. The k-means algorithm tries to minimise the objective function described as shown in Equation \ref{kmeans2}
+The k-means algorithm is a data mining clustering method based on minimising the mean distance of each centroid to a set of selected data points according to their distances. The centroids represent different classes of data, and are used as prototypes. The k-means algorithm tries to minimise the objective function described as shown in Equation \ref{kmeans2}
 % is the objective function to find those centroids $\mu$ that minimises the mean distance .
 
 
 \begin{equation}\label{kmeans2}
-\underset{ \{ \mu_{i} \}_1^k }{\text{arg min}} \sum_{nc=1}^k \sum_{x\in X_{i} }||x-\mu_{i}||^2
-\end{equation} where $X=\{x_i,\dots,x_n\}$ is the set of objects to be classified, $\mu_i$ is the centroid to be optimised, and $k$ is the number of clusters contained in the data set. Solving the k-means optimisation in Equation ({\ref{kmeans2}) is NP-hard but in practice it can be solved efficiently with the 2-step Lloyd's algorithm described by means of equations (\ref{kms1})  and (\ref{kms2}). When the centroids are initialised (random initialisation is an accepted strategy), the next step is to update the next position of the centroids $\mu_k$ using the Equation:
+\underset{ \{ \mu_{i} \}_1^k }{\text{arg min}} \sum_{i=1}^k \sum_{x\in \mathbf{x} }||x-\mu_{i}||^2
+\end{equation} where $\mathbf{x}=\{x_1,\dots,x_n\}$ is the set of objects to be classified, $\mu_i$ is the centroid to be optimised, and $k$ is the number of clusters contained in the data set. Solving the k-means optimisation in Equation ({\ref{kmeans2}) is NP-hard but in practice it can be solved efficiently with the 2-step Lloyd's algorithm described by means of equations (\ref{kms1})  and (\ref{kms2}). When the centroids are initialised (random initialisation is an accepted strategy), the next step is to update the next position of the centroids $\mu_i$ using Equation:
 
 
 
 \begin{equation}\label{kms1}
- C_k = \{x_n: ||x_n-\mu_k|| \leq \forall ||x_n-\mu_l||\}
-\end{equation} where $C_k$ is the number of objects belonging to the centroid $\mu_k$, defined by the minimum distance given by $||x_n-\mu_k||$ over all the centroids and the update is computed by the Equation %Equation (\ref{kms2})
+ \mathcal{C}_i = \{\mathbf{x}_n: ||\mathbf{x}_n-\mu_i|| \leq \forall ||x_n-\mu_l||\}
+\end{equation} where $ \mathcal{C}_i$ is the set of objects belonging to centroid $\mu_i$, defined by the minimum distance given by $||\mathbf{x}_n-\mu_i||$ over all the centroids and the update is computed by Equation %Equation (\ref{kms2})
 
 \begin{equation}\label{kms2}
- \mu_{k} = \frac{1}{C_k} \sum_{x_n \in C_k} x_n
-\end{equation} where $\mu_{k}$ is the updated centroid generated by the arithmetic mean of the objects in $C_k$. In order to select the most suitable number of classes $k$ that fits better with the data, auxiliary methods to measure and validate the quality the data separation among classes might be used.
+ \mu_{i} = \frac{1}{|\mathcal{C}_i|} \sum_{x \in \mathcal{C}_i} x
+\end{equation} where $\mu_{i}$ is the updated centroid generated by the arithmetic mean of the objects in $\mathcal{C}_i$. In order to select the most suitable number of classes $k$ that fits better the data, auxiliary methods to measure and validate the quality the data separation among classes might be used.
 %\section{Nearest Neighbor Rule}
 	
 %K-nearest neighbors is a simple but powerful learning non parametric algorithms that do not require training. It is useful for clustering and classification  data. Despite of its simplicity it has interesting properties and guarantees that make KNN suitable for the implementation in some situations like the lower bounded error by the Bayes Error Rate. The Bayes error rate gives a statistical lower bound on the error achievable for a given classification problem and associated choice of features. \cite{Tumer2003}. KNN can be used for density estimation and classification.
@@ -1721,29 +1720,29 @@ The k-means algorithm is a data mining clustering method based on minimising the
 
 
 
-In order to find the best separation of classes after the execution of a clustering algorithm, an index that indicates how well the clusters are separated is used. Depending on the characteristics of the data the clustering algorithm for separating the data in groups with its number of clusters $K$. $K$ is chosen from a set of possible values $K_{min} < K < K_{max}$. Once the clustering algorithm is executed an indicator of quality $Q_k$ is associated with the clustered data in $K$ clusters. The criteria depends on the kind of index, it might be the maximum value of the indicator as expressed by Equation (\ref{q2}). 
+In order to find the best separation of classes after the execution of a clustering algorithm, an index that indicates how well the clusters are separated is used. Depending on the characteristics of the data the clustering algorithm for separating the data in groups with its number of clusters $k$. The parameter $k$ is chosen from a set of possible values $K_{test} =\{1,\dots,k,\dots, k_{max}\}$. Once the clustering algorithm is executed, an indicator of quality $\mathcal{Q}_k$ is associated with the clustered data in $k \in K_{test}$ clusters. The criteria depends on the kind of index, it might be the maximum value of the indicator as expressed by Equation (\ref{q2}). 
 
 
 % 
 
 \begin{eqnarray}\label{q2}
-  \underset{k \in K }{\text{arg max}} \text{ } Q_k
+  \underset{k \in K_{test} }{\text{arg max}} \text{ } \mathcal{Q}_k
 \end{eqnarray} Also the minimum value of the indicator as shown in Equation (\ref{q1}) 
 
 \begin{eqnarray}\label{q1}
-  \underset{k \in K }{\text{arg min}} \text{ } Q_k
-\end{eqnarray} or the $K_k$ that produces the biggest difference respecting $K_{k-1}$ as shown in Equation (\ref{q3})
+  \underset{k \in K_{test} }{\text{arg min}} \text{ } \mathcal{Q}_k
+\end{eqnarray} or the $K_{test,k}$ that produces the biggest difference respecting $K_{test,k-1}$ as shown in Equation (\ref{q3})
 
 
 
 
 \begin{eqnarray}\label{q3}
-  \underset{k \in K }{\text{arg max}} \text{ } Q_k - Q_{k-1}
-\end{eqnarray} where $Q_k$ is defined by the Equation (\ref{q4})
+  \underset{k \in K_{test} }{\text{arg max}} \text{ } \mathcal{Q}_k - \mathcal{Q}_{k-1}
+\end{eqnarray} where $\mathcal{Q}_k$ is defined by Equation (\ref{q4})
 
 \begin{eqnarray}\label{q4}
- Q_k = Q(P,k)
-\end{eqnarray} where $P$ is the partitioned data, $k$ is the number of clusters in $P$, and $Q$ is the function that evaluates the index for $P$ using any algorithm. In the literature are found a plentiful of quantitative indexes for evaluating the clustering quality. A good survey with a good number clustering criteria is found in \cite{http://goo.gl/WEjjt4}. 
+ \mathcal{Q}_k = \mathcal{Q}(\mathcal{P},k)
+\end{eqnarray} where $\mathcal{P}$ is the partitioned data, $k$ is the selected number of clusters in $\mathcal{P}$, and $\mathcal{Q}$ is the function that evaluates the index for $\mathcal{P}$ using any algorithm. In the literature are found a plentiful of quantitative indexes for evaluating the clustering quality. A good survey with a good number clustering criteria is found in \cite{http://goo.gl/WEjjt4}. 
 
 
 
@@ -1758,37 +1757,37 @@ In clustering analysis, intuitive ideas are adopted for the development of clust
 
 The silhouette method is an algorithm to compute a separability coefficient developed by Peter J. Rousseauw \cite{Rousseeuw1987} inspired by the human intuition of clustering and classification. The silhouette coefficient is reliable in compact and clearly separated clusters. The silhouette method requires the data set partitioned in $k-$ clusters and the set of proximities between all the objects.
 
-To measure the silhouette coefficient we define $s(i)$ as the dissimilarity distance of the object $i$. $A$ is the cluster to which $i$ belongs. The average similarity of i with the other $j$ objects in $A$ when a cluster $A$ contains several objects is computed and expressed in Equation \ref{disim} and \ref{disim2}.
+To measure the silhouette coefficient we define $\mathrm{s}(i)$ as the dissimilarity distance of object $i$. $\mathrm{A}$ is the cluster to which object $i$ belongs. The average similarity of $i$ with the other $j$ objects in $\mathrm{A}$ is computed and expressed in Equation \ref{disim} and \ref{disim2}.
 
 
 \begin{equation}\label{disim}
-a(i) = \frac{1}{ |A|-1 }  \sum_{j \in A \text{ and } i \neq j} d(i,j)
+\mathrm{a}(i) = \frac{1}{ |\mathrm{A}|-1 }  \sum_{j \in \mathrm{A} \text{ and } i \neq j} d(i,j)
 \end{equation}
 
 
 
 \begin{equation}\label{disim2}
-	b(i) =  \text{minimum } d(i,B)
-\end{equation} where $d(i,B)$ is the set of all similarity measures between $i$ and objects $j \in B$. $b(i)$ is the minimum similarity measure of the nearest cluster $B \neq A$. With these definitions we are able to compute the individual silhouette coefficient for each object $i$ with the Equation \ref{silhouette}.
+	\mathrm{b}(i) =  \text{minimum } d(i,\mathrm{B})
+\end{equation} where $d(i,\mathrm{B})$ is the set of all similarity measures between $i$ and objects $j \in \mathrm{B}$. $\mathrm{b}(i)$ is the minimum similarity measure of the nearest cluster $\mathrm{B}\neq \mathrm{A}$. With these definitions we are able to compute the individual silhouette coefficient for each object $i$ using Equation \ref{silhouette}.
 
 
 \begin{equation}\label{silhouette}
- s (i) =  \frac{b(i)-a(i)}{max \{a(i),b(i)\} }
+ \mathrm{s}| (i) =  \frac{\mathrm{b}(i)-\mathrm{a}(i)}{max \{\mathrm{a}(i),\mathrm{b}(i)\} }
 \end{equation}
 
 Finally the average silhouette coefficient is given by Equation \ref{silhouette2}.
 
 
 \begin{equation}\label{silhouette2}
-\frac{1}{N}\sum_{i=1}^N s (i)
+\frac{1}{n}\sum_{i=1}^n \mathrm{s} (i)
 \end{equation}
 
-In many real cases, there exist the possibility of having not perfectly separated clusters having mixed clusters, in this case the output of the Equation \ref{silhouette} might be negative. The meaning of this is that there is an intrusive object inside the set $A$ belonging actually to another cluster. For that reason $b(i)$ can be substituted by the mean of all the distances of the objects $i \in A$ with the objects $j \in B$.
+In many real cases, there exists the possibility of having not perfectly separated clusters having mixed clusters, in this case the output of Equation \ref{silhouette} might be negative. The meaning of this is that there is an intrusive object inside the set $\mathrm{A}$ belonging actually to another cluster. For that reason $\mathrm{b}(i)$ can be substituted by the mean of all the distances of the objects $i \in \mathrm{A}$ with the objects $j \in \mathrm{B}$.
 
 
 \begin{equation}
-	b(i) =  \frac{1}{ |B|-1 }  \sum_{j \in B \text{ and } i \neq j} d(i,j)
-\end{equation} where $B$ is the closest cluster to the object $i$ and $d(i,B)$  is the set of dissimilarity distances between $i$ and the $j$ objects contained in $B$.
+	\mathrm{b}(i) =  \frac{1}{ |\mathrm{B}|-1 }  \sum_{j \in \mathrm{B} \text{ and } i \neq j} d(i,j)
+\end{equation} where $\mathrm{B}$ is the closest cluster to the object $i$ and $d(i,\mathrm{B})$  is the set of dissimilarity distances between $i$ and the $j$ objects contained in $\mathrm{B}$.
 
 
 \subsection{Feature Extraction}
@@ -1807,7 +1806,7 @@ The feature extraction is a kind of data processing to obtain meaningful charact
 
 %purpose analogously to the correlation and autocorrelation methods for linear times series analysis.% PCA (Principal component analysis) is used often in classical data analysis for data discrimination. 
 
-\item \textbf{Nonlinear expansion:} When the data is too complex, is common to transform the data to a higher dimension. This idea is applied to nonlinear time series where observing just one variable in unidimensional space is possible to reconstruct the trajectory in a higher dimensional space. The theory of machine learning classifiers such as ANN and SVM provides the possibility of implementing a set of hidden neurons with nonlinear activation functions to transform or map the input data in a nonlinear space. For the Support Vector Machines the implementation of kernel tricks is useful also for transforming the dimension and shape of the original feature space of the data to another that improves the performance. Examples of applications exploring the nonlinear relationship of the natural data are found in \cite{CLX11} and \cite{She05}.
+\item \textbf{Nonlinear expansion:} When the data is too complex, is common to transform the data to a higher dimension. This idea is applied to nonlinear time series, where observing just one variable in unidimensional space, is possible to reconstruct the trajectory in a higher dimensional space. The theory of machine learning classifiers as ANN and SVM provides the possibility of implementing a set of hidden neurons with nonlinear activation functions to transform or map the input data in a nonlinear space. For the Support Vector Machines the implementation of kernel tricks is useful also for transforming the dimension and shape of the original feature space of the data to another that improves the performance. Examples of applications exploring the nonlinear relationship of the natural data are found in \cite{CLX11} and \cite{She05}.
 %[Figura de ejemplo series de tiempo]
 
 \item \textbf{Feature discretisation:} For dealing with computational complexity, some algorithms require to discretise the continuous model or data. For example, for the implementation of a dynamical system for simulation in MPC for being solved by computers or micro controllers since the continuous characterisation of the model is intractable for computers. An important article about discretization of partial differential equations and discretization of continuous attributes as preprocessing step for machine learning are found in \cite{BWZ08} and \cite{CGB96}
@@ -1911,7 +1910,7 @@ The steps involved in the off-line \textbf{MMP} training are:
 \item \textbf{Decomposition}: The training set is organised in samples $S$ of the time series given by the \textbf{Split} Module. If needed, the output of this module is transformed to another feature space by the means of \textbf{Feature Extraction} module responsible of mapping the vectors $S$ into vector $S'$ with Equation \ref{map2}
 
 \begin{equation}\label{map2}
-\mathds{\phi}:S \mapsto S'
+\mathds{\psi}:S \mapsto S'
 \end{equation}
 
 \item \textbf{Classification}: This step includes the \textbf{Pattern Classifier} module for classifying the split time series $S$ (if the feature spaces is transformed, then the classification is performed with the transformed vectors $S'$) extracted by the \textbf{Feature Extraction} module in order to generate labeled samples $LS$ that include the belonging class. The classified labeled samples $LS$ are formatted by the \textbf{Data Formatting} module that generates training sample vectors $TS$ that contain input-output training information with the associated class attached.
@@ -2005,13 +2004,13 @@ S_i= \{Y_{(\tau \cdot i - m + 1)},\dots,Y_{\tau \cdot i },\dots ,Y_{ \tau \cdot 
 				\label{splitting}
 \end{figure}
 
-\subsubsection{\textit{Identification and training:}} The objective of the identification analysis is to detect the number of different modes in the samples $\mathbf{S}$. The samples $\mathbf{S}$ are classified into a suitable number of classes $k$ using a clustering algorithm to group them according to their similarity. Then a local forecast model is trained with classified data for each specific mode. In order to choose a number of clusters $k$, the classification is validated by maximizing the mean silhouette coefficient shown in Equation \ref{silhouette}. When the \textbf{Feature Extraction} module is implemented, the \textbf{Pattern Classifier} uses the samples $S'$ that are transformed in the same feature space to classify $S$. After the classification of $S$, labeled samples $LS_i =  \{ K_i,S_i \}$ are obtained where $K_i \in \{ 1,\dots, k\}$ are the possible labels that $K_i$ can take. Then, the class information is incorporated using extended input vectors that include the $m$ last observations concatenated with the codified class information. The procedure for generating training samples $\mathbf{TS}$ is implemented in the \textbf{Data Formatting} module. To generate the training samples $\mathbf{TS}$,  a sliding window of size $m+h$ is used to obtain from the labeled samples $\mathbf{LS}$ the training samples $\mathbf{TS}=\{ \{ \mathbf{K}' , \mathbf{Input} \},  \mathbf{y} \}$ where $\mathbf{K}' = \{\mathbb{I}_{K,1}, \dots ,\mathbb{I}_{K,k} \}$ is the codification of the $k-th$ class using the $K-th$ row of the identity matrix $\mathbb{I}_{k \times k}$ as shown in
+\subsubsection{\textit{Identification and training:}} The objective of the identification analysis is to detect the number of different modes in the samples $\mathbf{S}$. The samples $\mathbf{S}$ are classified into a suitable number of classes $k$ using a clustering algorithm to group them according to their similarity. Then a local forecast model is trained with classified data for each specific mode. In order to choose a number of clusters $k$, the classification is validated by maximizing the mean silhouette coefficient shown in Equation \ref{silhouette}. When the \textbf{Feature Extraction} module is implemented, the \textbf{Pattern Classifier} uses the samples $S'$ that are transformed in the same feature space to classify $S$. After the classification of $S$, labeled samples $LS_i =  \{ C_i,S_i \}$ are obtained where $C_i \in K$ are the possible labels of $C_i$ with $K=\{1,\dots,k\}$. Then, the class information is incorporated using extended input vectors that include the $m$ last observations concatenated with the codified class information. The procedure for generating training samples $\mathbf{TS}$ is implemented in the \textbf{Data Formatting} module. To generate the training samples $\mathbf{TS}$, a sliding window of size $m+h$ is used to obtain from the labeled samples $\mathbf{LS}$ the training samples $\mathbf{TS}=\{ \{ \mathbf{C}' , \mathbf{Input} \},  \mathbf{y} \}$ where $C'_i = \{\mathbb{I}_{C_i,1}, \dots ,\mathbb{I}_{C_i,k} \}$ is the codification of the class in $c_i$ using the $C_i-th$ row of the identity matrix $\mathbb{I}_{k \times k}$ as shown in:
 
 \begin{equation}\label{idm}
 	\begin{bmatrix}
-       K_1 \rightarrow K'_1            \\[0.3em]
+       k_1 \rightarrow k'_1            \\[0.3em]
        \vdots \\[0.3em]
-       K_k \rightarrow K'_k
+       k_{k} \rightarrow k'_{k} 
   	\end{bmatrix}
 		=
 	\begin{bmatrix}
@@ -2025,7 +2024,7 @@ S_i= \{Y_{(\tau \cdot i - m + 1)},\dots,Y_{\tau \cdot i },\dots ,Y_{ \tau \cdot 
 \end{equation}
 
 
-The vector  $ Input_i = \{ S_{i,j}, \dots , S_{i,j+m-1} \} $ is a sequence of $m$ inputs and  $\mathbf{y}_i = \{S_{i,j+m},\dots, S_{i,j+m+h} \}$ is the output or target vector of size $h$ where $j = \{1,\dots,\tau\}$ is the index that moves the sliding window $\tau$ times composing the training set by extending the each input vector to $\mathbf{x_i} = \{K_i, Input_i \}$ obtaining a set of training samples denoted by $\mathbf{TS} = \{\mathbf{x}_i, \mathbf{y}_i \}_i^{N'}$.
+The vector  $ Input_i = \{ S_{i,j}, \dots , S_{i,j+m-1} \} $ is a sequence of $m$ inputs and  $\mathbf{y}_i = \{S_{i,j+m},\dots, S_{i,j+m+h} \}$ is the output or target vector of size $h$ where $j = \{1,\dots,\tau\}$ is the index that moves the sliding window $\tau$ times composing the training set by extending the each input vector to $\mathbf{x_i} = \{C_i, Input_i \}$ obtaining a set of training samples denoted by $\mathbf{TS} = \{\mathbf{x}_i, \mathbf{y}_i \}_i^{N'}$.
 
 
 \subsubsection{Training:} The machine learning method is trained using the training samples $\textbf{TS}$ to optimize the objective function
@@ -2038,34 +2037,34 @@ The vector  $ Input_i = \{ S_{i,j}, \dots , S_{i,j+m-1} \} $ is a sequence of $m
 %\subsubsection{Operational Phase: Implementation of the Multi-Model Predictor Pattern Estimation }
 \subsubsection{Operational Phase}
 
-The operational phase consists in the implementation executing the Multi-Model Predictor.  After training the RBF-ANN, arises the challenge of designing a mechanism for the \textbf{Mode Recognition} module to estimate and discover the current operation mode. For this module a mode discovery based on the nearest neighbor rule using a variable stack of observations is proposed. The idea is based on the exploitation of the current and limited historical information to estimate the belonging class of the observed measurements using the Euclidean distance. The implementation consists in a stack $Z$ of variable size that stores from $m$ to $m+\tau-1$ measurements shown in Equation \ref{stackZ}
+The operational phase consists in the implementation executing the Multi-Model Predictor.  After training the RBF-ANN, arises the challenge of designing a mechanism for the \textbf{Mode Recognition} module to estimate and discover the current operation mode. For this module a mode discovery based on the nearest neighbor rule using a variable queue of observations is proposed. The idea is based on the exploitation of the current and limited historical information to estimate the belonging class of the observed measurements using the Euclidean distance. The implementation consists in a queue $\mathcal{W'}$ of variable size that stores from $m$ to $m+\tau-1$ measurements shown in Equation \ref{stackZ}
 %After detecting and defining the classes in the time series the problem of mode Discovery arises. The mode discovery is a mechanism that should be able to discover, detects, or predict the operation mode for prediction.
 
 
 \begin{eqnarray}\label{stackZ}
  \begin{bmatrix}
-       Z_{1} &   \\[0.3em]
-       Z_{2} &   \\[0.3em]
+       \mathcal{W}_{1} &   \\[0.3em]
+       \mathcal{W}_{2} &   \\[0.3em]
        \vdots &  \\[0.3em]
-        Z_{m+mod(t,\tau)}           &
+        \mathcal{W}_{m+mod(t,\tau)}           &
      \end{bmatrix} = \begin{bmatrix}
        Y_{t-(m+mod(t,\tau))+1} &         \\[0.3em]
        Y_{t-(m+mod(t,\tau))+2} &         \\[0.3em]
        \vdots &  \\[0.3em]
        Y_t
      \end{bmatrix}
-\end{eqnarray} where $Z_1$ is the first element of the stack that stores a delayed measurement $Y_{t-(m+mod(t,\tau))+1}$, and $Z_{m+mod(t,\tau)}$ stores the current measurement $Y_t$. Notice that $Z_1$ is realigned each period defined by $\tau$. In order to simplify the notation, we define $\{ \mathbf{Z} \}^{sup(t)}$ and the prototype vectors $\{ \mathbf{P}_k \}^{sup(t)}$
+\end{eqnarray} where $\mathcal{W}_1$ is the first element of the queue that stores a delayed measurement $Y_{t-(m+mod(t,\tau))+1}$, and $\mathcal{W}_{m+mod(t,\tau)}$ stores the current measurement $Y_t$. Notice that $\mathcal{W}_1$ is realigned each period defined by $\tau$. In order to simplify the notation, we define $\{ \mathcal{W'} \}^{sup(t)}$ and the prototype vectors $\{ \mathbf{P}_k \}^{sup(t)}$
 
 \begin{equation}\label{Z}
-\{ \mathbf{Z} \}^{sup(t)} = \{Z_1, \dots, Z_{sup(t)} \}, \end{equation}
+\{ \mathcal{W}' \}^{sup(t)} = \{\mathcal{W}_1, \dots, \mathcal{W}_{sup(t)} \}, \end{equation}
 
 \begin{equation}\label{P}
 \{ \mathbf{P}_k \}^{sup(t)} = \{P_1^k, \dots, P_{sup(t)}^k \},
-\end{equation}  where  $sup(t)=m+mod(t,\tau)$. The estimation of the belonging class of the current observations in time $t$ stored in $\left. \mathbf{Z} \right|^{sup(t)} $ is performed using the nearest neighbor rule
+\end{equation}  where  $sup(t)=m+mod(t,\tau)$. The estimation of the belonging class of the current observations in time $t$ stored in $\left. \mathcal{W'} \right|^{sup(t)} $ is performed using the nearest neighbor rule
 
  \begin{eqnarray}\label{euclid}
   \underset{k \in K }{\text{arg min}}  \left| \left| \{ \mathbf{P}_k \}^{sup(t)} - \{ \mathbf{Z} \}^{sup(t)}   \right|\right|
-\end{eqnarray} where the class selected is the argument $k$ that minimises the distance between the prototype $\{ \mathbf{P_k} \}^{sup(t)} $ and the current measurement stored in $\{ \mathbf{Z} \}^{sup(t)} $. %The euclidean distance to estimate the most similar class to the the observations
+\end{eqnarray} where the class selected is the argument $k$ that minimises the distance between the prototype $\{ \mathbf{P_k} \}^{sup(t)} $ and the current measurement stored in $\{ \mathcal{W'}  \}^{sup(t)} $. %The euclidean distance to estimate the most similar class to the the observations
 
 
  %The implementation is described by the next Algorithm (\ref{stack}). It is important to mention that depending of the data, the use of any filtered data for performing the pattern estimation might reduce the false neighbors increasing the accuracy in the forecasting.
@@ -2166,11 +2165,11 @@ Y_{floor[(t-\tau*\alpha + 1)/ \tau] \tau}, \dots, Y_{floor(t/\tau) \tau},
 
 \subsubsection{Preparation Phase}
 
-For the preparation phase, the parameters of the qualitative kNN predictor and SARIMA model are tuned using the training data set. The parameters $\epsilon$ and delays $m$ of the qualitative kNN forecasting are found in Equation \ref{hamming}, \ref{hamming2} and \ref{estimatingModes} in Subsection \ref{qualitativeForecasting}.
+For the preparation phase, the parameters of the qualitative kNN predictor and SARIMA model are tuned using the training data set. The parameters $\varepsilon$ and delays $m$ of the qualitative kNN forecasting are found in Equation \ref{hamming}, \ref{hamming2} and \ref{estimatingModes} in Subsection \ref{qualitativeForecasting}.
 
 %The algorithm is found in subsection \ref{sssec:qualitativeForecasting}. The Seasonal ARIMA predictor should be tuned using the training data set.  $\epsilon$ and the delays $m$ for the KNN, and the parameters of the autoregressive (AR) and (MA) parts for the ARIMA model. 
 
-The correlation analysis is required to identify the SARIMA model, and then optimise its parameters with any gradient based parameter estimation algorithm. Once the SARIMA model is obtained. The kNN parameters are adjusted executing exhaustive search bounding the search space for the parameters $\epsilon$ and $m$ with the objective of minimising the $\overline{RMSE}_h$ errors as follows:
+The correlation analysis is required to identify the SARIMA model, and then optimise its parameters with any gradient based parameter estimation algorithm. Once the SARIMA model is obtained. The kNN parameters are adjusted executing exhaustive search bounding the search space for the parameters $\varepsilon$ and $m$ with the objective of minimising the $\overline{RMSE}_h$ errors as follows:
 
 %\ref{modes}
 %\begin{figure}[h!]
@@ -2183,11 +2182,11 @@ The correlation analysis is required to identify the SARIMA model, and then opti
 
 \begin{equation}\label{kNNobjectiveFunction}
 \begin{aligned}
-& \underset{m, \epsilon}{\text{arg min}}
-  \sum_{N=1}^{M}  || \hat{\mathbf{Y}}_\mathbf{N}  - \mathbf{Y}_\mathbf{N} || \\
+& \underset{m, \varepsilon}{\text{arg min}}
+  \sum_{T=1}^{N'}  || \hat{\mathbf{Y}}_{T+1}  - \mathbf{Y}_{T+1} || \\
 %& \text{subject to} \\    & \epsilon, m &
 \end{aligned}
-\end{equation} where $\hat{\mathbf{Y}}_\mathbf{N}$ is the predicted value given by the composition of the qualitative and quantitative forecasting for the next days expressed by
+\end{equation} where $\hat{\mathbf{Y}}_{T+1}$ is the predicted value given by the composition of the qualitative and quantitative forecasting for the next days expressed by
 
 
 
@@ -2199,17 +2198,17 @@ The correlation analysis is required to identify the SARIMA model, and then opti
 
 
 \begin{equation}\label{predictedData}
-\hat{\mathbf{Y}}_\mathbf{N} = \{  \hat{Z}_{N+1} P_{\hat{C}_{N+1}}, \dots, \hat{Z}_{N+\Delta n} P_{\hat{C}_{N+\Delta n}} \}
+\hat{\mathbf{Y}}_{T+1} = \{  \hat{Z}_{T+1} P_{\hat{C}_{T+1}}, \dots, \hat{Z}_{T+\Delta n} P_{\hat{C}_{T+\Delta n}} \}
 \end{equation} 
 
-\noindent and  $\mathbf{Y}_\mathbf{N}$ is the real hourly information (in our application, water consumption) defined by
+\noindent and  $\mathbf{Y}_{T+1}$ is the real hourly information (in our application, water consumption) defined by
 
 
 \begin{equation}\label{realData}
-{\mathbf{Y}}_\mathbf{N} = \{Y_{\tau (N-1)+1},\dots,Y_{\tau N \cdot  \Delta n}  \}
+{\mathbf{Y}}_{T+1} = \{Y_{\tau (T-1)+1},\dots,Y_{\tau T \cdot  \Delta n}  \}
 \end{equation}
 
-\noindent where $\Delta n$ is the $n$-th predicted element. The Figure \ref{predictionSample} shows how the prediction at the smallest basis (hours) is performed along the period (day), using a sliding window of size $h$ covering the subsequence of data from $N+1$ to $N+\tau-1$ in $\tau$ steps. 
+\noindent where $\Delta n$ is the $n$-th predicted element. The Figure \ref{predictionSample} shows how the prediction at the smallest basis (hours) is performed along the period (day), using a sliding window of size $h$ covering the subsequence of data from $T+1$ to $T+\tau-1$ in $\tau$ steps. 
 
 
 \subsubsection{Operational Phase}
@@ -2221,9 +2220,9 @@ In the operational phase, the Multi-Model Predictor architecture presented in th
 as input for transforming the data to allow the extraction and classification of the qualitative patterns performed by the \textbf{Qualitative Feature Extractions} and the aggregated data by the \textbf{Quantitative Feature Extraction} every $\tau$ steps. The sequence of labels $\mathbf{C}$ (Equation \ref{labels}) are processed by the \textbf{Mode Detection} Module to estimate with Hamming distance based kNN, the next pattern to be considered and used by the \textbf{Multi-Model} Module.
 
 
-For the operational control of water distribution networks, it is necessary to have available 24 hour ahead predictions not only in each period $\tau$ but in an hourly basis. For expanding the capability of having the prediction information, kNN estimates 2 modes ahead, and SARIMA predicts two aggregated consumption days described as the Figure \ref{predictionSample}. % obtaining the prediction 
+For the operational control of water distribution networks, it is necessary to have available 24 hour ahead predictions not only in each period $\tau$, but in an hourly basis. For expanding the capability of having the prediction information, kNN estimates 2 modes ahead, and SARIMA predicts two aggregated consumption days described as the Figure \ref{predictionSample}. % obtaining the prediction 
 %$\hat{Y},\dots,\hat{Y}_{N+1}$
-The prediction at any time $t$ is provided by a sliding  window over $\mathbf{\hat{Y}_N}$ shown in Figure \ref{predictionSample} with a desired prediction horizon $h$.
+The prediction at any time $t$ is provided by a sliding  window over $\mathbf{\hat{Y}}_{t+1}$ shown in Figure \ref{predictionSample} with a desired prediction horizon $h$.
 % over the prediction $\{ Y_{N} ,\dots, Y_{N+1} \}$.
 
 
@@ -2511,7 +2510,7 @@ The performance of \textbf{QMMP+kNN} and \textbf{QMMP+NF} depends on the selecte
 \end{figure}
 
 
-The training-validation is divided in datasets $A$ and $B$ taken from the $70\%$ of the total data. For this task the time series $\mathbf{Y}$, are decomposed in its qualitative and qualitative components $\mathbf{Z}$ and $\mathbf{X}$ by using the Equation \ref{quant} and \ref{qual} respectively. The parameter $\tau$ is set to $24$ according to the seasonality observed in the correlation plots of Figure \ref{autocorr01} and \ref{autocorr02}, the qualitative time series $\mathbf{X}$ is classified using k-means. The number of classes is selected according to the maximum silhouette coefficient criteria. Different number of classes are tested with $k = \{1,\dots,10\}$. Their silhouette values are plot in the Figure \ref{silhouetteVals}, where all the time series considered matches with a number of classes $k=2$.
+The training-validation is divided in datasets $\mathrm{A}$ and $\mathrm{B}$ taken from the $70\%$ of the total data. For this task the time series $\mathbf{Y}$, are decomposed in its qualitative and qualitative components $\mathbf{Z}$ and $\mathbf{X}$ by using the Equation \ref{quant} and \ref{qual} respectively. The parameter $\tau$ is set to $24$ according to the seasonality observed in the correlation plots of Figure \ref{autocorr01} and \ref{autocorr02}, the qualitative time series $\mathbf{X}$ is classified using k-means. The number of classes is selected according to the maximum silhouette coefficient criteria. Different number of classes are tested with $K_{test} = \{1,\dots,10\}$. Their silhouette values are plot in the Figure \ref{silhouetteVals}, where all the time series considered matches with a number of classes $k=2$.
  
  
 \begin{figure}[h!]
@@ -2545,7 +2544,7 @@ We consider the calendar $\hat{F}_{cal}$ (Equation (\ref{calendar}) ) and kNN qu
 
 %The performance of the qualitative prediction is validated using two iteration cross validation comparing the prediction errors given by the Equation \ref{qualitativeParametersOpt}.
 
-The cross validation estimates the predictability of the pattern mode of both strategies. The strategy is selected according to the minimisation of the average pattern prediction errors criteria. The two iteration cross validation is performed in this way: the first iteration takes the subset $A$ as the training set and the set $B$ is the validation set, and for the second iteration, $B$ is used as training set and $A$ as the validation set. After finishing the two iterations, the errors obtained are averaged. The results are shown in the Table \ref{crossValidation}. 
+The cross validation estimates the predictability of the pattern mode of both strategies. The strategy is selected according to the minimisation of the average pattern prediction errors criteria. The two iteration cross validation is performed in this way: the first iteration takes the subset $\mathrm{B}$ as the training set and the set $\mathrm{B}$ is the validation set, and for the second iteration, $\mathrm{B}$ is used as training set and $\mathrm{B}$ as the validation set. After finishing the two iterations, the errors obtained are averaged. The results are shown in the Table \ref{crossValidation}. 
 
 
 \begin{table}[htbp]
@@ -2569,7 +2568,7 @@ The cross validation estimates the predictability of the pattern mode of both st
 \caption{Two iteration cross validation for kNN and Calendar mode estimation}
 \label{crossValidation}
 \end{table}
-In both iterations the parameters $m$ and $\epsilon$ defining the length and neighborhood of the qualitative delay vectors of kNN are optimised using the Equation \ref{qualitativeParametersOpt} setting the prediction horizon one day ahead $H=1$ (prediction of one pattern mode ahead).
+In both iterations the parameters $m$ and $\varepsilon$ defining the length and neighborhood of the qualitative delay vectors of kNN are optimised using the Equation \ref{qualitativeParametersOpt} setting the prediction horizon one day ahead $H=1$ (prediction of one pattern mode ahead).
 
 
 
@@ -2582,11 +2581,11 @@ In both iterations the parameters $m$ and $\epsilon$ defining the length and nei
 
 \begin{equation}\label{qualitativeParametersOpt}
 \begin{aligned}
-& \underset{m, \epsilon}{\text{arg min}}
-  \sum_{N=1}^{N'}  dist( \hat{\mathbf{C}}_\mathbf{N}  , \mathbf{C}_\mathbf{N}) \\
+& \underset{m, \varepsilon}{\text{arg min}}
+  \sum_{T=1}^{N'}  dist( \hat{\mathbf{C}}_{T}  , \mathbf{C}_{T}) \\
 %& \text{subject to} \\    & \epsilon, m &
 \end{aligned}
-\end{equation} where $dist$ is the hamming distance since $\mathbf{C}$ is a sequences of labels and the prediction is performed by using the Equation \ref{estimatingModes}. Table \ref{knnparameters} includes the parameters that optimize the prediction with kNN for each iteration. The distance of the neighborhood and size of the delay vector for kNN mode estimator are those that minimises the objective function expressed by Equation (\ref{kNNobjectiveFunction}) subject to $ \epsilon = \{0.01,0.02,\dots,0.1\}$  and $m=\{2,\dots,10\}$.
+\end{equation} where $dist$ is the hamming distance since $\mathbf{C}$ is a sequences of labels and the prediction is performed by using the Equation \ref{estimatingModes}. Table \ref{knnparameters} includes the parameters that optimize the prediction with kNN for each iteration. The distance of the neighborhood and size of the delay vector for kNN mode estimator are those that minimises the objective function expressed by Equation (\ref{kNNobjectiveFunction}) subject to $ \varepsilon = \{0.01,0.02,\dots,0.1\}$  and $m=\{2,\dots,10\}$.
 
 
 \begin{table}[htbp]
@@ -2604,7 +2603,7 @@ In both iterations the parameters $m$ and $\epsilon$ defining the length and nei
 19 &  8 & 9 \\ \hline
 \end{tabular}
 \end{center}
-\caption{$m$ parameters that optimize the mode prediction with kNN. $\epsilon=0.01$ was chosen for all time series}
+\caption{$m$ parameters that optimize the mode prediction with kNN. $\varepsilon=0.01$ was chosen for all time series}
 \label{knnparameters}
 \end{table}
 
@@ -2638,7 +2637,7 @@ For the algorithm \textbf{QMMP+NF} the data set is divided in 3 sets. The prepar
 
 
 
-The parameters $m$, $\epsilon$ and SARIMA structures of the two algorithms are shown in Table \ref{MMPParams} which the search space for the kNN qualitative forecaster are defined by $m=\{1,\dots,20\}$ and $\epsilon=\{0.01,0.02,\dots,1.00\}$. For the noise filter parameters the search space is defined by $ \alpha=\{0,0.1,$ $0.2,\dots, 1 \} $ and $\kappa=\{1,2,\dots,40\}$. All those values are tested using the validation set and selected those that minimize the mean of all the independent $RMSE_h$ described in Equation \ref{MinMSE}.
+The parameters $m$, $\varepsilon$ and SARIMA structures of the two algorithms are shown in Table \ref{MMPParams} which the search space for the kNN qualitative forecaster are defined by $m=\{1,\dots,20\}$ and $\varepsilon=\{0.01,0.02,\dots,1.00\}$. For the noise filter parameters the search space is defined by $ \alpha=\{0,0.1,$ $0.2,\dots, 1 \} $ and $\kappa=\{1,2,\dots,40\}$. All those values are tested using the validation set and selected those that minimize the mean of all the independent $RMSE_h$ described in Equation \ref{MinMSE}.
 
 %\begin{equation}\label{MinMSE}
 %	\underset{  \alpha, \kappa }{\text{arg min}} ||\hat{Y}_{T}-Y_{T}||
@@ -2701,7 +2700,7 @@ The two algorithms are compared with well known forecasting models such as, Doub
 
 %The holidays and weekdays patterns are determined classifying unitary patterns of the training set and taking the corresponding centroids as unitary patterns associated with an activity calendar to perform the daily prediction.
 
-For the Holt-Winters, two parameters associated with two periods are fixed. Since Holt-Winters manages hourly data, $period_1$ and $period_2$ parameters are set to 24 and 168 for the daily and weekly period.
+For the Holt-Winters, two parameters associated with two periods are fixed. Since Holt-Winters manages hourly data, period $\tau_1$ and period $\tau_2$ parameters are set to 24 and 168 for the daily and weekly period.
 For the RBF-ANN, different structures are implemented with 192 neurons in the hidden layer, fixed widths with $\sigma = 1$, and input layer of size 24 and the output layer of size 24 ($h=24$). 
 
 Finally to measure the performance of the algorithms is used the $\overline{RMSE}_{24}$ (Equation \ref{MRMSE}). The $\overline{RMSE}_h$ produced by the \textbf{QMMP}, \textbf{QMMP} \textbf{+NF}, \textbf{QMMP}\textbf{+kNN}, \textbf{RBF-ANN}  and \textbf{DSHW} using the test set for $h=24$ steps ahead, $\alpha$ and $\kappa$ best values for the \textbf{QMMP+NF} are reported in Table \ref{performance}.
@@ -2764,7 +2763,7 @@ Finally to measure the performance of the algorithms is used the $\overline{RMSE
 %\end{table}
 
 
-In order to compare graphically the performance regarding the \textbf{QMMP+NF}, the figures \ref{fig:stacked:1} - \ref{fig:stacked:14} illustrate the improvement that the filter produces: the first column of plots shows the prediction errors $RMSE_{24}$ at each time $t$ in hours along the testing set comparing the performance of the Noise Filter (\textbf{QMMP+NF}) (red line) with the original Qualitative and Quantitative forecasting (\textbf{QMMP}) (Black dotted line) with the pattern mode calendar. For the second column, a prediction sample 48 hours ahead is plot comparing the actual (black line), with the normal (\textbf{QMMP}) (blue dotted line) and filtered predictions (\textbf{QMMP+NF}) (red line). It is observed that the noise filter reduces in general the prediction error since the red line is the most of the time lower than the black line representing the prediction with SARIMA pattern without filtering.
+In order to compare graphically the performance regarding the \textbf{QMMP} \textbf{+NF}, the figures \ref{fig:stacked:1} - \ref{fig:stacked:14} illustrate the improvement that the filter produces: the first column of plots shows the prediction errors $RMSE_{24}$ at each time $t$ in hours along the testing set comparing the performance of the Noise Filter (\textbf{QMMP+NF}) (red line) with the original Qualitative and Quantitative forecasting (\textbf{QMMP}) (Black dotted line) with the pattern mode calendar. For the second column, a prediction sample 48 hours ahead is plot comparing the actual (black line), with the normal (\textbf{QMMP}) (blue dotted line) and filtered predictions (\textbf{QMMP+NF}) (red line). It is observed that the noise filter reduces in general the prediction error since the red line is the most of the time lower than the black line representing the prediction with SARIMA pattern without filtering.
 %The Table \ref{performance} shows a performance improvement of the proposed \textbf{MMP+NF} algorithm minimizing the $\overline{MSE}_{24}$ error respecting \textbf{MMP} and \textbf{RBF-ANN} for all sectors except the sector 10017. Taking the average error of each forecasting method for all tested sectors, the proposed methodology improved the accuracy $\% 19.5$ respecting the \textbf{RBF-ANN}, and $\%12.39$ respecting the \textbf{MMP}.
 
 
@@ -2973,7 +2972,7 @@ The results including the number of clusters selected are indicated in Table \re
   \item A Seasonal ARIMA Pattern (SARIMA) (\textbf{QMMP}) based on the work of \cite{Quevedo2010} with a SARIMA model structure is defined previously in the Table \ref{MMPParams}. 
   
   %$ARIMA(0,1,1) \times$ with  Model Seasonally Integrated with Seasonal $MA(7)$.
-  \item A Double Seasonal Holt-Winters (DSHW) \cite{Kalekar2004} with  period1 and period2 set to 24 and 168 for the daily and weekly period respectively.
+  \item A Double Seasonal Holt-Winters (DSHW) \cite{Kalekar2004} with  period $\tau_1$ and period $\tau_2$ set to 24 and 168 for the daily and weekly period respectively.
   \item A standard RBF Artificial Neural Network \textbf{RBF-ANN} taking $m+k$ inputs and $h$ outputs, with $m=24$.
 \end{itemize}
 
@@ -3224,7 +3223,7 @@ The Table \ref{dailyresults}, shows that \textbf{RBFMMP+OR} is better than \text
 
 \subsection{Discussion}
 
-This approach basically proposes a methodology to train and implement a Multi-Model Predictor with classified temporal data using RBF-ANN for time series with defined periodicity. This approach by introducing the concept of regimes or operation forecasting modes requires a mode recognition mechanism to identify the current mode on-line  . One of the main drawbacks is the selection of a good value for the split point. A short split point value leads to have short prototypes and short overlaps between consecutive segments producing a big number of classes. A big split point leads to have long prototypes maybe difficult to recognise when the number of observations are short producing poor mode estimations and consequently poor predictions (Remember that the split point defines the minimum amount of observations stored in the stack for estimating the current mode). Although it is not the best model for minimising the error for all the time series studied in this thesis, it performs better than the traditional RBF-ANN. The author believes that the use of more sophisticated algorithms for clustering, feature extraction and prediction might improve the performance even more. As future work, other implementations should be studied extending the experimentation with more algorithms such as feature extraction and, dimensionality reduction algorithms. We can conclude the model is suitable for stationary time series presenting defined seasonal patterns along the time.
+This approach basically proposes a methodology to train and implement a Multi-Model Predictor with classified temporal data using RBF-ANN for time series with defined periodicity. This approach by introducing the concept of regimes or operation forecasting modes requires a mode recognition mechanism to identify the current mode on-line  . One of the main drawbacks is the selection of a good value for the split point. A short split point value leads to have short prototypes and short overlaps between consecutive segments producing a big number of classes. A big split point leads to have long prototypes maybe difficult to recognise when the number of observations are short producing poor mode estimations and consequently poor predictions (Remember that the split point defines the minimum amount of observations stored in the queue for estimating the current mode). Although it is not the best model for minimising the error for all the time series studied in this thesis, it performs better than the traditional RBF-ANN. The author believes that the use of more sophisticated algorithms for clustering, feature extraction and prediction might improve the performance even more. As future work, other implementations should be studied extending the experimentation with more algorithms such as feature extraction and, dimensionality reduction algorithms. We can conclude the model is suitable for stationary time series presenting defined seasonal patterns along the time.
 
 
 %\subsection{Conclusions}
@@ -3390,7 +3389,7 @@ With this last figure is finished this Chapter and thesis, concluding that the f
 \appendix
 
 %\include{appendix/A/appA}
-%\include{appendix/B/appB}
+\include{appendix/B/appB}
 %\include{appendix/C/appC}
 
 {\small
