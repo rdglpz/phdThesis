@@ -1761,14 +1761,14 @@ To measure the silhouette coefficient we define $\mathrm{s}(i)$ as the dissimila
 
 
 \begin{equation}\label{disim}
-\mathrm{a}(i) = \frac{1}{ |\mathrm{A}|-1 }  \sum_{j \in \mathrm{A} \text{ and } i \neq j} d(i,j)
+\mathrm{a}(i) = \frac{1}{ |\mathrm{A}|-1 }  \sum_{j \in \mathrm{A} \text{ and } i \neq j} dist(i,j)
 \end{equation}
 
 
 
 \begin{equation}\label{disim2}
-	\mathrm{b}(i) =  \text{minimum } d(i,\mathrm{B})
-\end{equation} where $d(i,\mathrm{B})$ is the set of all similarity measures between $i$ and objects $j \in \mathrm{B}$. $\mathrm{b}(i)$ is the minimum similarity measure of the nearest cluster $\mathrm{B}\neq \mathrm{A}$. With these definitions we are able to compute the individual silhouette coefficient for each object $i$ using Equation \ref{silhouette}.
+	\mathrm{b}(i) =  \text{minimum } dist(i,\mathrm{B})
+\end{equation} where $dist(i,\mathrm{B})$ is the set of all similarity measures between $i$ and objects $j \in \mathrm{B}$. $\mathrm{b}(i)$ is the minimum similarity measure of the nearest cluster $\mathrm{B}\neq \mathrm{A}$. With these definitions we are able to compute the individual silhouette coefficient for each object $i$ using Equation \ref{silhouette}.
 
 
 \begin{equation}\label{silhouette}
@@ -1786,8 +1786,8 @@ In many real cases, there exists the possibility of having not perfectly separat
 
 
 \begin{equation}
-	\mathrm{b}(i) =  \frac{1}{ |\mathrm{B}|-1 }  \sum_{j \in \mathrm{B} \text{ and } i \neq j} d(i,j)
-\end{equation} where $\mathrm{B}$ is the closest cluster to the object $i$ and $d(i,\mathrm{B})$  is the set of dissimilarity distances between $i$ and the $j$ objects contained in $\mathrm{B}$.
+	\mathrm{b}(i) =  \frac{1}{ |\mathrm{B}|-1 }  \sum_{j \in \mathrm{B} \text{ and } i \neq j} dist(i,j)
+\end{equation} where $\mathrm{B}$ is the closest cluster to the object $i$ and $dist(i,\mathrm{B})$  is the set of dissimilarity distances between $i$ and the $j$ objects contained in $\mathrm{B}$.
 
 
 \subsection{Feature Extraction}
@@ -1989,7 +1989,7 @@ In the preparation phase is performed the training of the \textbf{Multi-Model} p
 
 \begin{equation}\label{sects}
 \mathbf{S} = \{ S_1,\dots,S_i,\dots,S_{N'}  \}
-\end{equation} where  $N'$ is the total number of samples defined by $\lfloor \frac{n-h}{\tau}\rfloor$ and $S_i$ is the sample obtained splitting the original time series $\mathbf{Y}$ according to Equation \ref{splitting}  % samples according to the split point that indicates the the number of subsamples belonging to a pattern, number of observations $o$, and prediction horizon $h$. Number of observations $o$ and and the prediction horizon $h$ define the structure of the RBF.
+\end{equation} where  $N'$ is the total number of samples defined by $\lfloor \frac{n-h-m+1}{\tau}\rfloor$ and $S_i$ is the sample obtained splitting the original time series $\mathbf{Y}$ according to Equation \ref{splitting}  % samples according to the split point that indicates the the number of subsamples belonging to a pattern, number of observations $o$, and prediction horizon $h$. Number of observations $o$ and and the prediction horizon $h$ define the structure of the RBF.
 
 \begin{equation}\label{spliting}
 S_i= \{Y_{(\tau \cdot i - m + 1)},\dots,Y_{\tau \cdot i },\dots ,Y_{ \tau \cdot i+h } \}
@@ -2030,7 +2030,7 @@ The vector  $ Input_i = \{ S_{i,j}, \dots , S_{i,j+m-1} \} $ is a sequence of $m
 \subsubsection{Training:} The machine learning method is trained using the training samples $\textbf{TS}$ to optimize the objective function
 
 \begin{equation}\label{of2}
-\underset{\mathbf{w \text{ }}}{\text{minimise}} \sum_{i=1}^N (f(\mathbf{x}_i)-\mathbf{y}_i)^2
+\underset{\mathbf{w \text{ }}}{\text{minimise}} \sum_{i=1}^{N'} (f(\mathbf{x}_i)-\mathbf{y}_i)^2
 \end{equation} where $\mathbf{w}$ is the set of weights that minimises the sum of the squared errors between the estimated output by the neural network denoted by $f(\mathbf{x_i})$ and the real output vectors $\mathbf{y_i}$.
 
 %\sigma \text{ } \mu
@@ -2142,7 +2142,7 @@ The final forecasting is produced by the composition of the predicted qualitativ
 The implementation of this Multi-Model Predictor with a Mode Prediction without any information about the future of the prediction mode, uses a qualitative forecasting model based on kNN. The scheme is described in Figure \ref{qqscheme}.
 \begin{figure}[h!]
 				\centering
-				\includegraphics[trim= 18mm 16mm 12mm 13mm, clip, width=105mm]{figures/generalFrameworkMM.pdf}
+				\includegraphics[trim= 0mm 16mm 15mm 13mm, clip, width=105mm]{figures/generalFrameworkMMFixed.pdf}
 				\caption{Multi-model training process}
 				\label{qqscheme}
 \end{figure}
@@ -2150,7 +2150,7 @@ The implementation of this Multi-Model Predictor with a Mode Prediction without 
 According to Figure \ref{qqscheme}, the observed data so far $\{Y_1,\dots,Y_{floor(t/\tau)\tau}\}$ is received and processed by the \textbf{Qualitative Feature Extraction} module delivering the extracted qualitative information to the \textbf{Mode Recognition} module. On the other hand, the subset of observations
 
 \begin{equation}
-Y_{floor[(t-\tau*\alpha + 1)/ \tau] \tau}, \dots, Y_{floor(t/\tau) \tau},
+Y_{floor[(t-\tau*\acute{\alpha} + 1)/ \tau] \tau}, \dots, Y_{floor(t/\tau) \tau},
 \end{equation}
 
 \noindent (where $\alpha$ constraints the last days to be considered) is processed by the \textbf{Quantitative Feature Extraction} module related directly with the seasonality value used by SARIMA forecasting model. The SARIMA forecasting model is included in the  \textbf{Multi-Model} module. The implementation is composed by the preparation and operational phases using data organised in training and validation sets respectively. The procedures of both phases are described next.
@@ -2198,17 +2198,17 @@ The correlation analysis is required to identify the SARIMA model, and then opti
 
 
 \begin{equation}\label{predictedData}
-\hat{\mathbf{Y}}_{T \tau +1} = \{  \hat{Z}_{T+1} P_{\hat{C}_{T+1}}, \dots, \hat{Z}_{T+h} P_{\hat{C}_{T+h}} \}
+\hat{\mathbf{Y}}_{T \tau +1} = \{  \hat{Z}_{T+1} P_{\hat{C}_{T+1}}, \dots, \hat{Z}_{T+h} P_{\hat{C}_{T+H}} \}
 \end{equation} 
 
 \noindent and  $\mathbf{Y}_{T \tau +1}$ is the real hourly information (in our application, water consumption) defined by
 
 
 \begin{equation}\label{realData}
-{\mathbf{Y}}_{T \tau+1} = \{Y_{\tau (T-1)+1},\dots,Y_{\tau T \cdot  h}  \}
+{\mathbf{Y}}_{T \tau+1} = \{Y_{ T\tau+1},\dots,Y_{T \tau  \cdot  H}  \}
 \end{equation}
 
-\noindent where $h$ is the $h$-th predicted element. The Figure \ref{predictionSample} shows how the prediction at the smallest basis (hours) is performed along the period (day), using a sliding window of size $h$ covering the prediction subsequence data from $(\tau (T-1)+1)$ to $(\tau T \cdot  h)$ in $\tau$ steps. 
+\noindent where $H$ is the $H$-th predicted vector with $\tau$ elements. The Figure \ref{predictionSample} shows how the prediction at the smallest basis (hours) is performed along the period (day), using a sliding window of size $h$ covering the prediction subsequence data from $(\tau (T-1)+1)$ to $(\tau T \cdot  h)$ in $\tau$ steps. 
 
 
 \subsubsection{Operational Phase}
@@ -2228,7 +2228,7 @@ The prediction at any time $t$ is provided by a sliding  window over $\mathbf{\h
 
 \begin{figure}\
 				\centering
-				\includegraphics[width=70mm]{figures/predictionSample.eps}
+				\includegraphics[trim= 30mm 90mm 24mm 20mm, clip, width=70mm]{figures/predictionSampleNormalized.pdf}
 				\caption{Prediction sample}
 				\label{predictionSample}
 \end{figure}
@@ -2265,7 +2265,7 @@ The \textbf{Filter} module is an extension of the the \textbf{Multi-Model Predic
 
 \begin{figure*}[!ht]
   \centering
-  \includegraphics[trim= 10mm 10mm 12mm 13mm, clip, width=110mm]{figures/generalFrameworkMMwithFilterBigger.pdf}
+  \includegraphics[trim= 10mm 10mm 12mm 13mm, clip, width=110mm]{figures/generalFrameworkMMwithFilterBiggerFixed.pdf}
   \caption{Multi-Model Predictor with the Filter Module}
   \label{gsfilter}
 \end{figure*} 
@@ -2315,15 +2315,15 @@ V = \{\forall i \in [1,T], C_i = \hat{C}_{T+1} \}
 \end{equation} where \text{Max} function gets the vector element with the maximum value and it is stored in $\mathbf{s}$. The last occurrence of the predicted mode $\hat{C}_{T+1}$ is used as reference for searching $\kappa$ similar residuals to $R_{\mathbf{s}}$. The residual $R_s$ is selected as the basis for searching and sorting its $\kappa$ similar residuals. In Equation (\ref{sortresiduals}) the vectors $R_{V_l}$ are sorted and then taken the $\kappa$ closets residuals to $R_{\mathbf{s}}$
 
 \begin{equation}\label{sortresiduals}
-	d(R_s,R_{V_{l}}) < d(R_s,R_{V_{l+1}})
-\end{equation} where function $d$ is the Euclidean distance function and $l=\{1,\dots,\kappa-1\}$ are the indexes related to the closets residuals. Once $V$ indexes are ordered, the filter for the next time step $T+1$ is computed by the Equation (\ref{filter}) (that is the simplification of Equation (\ref{filter2}) setting $m=1$).
+	dist(R_s,R_{V_{l}}) < dist(R_s,R_{V_{l+1}})
+\end{equation} where function $dist$ is the Euclidean distance function and $l=\{1,\dots,\kappa-1\}$ are the indexes related to the closets residuals. Once $V$ indexes are ordered, the filter for the next time step $T+1$ is computed by the Equation (\ref{filter}) (that is the simplification of Equation (\ref{filter2}) setting $m=1$).
 
 \begin{equation}\label{filter}
 	F_{T+1} = \frac{1}{k}\sum_{i=1}^{\kappa} R_{v_i}
 \end{equation} The $F_{T+1}$ vector is used as predictor corrector and it is integrated in Equation (\ref{corrector}).
 
 \begin{equation}\label{corrector}
-	\{ \mathbf{\hat{Y}}_{T \tau+i}\}_{i=1}^{H \tau}   =  \{ \mathbf{\hat{Z}}_{T+i} \cdot \mathbf{{P}}_{\hat{C}_{T+i}}+\alpha F_{T+i} \}_{i=1}^{H}
+	\{ {\hat{Y}}_{T \tau+i}\}_{i=1}^{H \tau}   =  \{ \mathbf{\hat{Z}}_{T+i} \cdot \mathbf{{P}}_{\hat{C}_{T+i}}+\alpha F_{T+i} \}_{i=1}^{H}
 \end{equation} where $\alpha \leq 1 $ is a real constant number that weighs the amplitude of the filter signal. Notice that when $\alpha=0$ the filter has no effect, and when $\alpha=1$ the filter might over re-adjust the prediction producing poor accuracy forecast. To estimate a value for the $\alpha$ parameter, the \textbf{MMP+NF} is executed with different $\alpha$ and $\kappa$ values using the validation set and are selected those that minimize the prediction error.
 
 
@@ -2585,7 +2585,7 @@ In both iterations the parameters $m$ and $\varepsilon$ defining the length and 
   \sum_{T=1}^{N'}  dist( \hat{\mathbf{C}}_{T+H}  , \mathbf{C}_{T+H}) \\
 %& \text{subject to} \\    & \epsilon, m &
 \end{aligned}
-\end{equation} where $dist$ is the hamming distance since $\mathbf{C}$ is a sequences of labels and the prediction is performed by using the Equation \ref{estimatingModes}. Table \ref{knnparameters} includes the parameters that optimize the prediction with kNN for each iteration. The distance of the neighborhood and size of the delay vector for kNN mode estimator are those that minimises the objective function expressed by Equation (\ref{kNNobjectiveFunction}) subject to $ \varepsilon = \{0.01,0.02,\dots,0.1\}$  and $m=\{2,\dots,10\}$.
+\end{equation} where $dist$ is the Hamming distance since $\mathbf{C}$ is a sequences of labels and the prediction is performed by using the Equation \ref{estimatingModes}. Table \ref{knnparameters} includes the parameters that optimize the prediction with kNN for each iteration. The distance of the neighborhood and size of the delay vector for kNN mode estimator are those that minimises the objective function expressed by Equation (\ref{kNNobjectiveFunction}) subject to $ \varepsilon = \{0.01,0.02,\dots,0.1\}$  and $m=\{2,\dots,10\}$.
 
 
 \begin{table}[htbp]
